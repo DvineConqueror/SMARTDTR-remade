@@ -4,12 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".activityStudents.student_finished_duty_card">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_finished__duty"
         android:layout_width="300dp"
-        android:layout_height="150dp"
+        android:layout_height="160dp"
         android:layout_gravity="center"
         android:layout_margin="10dp"
         android:elevation="6dp"

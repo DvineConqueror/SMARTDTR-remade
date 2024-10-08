@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".teacher_home_page">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,9 +29,11 @@
             android:layout_height="75dp"
             android:layout_gravity="center"
             android:layout_marginTop="12dp"
-            android:backgroundTint="@color/blue"
+            android:background="@drawable/rectangle_blue"
             android:text="Make an Appointment"
+            android:textColor="@color/white"
             android:textSize="20sp"
+            android:gravity="center"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.494"
@@ -99,7 +102,9 @@
                     android:id="@+id/tvUpcomingTimeLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="12dp"
+                    android:textSize="10sp"
+                    android:textStyle="bold"
                     android:text="Time:"
                     android:textColor="@color/white"
                     app:layout_constraintStart_toStartOf="parent"
@@ -109,10 +114,11 @@
                     android:id="@+id/upcoming_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="52dp"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginStart="110dp"
+                    android:layout_marginTop="12dp"
                     android:text="7:30 am - 9:00 am"
                     android:textColor="@color/white"
+                    android:textSize="10sp"
                     app:layout_constraintStart_toEndOf="@+id/tvUpcomingTimeLabel"
                     app:layout_constraintTop_toBottomOf="@id/upcoming_date" />
 
@@ -120,9 +126,10 @@
                     android:id="@+id/tvUpcomingSubjectLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="12dp"
                     android:text="Subject:"
                     android:textColor="@color/white"
+                    android:textSize="10sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvUpcomingTimeLabel" />
 
@@ -130,8 +137,9 @@
                     android:id="@+id/upcoming_subject"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="36dp"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginStart="100dp"
+                    android:layout_marginTop="12dp"
+                    android:textSize="10sp"
                     android:text="PED 031"
                     android:textColor="@color/white"
                     app:layout_constraintStart_toEndOf="@+id/tvUpcomingSubjectLabel"
@@ -141,20 +149,24 @@
                     android:id="@+id/tvUpcomingTeacherLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="12dp"
                     android:text="Teacher:"
+                    android:textSize="10sp"
                     android:textColor="@color/white"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvUpcomingSubjectLabel" />
+
+                <!-- Positioning the ImageButton to the bottom-right -->
 
                 <TextView
                     android:id="@+id/upcoming_teacher"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="98dp"
+                    android:layout_marginTop="12dp"
                     android:text="Mrs. Marlyn Ogoy"
                     android:textColor="@color/white"
+                    android:textSize="10sp"
                     app:layout_constraintStart_toEndOf="@+id/tvUpcomingTeacherLabel"
                     app:layout_constraintTop_toBottomOf="@id/upcoming_subject" />
 
@@ -165,16 +177,17 @@
                     android:layout_marginTop="8dp"
                     android:text="Room:"
                     android:textColor="@color/white"
+                    android:textSize="10sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvUpcomingTeacherLabel" />
+                    app:layout_constraintTop_toBottomOf="@+id/upcoming_students_list" />
 
-                <!-- Positioning the ImageButton to the bottom-right -->
                 <TextView
                     android:id="@+id/upcoming_room"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="44dp"
+                    android:layout_marginStart="108dp"
                     android:layout_marginTop="8dp"
+                    android:textSize="10sp"
                     android:text="RS 115"
                     android:textColor="@color/white"
                     app:layout_constraintStart_toEndOf="@+id/tvUpcomingRoomLabel"
@@ -184,22 +197,25 @@
                     android:id="@+id/upcoming_students_list"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="8dp"
+                    android:labelFor="@+id/btUpcomingStudentList"
                     android:text="Students List:"
                     android:textColor="@color/white"
+                    android:textSize="10sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/upcoming_room" />
+                    app:layout_constraintTop_toBottomOf="@+id/tvUpcomingTeacherLabel" />
 
                 <ImageButton
                     android:id="@+id/btUpcomingStudentList"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
+                    android:layout_marginStart="100dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:src="@drawable/baseline_list_24"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.068"
-                    app:layout_constraintStart_toEndOf="@+id/upcoming_students_list"
+                    app:layout_constraintStart_toEndOf="@+id/tvUpcomingRoomLabel"
                     app:layout_constraintTop_toBottomOf="@+id/upcoming_room" />
 
                 <ImageButton
@@ -208,6 +224,7 @@
                     android:layout_height="30dp"
                     android:layout_marginEnd="1dp"
                     android:layout_marginBottom="1dp"
+                    android:contentDescription="Edit Button"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:src="@drawable/baseline_edit_24"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -252,20 +269,18 @@
                 android:padding="16dp">
 
                 <TextView
-                    android:id="@+id/finished_status"
+                    android:id="@+id/status_finished"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Pending"
                     android:textColor="@color/white"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/Finished_date"
+                    android:id="@+id/finished_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="September 5, 2024"
@@ -274,134 +289,130 @@
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toEndOf="@+id/finished_status"
+                    app:layout_constraintStart_toEndOf="@+id/status_finished"
                     app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/tvFinishedSubjectLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="Subject:"
-                    android:textColor="@color/white"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvFinishedTimeLabel" />
 
                 <TextView
                     android:id="@+id/tvFinishedTimeLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="12dp"
+                    android:textSize="10sp"
+                    android:textStyle="bold"
                     android:text="Time:"
                     android:textColor="@color/white"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.021"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/finished_status" />
+                    app:layout_constraintTop_toBottomOf="@+id/status_finished" />
 
                 <TextView
-                    android:id="@+id/finished_students_list"
+                    android:id="@+id/finished_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="Students List:"
+                    android:layout_marginStart="110dp"
+                    android:layout_marginTop="12dp"
+                    android:text="7:30 am - 9:00 am"
                     android:textColor="@color/white"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
+                    android:textSize="10sp"
+                    app:layout_constraintStart_toEndOf="@+id/tvFinishedTimeLabel"
+                    app:layout_constraintTop_toBottomOf="@id/finished_date" />
+
+                <TextView
+                    android:id="@+id/tvFinishedSubjectLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="Subject:"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvFinishedRoomLabel" />
+                    app:layout_constraintTop_toBottomOf="@+id/tvFinishedTimeLabel" />
+
+                <TextView
+                    android:id="@+id/finished_subject"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="100dp"
+                    android:layout_marginTop="12dp"
+                    android:textSize="10sp"
+                    android:text="PED 031"
+                    android:textColor="@color/white"
+                    app:layout_constraintStart_toEndOf="@+id/tvFinishedSubjectLabel"
+                    app:layout_constraintTop_toBottomOf="@id/finished_time" />
 
                 <TextView
                     android:id="@+id/tvFinishedTeacherLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="12dp"
                     android:text="Teacher:"
+                    android:textSize="10sp"
                     android:textColor="@color/white"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvFinishedSubjectLabel" />
 
                 <!-- Positioning the ImageButton to the bottom-right -->
 
                 <TextView
-                    android:id="@+id/tvFinishedRoomLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="Room:"
-                    android:textColor="@color/white"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvFinishedTeacherLabel" />
-
-                <TextView
-                    android:id="@+id/finished_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="52dp"
-                    android:layout_marginTop="4dp"
-                    android:text="7:30 am - 9:00 am"
-                    android:textColor="@color/white"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.365"
-                    app:layout_constraintStart_toEndOf="@+id/tvFinishedTimeLabel"
-                    app:layout_constraintTop_toBottomOf="@+id/Finished_date" />
-
-                <TextView
                     android:id="@+id/finished_teacher"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginStart="98dp"
+                    android:layout_marginTop="12dp"
                     android:text="Mrs. Marlyn Ogoy"
                     android:textColor="@color/white"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.388"
+                    android:textSize="10sp"
                     app:layout_constraintStart_toEndOf="@+id/tvFinishedTeacherLabel"
-                    app:layout_constraintTop_toBottomOf="@+id/finished_subject" />
+                    app:layout_constraintTop_toBottomOf="@id/finished_subject" />
+
+                <TextView
+                    android:id="@+id/tvFinishedRoomLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Room:"
+                    android:textColor="@color/white"
+                    android:labelFor="@+id/btFinishedStudentList"
+                    android:textSize="10sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/finished_students_list" />
 
                 <TextView
                     android:id="@+id/finished_room"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="44dp"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginStart="108dp"
+                    android:layout_marginTop="8dp"
+                    android:textSize="10sp"
                     android:text="RS 115"
                     android:textColor="@color/white"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.223"
                     app:layout_constraintStart_toEndOf="@+id/tvFinishedRoomLabel"
-                    app:layout_constraintTop_toBottomOf="@+id/finished_teacher" />
+                    app:layout_constraintTop_toBottomOf="@id/finished_teacher" />
+
+                <TextView
+                    android:id="@+id/finished_students_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:labelFor="@+id/btUpcomingStudentList"
+                    android:text="Students List:"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvFinishedTeacherLabel" />
 
                 <ImageButton
                     android:id="@+id/btFinishedStudentList"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
+                    android:layout_marginStart="100dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:src="@drawable/baseline_list_24"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.173"
-                    app:layout_constraintStart_toEndOf="@+id/finished_students_list"
+                    app:layout_constraintHorizontal_bias="0.068"
+                    app:layout_constraintStart_toEndOf="@+id/tvFinishedRoomLabel"
                     app:layout_constraintTop_toBottomOf="@+id/finished_room" />
 
-                <TextView
-                    android:id="@+id/finished_subject"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="36dp"
-                    android:layout_marginTop="4dp"
-                    android:text="PED 031"
-                    android:textColor="@color/white"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.22"
-                    app:layout_constraintStart_toEndOf="@+id/tvFinishedSubjectLabel"
-                    app:layout_constraintTop_toBottomOf="@+id/finished_time" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
