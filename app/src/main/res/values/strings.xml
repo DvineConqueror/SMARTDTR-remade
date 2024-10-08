@@ -50,6 +50,12 @@
     <string name="teacher_email">teacher email</string>
     <string name="create_login_text">Make Daily Time Record management more efficient and accessible</string>
     <string name="title_activity_teacher_login">Teacher_login</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="don_t_have_an_account">Don\'t have an account?</string>
+    <string name="log_in">Log In</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="bottom_wave">Bottom Wave</string>
 
     <string-array name="sex_options">
         <item>Male</item>

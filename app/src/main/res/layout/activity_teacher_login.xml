@@ -9,6 +9,25 @@
     android:orientation="vertical"
     tools:context=".activityTeachers.teacher_login">
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnBack"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/white"
+        android:shadowColor="@color/white"
+        android:contentDescription="Back Button"
+        app:icon="@drawable/baseline_arrow_back_ios_24"
+        app:iconTint="@color/brightred"
+        app:layout_constraintBottom_toTopOf="@+id/imageView16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.058"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:strokeColor="@color/white"
+        app:strokeWidth="0dp" />
+
     <ImageView
         android:id="@+id/imageView15"
         android:layout_width="191dp"
@@ -35,14 +54,11 @@
         android:id="@+id/imageView17"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
-        android:layout_marginBottom="34dp"
-        app:layout_constraintBottom_toTopOf="@+id/imageView20"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView15"
-        app:layout_constraintVertical_bias="0.088"
         app:srcCompat="@drawable/smart_dtr"
         tools:ignore="MissingConstraints" />
 
@@ -75,7 +91,7 @@
         android:id="@+id/imageView20"
         android:layout_width="414dp"
         android:layout_height="123dp"
-
+        android:contentDescription="@string/bottom_wave"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.666"
@@ -87,33 +103,39 @@
         android:id="@+id/etPassword"
         android:layout_width="300dp"
         android:layout_height="48dp"
+        android:layout_marginTop="32dp"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textAppearance="@style/CustomEditText"
+        android:textColorHint="@color/gray"
         android:background="@drawable/custom_edittext"
-        android:drawableRight="@drawable/baseline_remove_red_eye_24"
-        android:hint="Password"
+        android:drawableEnd="@drawable/baseline_remove_red_eye_24"
+        android:hint="@string/password"
         android:inputType="textPassword"
         android:padding="10dp"
-
         app:layout_constraintEnd_toEndOf="parent"
-
         app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints,SpeakableTextPresentCheck"
-        tools:layout_editor_absoluteY="398dp" />
+        app:layout_constraintTop_toBottomOf="@+id/etEmailAddress"
+        tools:ignore="MissingConstraints,SpeakableTextPresentCheck" />
 
     <EditText
         android:id="@+id/etEmailAddress"
         android:layout_width="300dp"
         android:layout_height="48dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/custom_edittext"
         android:ems="10"
         android:hint="Email"
         android:inputType="textEmailAddress"
         android:padding="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/etPassword"
+        android:textAppearance="@style/CustomEditText"
+        android:textColor="@color/black"
+        android:textColorHint="@color/gray"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView17"
-        app:layout_constraintVertical_bias="0.725"
+        app:layout_constraintTop_toBottomOf="@+id/textView5"
         tools:ignore="MissingConstraints,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <Button
@@ -123,8 +145,8 @@
         android:layout_marginTop="40dp"
         android:backgroundTint="#041AE0"
         android:fontFamily="@font/alfa_slab_one"
-        android:text="Log In"
-        android:textSize="20dp"
+        android:text="@string/log_in"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -136,23 +158,41 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:textSize="16sp"
-        android:text="Don't have an account? "
+        android:text="@string/don_t_have_an_account"
+        android:fontFamily="@font/lilita_one"
         android:textColor="@color/brightred"
-        app:layout_constraintEnd_toStartOf="@+id/textView5"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/tvClickableSignUp"
         app:layout_constraintHorizontal_bias="0.943"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btLogin" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/tvClickableSignUp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="100dp"
-        android:textSize="16sp"
-        android:text="Sign Up"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:fontFamily="@font/lilita_one"
+        android:text="@string/sign_up"
         android:textColor="@color/blue"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btLogin" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:fontFamily="@font/lilita_one"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:textColor="@color/gray"
+        android:text="Signing in as a Teacher"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView17" />
 </androidx.constraintlayout.widget.ConstraintLayout>
