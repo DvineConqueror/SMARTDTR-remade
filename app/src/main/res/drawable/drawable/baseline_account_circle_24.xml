@@ -3,7 +3,9 @@
     android:height="24dp"
     android:tint="#ffffff"
     android:viewportWidth="24"
-    android:viewportHeight="24">
+    android:viewportHeight="24"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://schemas.android.com/apk/res/android">
 
     <path
         android:fillColor="@android:color/white"
