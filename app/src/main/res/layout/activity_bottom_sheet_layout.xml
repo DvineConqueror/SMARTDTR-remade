@@ -9,7 +9,7 @@
     android:padding="16dp">
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/btn_change_password"
         android:layout_width="20dp"
         android:layout_height="50dp"
         android:layout_weight="1"
@@ -19,7 +19,7 @@
         android:text="change password" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btn_user_details"
         android:layout_width="20dp"
         android:layout_height="50dp"
         android:layout_weight="1"
@@ -29,7 +29,7 @@
         android:text="user details" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/btn_history"
         android:layout_width="20dp"
         android:layout_height="50dp"
         android:layout_weight="1"
@@ -39,7 +39,7 @@
         android:text="history" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/btn_log_out"
         android:layout_width="20dp"
         android:layout_height="50dp"
         android:layout_weight="1"
