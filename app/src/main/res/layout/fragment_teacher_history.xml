@@ -38,6 +38,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/duty_schedule_label"
-        tools:listitem="@layout/activity_teacher_finished_card" />
+        tools:listitem="@layout/rv_teacher_finished_card" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
