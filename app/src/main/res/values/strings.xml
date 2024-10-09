@@ -57,8 +57,12 @@
     <string name="password">Password</string>
     <string name="bottom_wave">Bottom Wave</string>
     <string name="are_you_sure_you_want_to_log_out_your_account" />
+    <string name="sure_to_logout_account">Are you sure you want to log out your account?</string>
+    <string name="log_out">Log Out</string>
+    <string name="cancel">Cancel</string>
 
     <string-array name="sex_options">
+        <item>Select Sex</item>
         <item>Male</item>
         <item>Female</item>
     </string-array>

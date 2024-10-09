@@ -1,11 +1,19 @@
 package com.example.smartdtr_remade.activityStudents
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import android.app.Activity
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import com.example.smartdtr_remade.R
+import com.example.smartdtr_remade.activityTeachers.teacher_create_account
+import com.example.smartdtr_remade.activityTeachers.teacher_login
 import com.example.smartdtr_remade.change_password
 import com.example.smartdtr_remade.databinding.ActivityMainStudentBinding
 import com.example.smartdtr_remade.student_account_details
@@ -76,10 +84,37 @@ class Main_student : AppCompatActivity() {
             bottomSheetDialog.dismiss()
         }
         button4.setOnClickListener {
-            // Handle Button 4 click
-            bottomSheetDialog.dismiss()
+            val dialogView = layoutInflater.inflate(R.layout.activity_alert_dialog2, null)
+
+            // Create an AlertDialog and set the custom view
+            val builder = AlertDialog.Builder(this@Main_student, R.style.CustomAlertDialog)
+            builder.setView(dialogView)
+
+            // Create and show the AlertDialog
+            val dialog = builder.create()
+            dialog.show()
+
+            // Get references to the buttons in the custom layout
+            val btnCancel = dialogView.findViewById<Button>(R.id.btnDialogCancel)
+            val btnLogOut = dialogView.findViewById<Button>(R.id.btnDialogLogOut)
+
+            //Cancel button function
+            btnCancel.setOnClickListener{
+                dialog.dismiss()
+            }
+
+            btnLogOut.setOnClickListener{
+                bottomSheetDialog.dismiss()
+                startActivity(
+                    Intent(
+                        this@Main_student,
+                        teacher_login::class.java
+                    )
+                )
+            }
+            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+            dialog.show()
         }
     }
-
-
 }

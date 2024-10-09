@@ -71,14 +71,14 @@
 
     <ImageView
         android:id="@+id/imageView20"
-        android:layout_width="514dp"
-        android:layout_height="123dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/wavebottom"
+        android:scaleType="fitXY"
+        android:src="@drawable/wave_bottom"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/wave_bottom"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/etPassword"
@@ -87,7 +87,7 @@
         android:layout_marginTop="32dp"
         android:textColor="@color/black"
         android:textSize="20sp"
-        android:textAppearance="@style/CustomEditText"
+        android:fontFamily="@font/lilita_one"
         android:textColorHint="@color/gray"
         android:background="@drawable/custom_edittext"
         android:drawableEnd="@drawable/baseline_remove_red_eye_24"
@@ -106,8 +106,9 @@
         android:background="@drawable/custom_edittext"
         android:ems="10"
         android:hint="Email"
+        android:fontFamily="@font/lilita_one"
         android:inputType="textEmailAddress"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="30dp"
         android:padding="10dp"
         android:textAppearance="@style/CustomEditText"
         android:textColor="@color/black"
@@ -154,8 +155,9 @@
         android:id="@+id/tvClickableSignUp"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="2dp"
         android:layout_marginEnd="100dp"
+        android:gravity="center"
         android:background="@drawable/ripple_effect"
         android:clickable="true"
         android:focusable="true"

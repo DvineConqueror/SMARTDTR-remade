@@ -10,12 +10,18 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import android.app.Activity
+import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.smartdtr_remade.R
+import com.example.smartdtr_remade.activityTeachers.teacher_login
+import com.example.smartdtr_remade.choose_user_role
 import com.example.smartdtr_remade.databinding.ActivityStudentLoginBinding
 import org.w3c.dom.Text
 
@@ -44,7 +50,7 @@ class student_login : AppCompatActivity() {
         val backButton: Button = findViewById(R.id.btnBack)
         val isPasswordVisible = false
 
-        // Set the initial drawable
+        // Set the icon for the right side of edit text
         etPassword.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.baseline_remove_red_eye_24, 0) // Set the initial drawable (eye)
         binding.etPassword.setOnTouchListener { v, event ->
             if (event.action == MotionEvent.ACTION_UP) {
@@ -59,21 +65,31 @@ class student_login : AppCompatActivity() {
             false
         }
 
-
         btLogin.setOnClickListener {
-            if (etEmailAddress.text.toString() == "teststudent" && etPassword.text.toString() == "adminstudent") {
-                Toast.makeText(this, "Login Successful!", Toast.LENGTH_SHORT).show()
-                // Optionally navigate to another activity
-                    startActivity(
-                        Intent(
-                            this@student_login,
-                            Main_student::class.java
-                        )
-                    )
+            val etEmail = etEmailAddress.text.toString()
+            val etPasswordText = etPassword.text.toString()
+
+            if (!etEmail.contains("@")) {
+                Toast.makeText(this, "Please enter a valid email address!", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(this, "Login Failed!", Toast.LENGTH_SHORT).show()
+                if (etEmail == "teststudent@gmail.com") {
+                    if (etPasswordText == "adminstudent") {
+                        Toast.makeText(this, "Login Successful!", Toast.LENGTH_LONG).show()
+                        // Optionally navigate to another activity
+                        Handler().postDelayed({
+                            startActivity(
+                                Intent(this@student_login, Main_student::class.java)
+                            )
+                        }, 1000)
+                    } else {
+                        Toast.makeText(this, "Password incorrect!", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    Toast.makeText(this, "Login Failed!", Toast.LENGTH_SHORT).show()
+                }
             }
         }
+
 
         //Signup Button
         textViewButton.setOnClickListener{
@@ -86,7 +102,12 @@ class student_login : AppCompatActivity() {
         }
 
         binding.btnBack.setOnClickListener {
-            onBackPressed() // This will take the user to the previous screen
+            startActivity(
+                Intent(
+                    this@student_login,
+                    choose_user_role::class.java
+                )
+            )
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->

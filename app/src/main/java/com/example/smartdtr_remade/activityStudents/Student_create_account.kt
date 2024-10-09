@@ -2,12 +2,14 @@ package com.example.smartdtr_remade.activityStudents
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import android.widget.Button
+import android.widget.Spinner
 import com.example.smartdtr_remade.R
 
 class Student_create_account : AppCompatActivity() {
@@ -17,6 +19,25 @@ class Student_create_account : AppCompatActivity() {
         setContentView(R.layout.activity_student_create_account)
 
         val signupButton: Button = findViewById(R.id.btnNext)
+        // Setup Sex Spinner
+        val spinnerSex: Spinner = findViewById(R.id.spinnerSex)
+        val adapterSex: ArrayAdapter<CharSequence> = ArrayAdapter.createFromResource(
+            this,
+            R.array.sex_options,
+            android.R.layout.simple_spinner_item
+        )
+        adapterSex.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerSex.adapter = adapterSex
+
+        // Setup Year Level Spinner
+        val spinnerYearLevel: Spinner = findViewById(R.id.spinnerYearLevel)
+        val adapterYearLevel: ArrayAdapter<CharSequence> = ArrayAdapter.createFromResource(
+            this,
+            R.array.year_level_options,
+            android.R.layout.simple_spinner_item
+        )
+        adapterYearLevel.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerYearLevel.adapter = adapterYearLevel
 
         signupButton.setOnClickListener{
             startActivity(

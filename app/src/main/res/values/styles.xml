@@ -1,17 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/white</item>
+    </style>
+
     <style name="CustomBottomNavigationView" parent="Widget.Design.BottomNavigationView">
         <item name="itemRippleColor">@color/transparent</item>
     </style>
 
     <style name="CustomEditText" parent="Widget.AppCompat.EditText">
-        <item name="android:fontFamily">@font/lilita_one</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textColorHint">@color/gray</item>
         <item name="android:background">@drawable/custom_edittext</item>
         <item name="android:padding">10dp</item>
     </style>
+
+    <style name="CustomAlertDialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:background">@color/transparent</item> <!-- Reference your drawable -->
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
 
 
 </resources>

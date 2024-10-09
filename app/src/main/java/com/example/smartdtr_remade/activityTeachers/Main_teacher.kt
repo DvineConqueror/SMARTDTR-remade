@@ -1,11 +1,16 @@
 package com.example.smartdtr_remade.activityTeachers
 
+import android.app.Activity
+import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.smartdtr_remade.R
+import com.example.smartdtr_remade.activityStudents.student_login
 import com.example.smartdtr_remade.change_password
 import com.example.smartdtr_remade.teacher_account_details
 import com.example.smartdtr_remade.teacher_appointment
@@ -75,8 +80,37 @@ class Main_teacher : AppCompatActivity() {
             bottomSheetDialog.dismiss()
         }
         button4.setOnClickListener {
-            // Handle Button 4 click
-            bottomSheetDialog.dismiss()
+            val dialogView = layoutInflater.inflate(R.layout.activity_alert_dialog2, null)
+
+            // Create an AlertDialog and set the custom view
+            val builder = AlertDialog.Builder(this@Main_teacher, R.style.CustomAlertDialog)
+            builder.setView(dialogView)
+
+            // Create and show the AlertDialog
+            val dialog = builder.create()
+            dialog.show()
+
+            // Get references to the buttons in the custom layout
+            val btnCancel = dialogView.findViewById<Button>(R.id.btnDialogCancel)
+            val btnLogOut = dialogView.findViewById<Button>(R.id.btnDialogLogOut)
+
+            //Cancel button function
+            btnCancel.setOnClickListener{
+                dialog.dismiss()
+            }
+
+            btnLogOut.setOnClickListener{
+                bottomSheetDialog.dismiss()
+                startActivity(
+                    Intent(
+                        this@Main_teacher,
+                        student_login::class.java
+                    )
+                )
+            }
+            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+            dialog.show()
         }
     }
 

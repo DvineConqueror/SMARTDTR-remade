@@ -3,6 +3,7 @@ package com.example.smartdtr_remade.activityTeachers
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.text.InputType
 import android.view.MotionEvent
 import android.widget.Button
@@ -17,6 +18,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.smartdtr_remade.R
 import com.example.smartdtr_remade.activityStudents.Main_student
 import com.example.smartdtr_remade.activityStudents.Student_create_account
+import com.example.smartdtr_remade.choose_user_role
 import com.example.smartdtr_remade.databinding.ActivityTeacherLoginBinding
 
 class teacher_login : AppCompatActivity() {
@@ -59,17 +61,27 @@ class teacher_login : AppCompatActivity() {
 
 
         btLogin.setOnClickListener {
-            if (etEmailAddress.text.toString() == "testteacher" && etPassword.text.toString() == "admin") {
-                Toast.makeText(this, "Login Successful!", Toast.LENGTH_SHORT).show()
-                // Optionally navigate to another activity
-                startActivity(
-                    Intent(
-                        this@teacher_login,
-                        Main_student::class.java
-                    )
-                )
+            val etEmail = etEmailAddress.text.toString()
+            val etPasswordText = etPassword.text.toString()
+
+            if (!etEmail.contains("@")) {
+                Toast.makeText(this, "Please enter a valid email address!", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(this, "Login Failed!", Toast.LENGTH_SHORT).show()
+                if (etEmail == "testteacher@gmail.com") {
+                    if (etPasswordText == "adminteacher") {
+                        Toast.makeText(this, "Login Successful!", Toast.LENGTH_LONG).show()
+                        // Optionally navigate to another activity
+                        Handler().postDelayed({
+                            startActivity(
+                                Intent(this@teacher_login, Main_student::class.java)
+                            )
+                        }, 1000)
+                    } else {
+                        Toast.makeText(this, "Password incorrect!", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    Toast.makeText(this, "Login Failed!", Toast.LENGTH_SHORT).show()
+                }
             }
         }
 
@@ -84,7 +96,12 @@ class teacher_login : AppCompatActivity() {
         }
 
         binding.btnBack.setOnClickListener {
-            onBackPressed() // This will take the user to the previous screen
+            startActivity(
+                Intent(
+                    this@teacher_login,
+                    choose_user_role::class.java
+                )
+            )
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->

@@ -1,116 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:background="@color/transparent"
     app:cardElevation="10dp"
-    android:cardCornerRadius="16dp"
-
-    >
+    tools:context=".alert_dialog">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="350dp"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:background="@color/brightred"
+        android:background="@drawable/gradient_background_2"
         android:outlineAmbientShadowColor="@color/black"
-        >
+        android:padding="16dp">
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Log Out"
+            android:layout_marginTop="25dp"
+            android:text="@string/log_out"
+            android:letterSpacing="0.12"
+            android:fontFamily="@font/lilita_one"
             android:textColor="@color/white"
             android:textSize="40sp"
             android:textStyle="bold"
-            android:layout_marginTop="25dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <View
+            android:id="@+id/View2"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="20dp"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
-            android:text="____________________________________________"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="@+id/textView"
-            app:layout_constraintStart_toStartOf="@+id/textView"
+            android:background="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
+
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="40dp"
             android:layout_marginEnd="24dp"
-            android:paddingRight="10dp"
+            android:fontFamily="@font/lilita_one"
+            android:letterSpacing="0.1"
+            android:gravity="center"
             android:paddingLeft="10dp"
-            android:text="Are you sure you want to log out your account?"
+            android:paddingRight="10dp"
+            android:text="@string/sure_to_logout_account"
             android:textColor="@color/white"
             android:textSize="20sp"
-            android:gravity="center"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/textView2"
-            app:layout_constraintStart_toStartOf="@+id/textView2"
-            app:layout_constraintTop_toBottomOf="@+id/textView2"
-            />
+            app:layout_constraintEnd_toEndOf="@+id/View2"
+            app:layout_constraintStart_toStartOf="@+id/View2"
+            app:layout_constraintTop_toBottomOf="@+id/View2" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginTop="35dp"
             android:layout_marginBottom="35dp"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView3"
+            app:layout_constraintVertical_bias="1.0"
             tools:ignore="MissingConstraints">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnDialogCancel"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
                 android:layout_weight="1"
-                android:backgroundTint="@color/white"
+                android:backgroundTint="@color/yellow"
+                android:fontFamily="@font/lilita_one"
                 android:padding="12dp"
-                android:layout_marginRight="20dp"
-                android:text="Cancel"
-                android:textColor="@color/blue"
-                android:textSize="12sp"
+                android:text="@string/cancel"
+                android:textColor="@color/white"
+                android:textSize="16sp"
                 android:textStyle="bold"
-                app:cornerRadius="5dp"
-                app:strokeColor="@color/blue"
-                app:strokeWidth="2dp" />
+                app:cornerRadius="50dp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnDialogLogOut"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:backgroundTint="@color/blue"
+                android:backgroundTint="@color/brightred"
+                android:fontFamily="@font/lilita_one"
                 android:padding="12dp"
-                android:layout_marginRight="20dp"
-                android:text="Log Out"
+                android:text="@string/log_out"
                 android:textColor="@color/white"
-                android:textSize="12sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
-                app:cornerRadius="5dp"
-                app:strokeColor="@color/white"
-                app:strokeWidth="2dp" />
+                app:cornerRadius="50dp" />
 
 
         </LinearLayout>
-
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
