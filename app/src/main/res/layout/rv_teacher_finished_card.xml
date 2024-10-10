@@ -72,10 +72,42 @@
                 android:layout_marginTop="4dp"
                 android:text="Time:"
                 android:textColor="@color/white"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.021"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/finished_status" />
+
+            <TextView
+                android:id="@+id/divider"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="-"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/finished_end_time"
+                app:layout_constraintStart_toEndOf="@+id/finished_start_time"
+                app:layout_constraintTop_toBottomOf="@+id/Finished_date" />
+
+            <TextView
+                android:id="@+id/finished_start_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="48dp"
+                android:layout_marginTop="4dp"
+                android:text="7:30 am"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toEndOf="@+id/tvFinishedTimeLabel"
+                app:layout_constraintTop_toBottomOf="@id/Finished_date" />
+
+            <TextView
+                android:id="@+id/finished_end_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:text="9:00 am"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toEndOf="@+id/finished_start_time"
+                app:layout_constraintTop_toBottomOf="@id/Finished_date" />
 
             <TextView
                 android:id="@+id/finished_students_list"
@@ -115,17 +147,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvFinishedTeacherLabel" />
 
-            <TextView
-                android:id="@+id/finished_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="52dp"
-                android:layout_marginTop="4dp"
-                android:text="7:30 am - 9:00 am"
-                android:textColor="@color/white"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.365"
-                app:layout_constraintStart_toEndOf="@+id/tvFinishedTimeLabel"
+
                 app:layout_constraintTop_toBottomOf="@+id/Finished_date" />
 
             <TextView
@@ -177,7 +199,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.22"
                 app:layout_constraintStart_toEndOf="@+id/tvFinishedSubjectLabel"
-                app:layout_constraintTop_toBottomOf="@+id/finished_time" />
+                app:layout_constraintTop_toBottomOf="@+id/finished_start_time" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

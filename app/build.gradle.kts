@@ -46,6 +46,11 @@ dependencies {
     implementation("com.google.code.gson:gson:2.8.6")
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.0")
 
+    //coroutines
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.5")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.5")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.6")
+
     //recyclerview
     implementation("androidx.recyclerview:recyclerview:1.2.1")
     implementation("com.google.android.material:material:1.8.0")

@@ -10,7 +10,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/card_upcoming_duty"
         android:layout_width="300dp"
-        android:layout_height="150dp"
+        android:layout_height="155dp"
         android:layout_gravity="center"
         android:layout_margin="10dp"
         android:elevation="6dp"
@@ -62,14 +62,37 @@
                 app:layout_constraintTop_toBottomOf="@+id/status" />
 
             <TextView
-                android:id="@+id/upcoming_time"
+                android:id="@+id/divider"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="52dp"
                 android:layout_marginTop="4dp"
-                android:text="7:30 am - 9:00 am"
+                android:text="-"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/upcoming_end_time"
+                app:layout_constraintStart_toEndOf="@+id/upcoming_start_time"
+                app:layout_constraintTop_toBottomOf="@+id/upcoming_date" />
+
+            <TextView
+                android:id="@+id/upcoming_start_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="48dp"
+                android:layout_marginTop="4dp"
+                android:text="7:30 am"
                 android:textColor="@color/white"
                 app:layout_constraintStart_toEndOf="@+id/tvUpcomingTimeLabel"
+                app:layout_constraintTop_toBottomOf="@id/upcoming_date" />
+
+            <TextView
+                android:id="@+id/upcoming_end_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="4dp"
+                android:text="9:00 am"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toEndOf="@+id/upcoming_start_time"
                 app:layout_constraintTop_toBottomOf="@id/upcoming_date" />
 
             <TextView
@@ -86,12 +109,13 @@
                 android:id="@+id/upcoming_subject"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="36dp"
                 android:layout_marginTop="4dp"
                 android:text="PED 031"
                 android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.2"
                 app:layout_constraintStart_toEndOf="@+id/tvUpcomingSubjectLabel"
-                app:layout_constraintTop_toBottomOf="@id/upcoming_time" />
+                app:layout_constraintTop_toBottomOf="@+id/upcoming_start_time" />
 
             <TextView
                 android:id="@+id/tvUpcomingTeacherLabel"
@@ -107,12 +131,13 @@
                 android:id="@+id/upcoming_teacher"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
                 android:layout_marginTop="8dp"
                 android:text="Mrs. Marlyn Ogoy"
                 android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.278"
                 app:layout_constraintStart_toEndOf="@+id/tvUpcomingTeacherLabel"
-                app:layout_constraintTop_toBottomOf="@id/upcoming_subject" />
+                app:layout_constraintTop_toBottomOf="@+id/upcoming_subject" />
 
             <TextView
                 android:id="@+id/tvUpcomingRoomLabel"
@@ -129,12 +154,13 @@
                 android:id="@+id/upcoming_room"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="44dp"
                 android:layout_marginTop="8dp"
                 android:text="RS 115"
                 android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.234"
                 app:layout_constraintStart_toEndOf="@+id/tvUpcomingRoomLabel"
-                app:layout_constraintTop_toBottomOf="@id/upcoming_teacher" />
+                app:layout_constraintTop_toBottomOf="@+id/upcoming_teacher" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

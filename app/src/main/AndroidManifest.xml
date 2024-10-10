@@ -54,6 +54,9 @@
             android:name=".activityStudents.Main_student"
             android:exported="false" />
         <activity
+            android:name=".activityTeachers.Main_teacher"
+            android:exported="false" />
+        <activity
             android:name=".choose_user_role"
             android:exported="false" />
         <activity

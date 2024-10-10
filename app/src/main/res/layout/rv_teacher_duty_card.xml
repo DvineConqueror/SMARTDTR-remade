@@ -63,14 +63,37 @@
                 app:layout_constraintTop_toBottomOf="@+id/status" />
 
             <TextView
-                android:id="@+id/upcoming_time"
+                android:id="@+id/divider"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="52dp"
                 android:layout_marginTop="4dp"
-                android:text="7:30 am - 9:00 am"
+                android:text="-"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/upcoming_end_time"
+                app:layout_constraintStart_toEndOf="@+id/upcoming_start_time"
+                app:layout_constraintTop_toBottomOf="@+id/upcoming_date" />
+
+            <TextView
+                android:id="@+id/upcoming_start_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="48dp"
+                android:layout_marginTop="4dp"
+                android:text="7:30 am"
                 android:textColor="@color/white"
                 app:layout_constraintStart_toEndOf="@+id/tvUpcomingTimeLabel"
+                app:layout_constraintTop_toBottomOf="@id/upcoming_date" />
+
+            <TextView
+                android:id="@+id/upcoming_end_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="4dp"
+                android:text="9:00 am"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toEndOf="@+id/upcoming_start_time"
                 app:layout_constraintTop_toBottomOf="@id/upcoming_date" />
 
             <TextView
@@ -92,7 +115,7 @@
                 android:text="PED 031"
                 android:textColor="@color/white"
                 app:layout_constraintStart_toEndOf="@+id/tvUpcomingSubjectLabel"
-                app:layout_constraintTop_toBottomOf="@id/upcoming_time" />
+                app:layout_constraintTop_toBottomOf="@id/upcoming_start_time" />
 
             <TextView
                 android:id="@+id/tvUpcomingTeacherLabel"

@@ -20,7 +20,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.smartdtr_remade.R
-import com.example.smartdtr_remade.activityTeachers.teacher_login
+import com.example.smartdtr_remade.activityStudents.student_login
 import com.example.smartdtr_remade.choose_user_role
 import com.example.smartdtr_remade.databinding.ActivityStudentLoginBinding
 import org.w3c.dom.Text
