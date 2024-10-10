@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SMART dtr</string>
+    <string name="app_name">Smart DTR</string>
     <string name="student">Student</string>
     <string name="teacher">Teacher</string>
     <string name="title_activity_homepage_teacher">activity_homepage_teacher</string>
