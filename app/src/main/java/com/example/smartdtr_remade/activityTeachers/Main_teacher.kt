@@ -18,6 +18,7 @@ import com.example.smartdtr_remade.teacher_history
 import com.example.smartdtr_remade.teacher_home_page
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.example.smartdtr_remade.databinding.ActivityMainTeacherBinding
+import com.example.smartdtr_remade.teacher_create_appointment
 
 class Main_teacher : AppCompatActivity() {
 
@@ -32,7 +33,6 @@ class Main_teacher : AppCompatActivity() {
         binding.btmNavView.setOnItemSelectedListener {
 
             when (it.itemId) {
-
                 R.id.home_btn -> replaceFragment(teacher_home_page())
                 R.id.appointment_btn -> replaceFragment(teacher_appointment())
                 R.id.menu_btn -> showBottomSheetDialog()
@@ -43,6 +43,7 @@ class Main_teacher : AppCompatActivity() {
             }
             true
         }
+
     }
 
     private fun replaceFragment(fragment: Fragment) {

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/white"
     tools:context=".teacher_create_appointment">
 
@@ -50,70 +50,65 @@
             app:srcCompat="@drawable/group_76"
             tools:ignore="ContentDescription" />
 
-        <ImageButton
-            android:id="@+id/backButton5"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnBack"
             android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="56dp"
-            android:background="@android:color/transparent"
-            android:contentDescription="backToHome"
-            android:scaleType="fitCenter"
-            android:src="@drawable/baseline_arrow_back_24"
-            app:layout_constraintStart_toStartOf="@+id/imageView21"
-            app:layout_constraintTop_toTopOf="@+id/imageView21"
-            tools:ignore="HardcodedText" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/white"
+            android:shadowColor="@color/white"
+            android:contentDescription="Back Button"
+            app:icon="@drawable/baseline_arrow_back_ios_24"
+            app:iconTint="@color/brightred"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.058"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:strokeColor="@color/white"
+            app:strokeWidth="0dp" />
 
         <TextView
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/alfa_slab_one"
+            android:fontFamily="@font/lilita_one"
+            android:layout_marginBottom="60dp"
             android:text="Make an Appointment"
             android:textColor="#1604F4"
             android:textSize="25sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.494"
             app:layout_constraintStart_toStartOf="parent"
-            tools:ignore="HardcodedText,MissingConstraints"
-            tools:layout_editor_absoluteY="240dp" />
-
-        <CalendarView
-            android:id="@+id/calendarView"
-            style="CustomCalendarView"
-            android:layout_width="393dp"
-            android:layout_height="271dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView6" />
+            app:layout_constraintTop_toBottomOf="@+id/imageView21"
+            tools:ignore="HardcodedText,MissingConstraints" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout"
-            android:layout_width="372dp"
-            android:layout_height="316dp"
-            android:layout_marginBottom="90dp"
-            android:background="#F86232"
-            android:backgroundTint="#F07046"
+            android:id="@+id/timeSelector"
+            android:layout_width="347dp"
+            android:layout_height="370dp"
+            android:layout_marginTop="360dp"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/gradient_background_3"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.476"
             app:layout_constraintStart_toStartOf="parent"
-
-            app:layout_constraintTop_toBottomOf="@+id/calendarView"
-            app:layout_constraintVertical_bias="1.0"
+            app:layout_constraintTop_toBottomOf="@+id/textView6"
+            app:layout_constraintVertical_bias="0.0"
             tools:ignore="MissingConstraints">
 
             <TextView
                 android:id="@+id/textView9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="52dp"
+                android:fontFamily="@font/lilita_one"
+                android:letterSpacing="0.1"
                 android:text="Subject"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.039"
+                app:layout_constraintHorizontal_bias="0.048"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView8"
                 tools:ignore="HardcodedText,MissingConstraints" />
@@ -122,38 +117,41 @@
                 android:id="@+id/textView10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="44dp"
+                android:layout_marginEnd="36dp"
+                android:fontFamily="@font/lilita_one"
+                android:letterSpacing="0.1"
                 android:text="Room"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.037"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textView9"
+                app:layout_constraintEnd_toStartOf="@+id/spinner4"
+                app:layout_constraintTop_toBottomOf="@+id/textView9"
                 tools:ignore="HardcodedText,MissingConstraints" />
 
             <Spinner
-                android:id="@+id/spinner2"
-                android:layout_width="228dp"
+                android:id="@+id/subjectCode"
+                android:layout_width="211dp"
                 android:layout_height="48dp"
-                android:layout_marginTop="60dp"
+                android:layout_marginTop="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.39"
+                app:layout_constraintHorizontal_bias="0.44"
                 app:layout_constraintStart_toEndOf="@+id/textView9"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/timeHour" />
 
             <TextView
                 android:id="@+id/textView11"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="36dp"
+                android:layout_marginTop="52dp"
+                android:fontFamily="@font/lilita_one"
+                android:letterSpacing="0.05"
                 android:text="Students"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.041"
+                app:layout_constraintEnd_toStartOf="@+id/spinner3"
+                app:layout_constraintHorizontal_bias="0.619"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView10"
                 tools:ignore="HardcodedText,SpUsage" />
@@ -162,9 +160,11 @@
                 android:id="@+id/textView8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="50dp"
                 android:text="Time"
                 android:textColor="@color/white"
+                android:fontFamily="@font/lilita_one"
+                android:letterSpacing="0.1"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -177,56 +177,69 @@
                 android:id="@+id/button6"
                 android:layout_width="100dp"
                 android:layout_height="48dp"
-                android:layout_marginEnd="24dp"
                 android:layout_marginBottom="16dp"
                 android:backgroundTint="#0008E2"
+                android:fontFamily="@font/lilita_one"
                 android:text="Save"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold"
+                app:cornerRadius="50dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 tools:ignore="HardcodedText,MissingConstraints" />
 
             <Spinner
-                android:id="@+id/spinner1"
+                android:id="@+id/timeMinutes"
                 android:layout_width="97dp"
                 android:layout_height="48dp"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="40dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.329"
-                app:layout_constraintStart_toEndOf="@+id/spinner0"
+                app:layout_constraintHorizontal_bias="0.358"
+                app:layout_constraintStart_toEndOf="@+id/timeHour"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Spinner
-                android:id="@+id/spinner0"
+                android:id="@+id/timeHour"
                 android:layout_width="97dp"
                 android:layout_height="48dp"
                 android:layout_marginStart="44dp"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="40dp"
                 app:layout_constraintStart_toEndOf="@+id/textView8"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Spinner
                 android:id="@+id/spinner3"
-                android:layout_width="228dp"
+                android:layout_width="211dp"
                 android:layout_height="48dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="28dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.215"
-                app:layout_constraintStart_toEndOf="@+id/textView11"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintTop_toBottomOf="@+id/spinner4" />
 
             <Spinner
                 android:id="@+id/spinner4"
-                android:layout_width="228dp"
+                android:layout_width="211dp"
                 android:layout_height="48dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="28dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textView10"
-                app:layout_constraintTop_toBottomOf="@+id/spinner2" />
+                app:layout_constraintTop_toBottomOf="@+id/subjectCode" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <CalendarView
+            android:id="@+id/calendarView"
+            style="CustomCalendarView"
+            android:layout_width="350dp"
+            android:layout_height="320dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.491"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
