@@ -1,6 +1,7 @@
 package com.example.smartdtr_remade.activityTeachers
 
 import android.annotation.SuppressLint
+import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
@@ -70,9 +71,9 @@ class activity_login : AppCompatActivity() {
                         Toast.makeText(this, "Login Successful!", Toast.LENGTH_LONG).show()
                         // Navigate to Main_teacher activity after delay
                         Handler().postDelayed({
-                            startActivity(
-                                Intent(this@activity_login, Main_teacher::class.java)
-                            )
+                            val intent = Intent(this@activity_login, Main_teacher::class.java)
+                            val options = ActivityOptions.makeSceneTransitionAnimation(this) // Create options for transition
+                            startActivity(intent, options.toBundle()) // Start activity with options
                         }, 1000)
                     } else {
                         Toast.makeText(this, "Password incorrect!", Toast.LENGTH_SHORT).show()
@@ -82,9 +83,9 @@ class activity_login : AppCompatActivity() {
                         Toast.makeText(this, "Login Successful!", Toast.LENGTH_LONG).show()
                         // Navigate to Main_teacher activity after delay
                         Handler().postDelayed({
-                            startActivity(
-                                Intent(this@activity_login, Main_student::class.java)
-                            )
+                            val intent = Intent(this@activity_login, Main_student::class.java)
+                            val options = ActivityOptions.makeSceneTransitionAnimation(this) // Create options for transition
+                            startActivity(intent, options.toBundle()) // Start activity with options
                         }, 1000)
                     } else {
                         Toast.makeText(this, "Password incorrect!", Toast.LENGTH_SHORT).show()

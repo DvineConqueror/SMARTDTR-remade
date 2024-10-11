@@ -5,6 +5,9 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
         <item name="colorPrimaryVariant">@color/dark_green</item>
         <item name="colorPrimary">@color/white</item>
+        <item name="android:windowActivityTransitions">true</item>
+        <item name="android:windowEnterTransition">@anim/app_animation</item>
+        <item name="android:windowExitTransition">@anim/app_animation</item>
     </style>
 
     <style name="Theme.HKAttendance" parent="Base.Theme.HKAttendance" />
