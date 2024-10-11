@@ -23,7 +23,7 @@ class StudentUpcomingDutyAdapter(private var duties: MutableList<Duty>) : Recycl
         holder.dateTextView.text = duty.date
         holder.startTimeTextView.text = formatTime(duty.start_time)
         holder.endTimeTextView.text = formatTime(duty.end_time)
-        holder.teacherTextView.text = duty.teacher_id.toString()
+        holder.teacherTextView.text = duty.teacher_name.toString()
         holder.subjectTextView.text = duty.subject
         holder.roomTextView.text = duty.room
     }
