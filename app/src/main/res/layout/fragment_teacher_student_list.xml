@@ -11,10 +11,12 @@
         android:id="@+id/top_wave"
         android:layout_width="match_parent"
         android:layout_height="250dp"
+        android:layout_marginTop="4dp"
         android:contentDescription="@string/top_wave"
         android:scaleType="fitXY"
         android:src="@drawable/top_wave"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -23,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="@string/duty_schedule_label"
+        android:text="Student LIst"
         android:textColor="@color/blue"
         android:textSize="30sp"
         android:textStyle="bold"
