@@ -5,6 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.Spinner
+import androidx.activity.OnBackPressedCallback
+import androidx.lifecycle.findViewTreeViewModelStoreOwner
+import com.google.android.material.button.MaterialButton
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,13 +27,53 @@ class teacher_create_appointment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val backButton: MaterialButton = view.findViewById(R.id.btnBack)
+        val spinnerTimeHour: Spinner = view.findViewById(R.id.timeHour)
+        val spinnerTimeMin: Spinner = view.findViewById(R.id.timeMinutes)
+        val spinnerCollDepartment: Spinner = view.findViewById(R.id.collegeDepartment)
+
+        val adapterTimeHour: ArrayAdapter<CharSequence> = ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.time_hour,
+            android.R.layout.simple_spinner_item
+        )
+        adapterTimeHour.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerTimeHour.adapter = adapterTimeHour
+
+        val adapterTimeMin: ArrayAdapter<CharSequence> = ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.time_minutes,
+            android.R.layout.simple_spinner_item
+        )
+        adapterTimeMin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerTimeMin.adapter = adapterTimeMin
+
+        val adapterCollegeDepartment: ArrayAdapter<CharSequence> = ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.college_departments,
+            android.R.layout.simple_spinner_item
+        )
+        adapterCollegeDepartment.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerCollDepartment.adapter = adapterCollegeDepartment
+
+        backButton.setOnClickListener {
+            parentFragmentManager.popBackStack()
+        }
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

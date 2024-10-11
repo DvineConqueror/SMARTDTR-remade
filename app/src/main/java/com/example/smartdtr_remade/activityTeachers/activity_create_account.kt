@@ -10,16 +10,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.smartdtr_remade.R
-import com.example.smartdtr_remade.activityStudents.student_login
+import com.example.smartdtr_remade.teacher_history
 
-class teacher_create_account : AppCompatActivity() {
+class activity_create_account : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_teacher_create_account)
+        setContentView(R.layout.activity_create_account)
 
         val signupButton: Button = findViewById(R.id.btnNext)
         val spinnerSex: Spinner = findViewById(R.id.spinnerSex)
+        val backBtn: Button = findViewById(R.id.btnBack)
         val adapterSex: ArrayAdapter<CharSequence> = ArrayAdapter.createFromResource(
             this,
             R.array.sex_options,
@@ -28,11 +29,20 @@ class teacher_create_account : AppCompatActivity() {
         adapterSex.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerSex.adapter = adapterSex
 
+        backBtn.setOnClickListener{
+            startActivity(
+                Intent(
+                    this@activity_create_account,
+                    activity_login::class.java
+                )
+            )
+        }
+
         signupButton.setOnClickListener{
             startActivity(
                 Intent(
-                    this@teacher_create_account,
-                    student_login::class.java
+                    this@activity_create_account,
+                    activity_login::class.java
                 )
             )
         }

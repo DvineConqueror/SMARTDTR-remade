@@ -12,6 +12,7 @@ import android.app.Activity
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import com.example.smartdtr_remade.R
+import com.example.smartdtr_remade.activityTeachers.activity_login
 import com.example.smartdtr_remade.change_password
 import com.example.smartdtr_remade.databinding.ActivityMainStudentBinding
 import com.example.smartdtr_remade.student_account_details
@@ -106,7 +107,7 @@ class Main_student : AppCompatActivity() {
                 startActivity(
                     Intent(
                         this@Main_student,
-                        student_login::class.java
+                        activity_login::class.java
                     )
                 )
             }

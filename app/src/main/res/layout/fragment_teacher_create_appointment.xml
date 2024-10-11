@@ -102,8 +102,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="52dp"
                 android:fontFamily="@font/lilita_one"
-                android:letterSpacing="0.1"
-                android:text="Subject"
+
+                android:text="Department"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -130,8 +130,9 @@
                 tools:ignore="HardcodedText,MissingConstraints" />
 
             <Spinner
-                android:id="@+id/subjectCode"
-                android:layout_width="211dp"
+                android:id="@+id/collegeDepartment"
+                android:background="@drawable/custom_edittext"
+                android:layout_width="180dp"
                 android:layout_height="48dp"
                 android:layout_marginTop="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -193,6 +194,7 @@
             <Spinner
                 android:id="@+id/timeMinutes"
                 android:layout_width="97dp"
+                android:background="@drawable/custom_edittext"
                 android:layout_height="48dp"
                 android:layout_marginTop="40dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -202,6 +204,7 @@
 
             <Spinner
                 android:id="@+id/timeHour"
+                android:background="@drawable/custom_edittext"
                 android:layout_width="97dp"
                 android:layout_height="48dp"
                 android:layout_marginStart="44dp"
@@ -213,6 +216,7 @@
                 android:id="@+id/spinner3"
                 android:layout_width="211dp"
                 android:layout_height="48dp"
+                android:background="@drawable/custom_edittext"
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="28dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -222,11 +226,12 @@
             <Spinner
                 android:id="@+id/spinner4"
                 android:layout_width="211dp"
+                android:background="@drawable/custom_edittext"
                 android:layout_height="48dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="28dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/subjectCode" />
+                app:layout_constraintTop_toBottomOf="@+id/collegeDepartment" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

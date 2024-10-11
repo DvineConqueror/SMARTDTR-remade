@@ -10,7 +10,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.smartdtr_remade.R
-import com.example.smartdtr_remade.activityStudents.student_login
 import com.example.smartdtr_remade.change_password
 import com.example.smartdtr_remade.teacher_account_details
 import com.example.smartdtr_remade.teacher_appointment
@@ -105,7 +104,7 @@ class Main_teacher : AppCompatActivity() {
                 startActivity(
                     Intent(
                         this@Main_teacher,
-                        student_login::class.java
+                        activity_login::class.java
                     )
                 )
             }

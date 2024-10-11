@@ -30,20 +30,23 @@
             android:layout_gravity="center"
             android:layout_marginTop="12dp"
             android:background="@drawable/rectangle_blue"
+            android:fontFamily="@font/lilita_one"
+            android:gravity="center"
             android:text="Make an Appointment"
             android:textColor="@color/white"
             android:textSize="20sp"
-            android:gravity="center"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.494"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/top_wave" />
+            app:layout_constraintTop_toBottomOf="@id/top_wave"
+            app:rippleColor="@color/gray" />
 
         <TextView
             android:id="@+id/upcoming_duty_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/lilita_one"
             android:layout_marginStart="56dp"
             android:layout_marginTop="8dp"
             android:text="Upcoming Duty:"
@@ -56,7 +59,7 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/card_upcoming_duty"
             android:layout_width="300dp"
-            android:layout_height="180dp"
+            android:layout_height="190dp"
             android:layout_gravity="center"
             android:layout_margin="10dp"
             android:layout_marginTop="12dp"
@@ -71,8 +74,8 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="16dp">
+                android:layout_height="200dp"
+                android:padding="18dp">
 
                 <TextView
                     android:id="@+id/status"
@@ -80,6 +83,7 @@
                     android:layout_height="wrap_content"
                     android:text="Pending"
                     android:textColor="@color/white"
+                    android:fontFamily="@font/lilita_one"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
@@ -91,6 +95,7 @@
                     android:layout_height="wrap_content"
                     android:text="September 5, 2024"
                     android:textColor="@color/white"
+                    android:fontFamily="@font/lilita_one"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -103,7 +108,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:textSize="10sp"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/lilita_one"
                     android:textStyle="bold"
                     android:text="Time:"
                     android:textColor="@color/white"
@@ -118,7 +124,8 @@
                     android:layout_marginTop="12dp"
                     android:text="7:30 am - 9:00 am"
                     android:textColor="@color/white"
-                    android:textSize="10sp"
+                    android:fontFamily="@font/lilita_one"
+                    android:textSize="14sp"
                     app:layout_constraintStart_toEndOf="@+id/tvUpcomingTimeLabel"
                     app:layout_constraintTop_toBottomOf="@id/upcoming_date" />
 
@@ -129,7 +136,8 @@
                     android:layout_marginTop="12dp"
                     android:text="Subject:"
                     android:textColor="@color/white"
-                    android:textSize="10sp"
+                    android:fontFamily="@font/lilita_one"
+                    android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvUpcomingTimeLabel" />
 
@@ -137,11 +145,12 @@
                     android:id="@+id/upcoming_subject"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="100dp"
+                    android:layout_marginStart="96dp"
                     android:layout_marginTop="12dp"
-                    android:textSize="10sp"
+                    android:fontFamily="@font/lilita_one"
                     android:text="PED 031"
                     android:textColor="@color/white"
+                    android:textSize="14sp"
                     app:layout_constraintStart_toEndOf="@+id/tvUpcomingSubjectLabel"
                     app:layout_constraintTop_toBottomOf="@id/upcoming_time" />
 
@@ -151,7 +160,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:text="Teacher:"
-                    android:textSize="10sp"
+                    android:fontFamily="@font/lilita_one"
+                    android:textSize="14sp"
                     android:textColor="@color/white"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvUpcomingSubjectLabel" />
@@ -162,11 +172,12 @@
                     android:id="@+id/upcoming_teacher"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="98dp"
+                    android:layout_marginStart="94dp"
                     android:layout_marginTop="12dp"
+                    android:fontFamily="@font/lilita_one"
                     android:text="Mrs. Marlyn Ogoy"
                     android:textColor="@color/white"
-                    android:textSize="10sp"
+                    android:textSize="14sp"
                     app:layout_constraintStart_toEndOf="@+id/tvUpcomingTeacherLabel"
                     app:layout_constraintTop_toBottomOf="@id/upcoming_subject" />
 
@@ -175,9 +186,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    android:fontFamily="@font/lilita_one"
                     android:text="Room:"
                     android:textColor="@color/white"
-                    android:textSize="10sp"
+                    android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/upcoming_students_list" />
 
@@ -185,11 +197,12 @@
                     android:id="@+id/upcoming_room"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="108dp"
+                    android:layout_marginStart="107dp"
                     android:layout_marginTop="8dp"
-                    android:textSize="10sp"
+                    android:fontFamily="@font/lilita_one"
                     android:text="RS 115"
                     android:textColor="@color/white"
+                    android:textSize="14sp"
                     app:layout_constraintStart_toEndOf="@+id/tvUpcomingRoomLabel"
                     app:layout_constraintTop_toBottomOf="@id/upcoming_teacher" />
 
@@ -201,15 +214,16 @@
                     android:labelFor="@+id/btUpcomingStudentList"
                     android:text="Students List:"
                     android:textColor="@color/white"
-                    android:textSize="10sp"
+                    android:fontFamily="@font/lilita_one"
+                    android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvUpcomingTeacherLabel" />
 
                 <ImageButton
                     android:id="@+id/btUpcomingStudentList"
                     android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_marginStart="100dp"
+                    android:layout_height="28dp"
+                    android:layout_marginStart="86dp"
                     android:layout_marginTop="4dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:src="@drawable/baseline_list_24"
@@ -221,15 +235,17 @@
 
                 <ImageButton
                     android:id="@+id/edit_button"
+                    android:layout_marginTop="120dp"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:layout_marginEnd="1dp"
-                    android:layout_marginBottom="1dp"
-                    android:contentDescription="Edit Button"
+                    android:layout_marginLeft="240dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="Edit Button"
                     android:src="@drawable/baseline_edit_24"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -242,6 +258,7 @@
             android:layout_marginStart="56dp"
             android:layout_marginTop="16dp"
             android:text="Finished Duty:"
+            android:fontFamily="@font/lilita_one"
             android:textColor="@color/blue"
             android:textSize="15sp"
             android:textStyle="bold"
@@ -251,13 +268,15 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/card_finished_duty"
             android:layout_width="300dp"
-            android:layout_height="180dp"
+            android:layout_height="190dp"
             android:layout_gravity="center"
             android:layout_margin="10dp"
             android:layout_marginTop="54dp"
+            android:layout_marginBottom="200dp"
             android:elevation="6dp"
             app:cardBackgroundColor="@color/yellow"
             app:cardCornerRadius="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.602"
             app:layout_constraintStart_toStartOf="parent"
@@ -266,7 +285,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="200dp"
                 android:padding="16dp">
 
                 <TextView
@@ -275,6 +294,7 @@
                     android:layout_height="wrap_content"
                     android:text="Pending"
                     android:textColor="@color/white"
+                    android:fontFamily="@font/lilita_one"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
@@ -287,6 +307,7 @@
                     android:text="September 5, 2024"
                     android:textColor="@color/white"
                     android:textSize="16sp"
+                    android:fontFamily="@font/lilita_one"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"
@@ -298,10 +319,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:textSize="10sp"
-                    android:textStyle="bold"
                     android:text="Time:"
                     android:textColor="@color/white"
+                    android:fontFamily="@font/lilita_one"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/status_finished" />
 
@@ -313,7 +335,8 @@
                     android:layout_marginTop="12dp"
                     android:text="7:30 am - 9:00 am"
                     android:textColor="@color/white"
-                    android:textSize="10sp"
+                    android:fontFamily="@font/lilita_one"
+                    android:textSize="14sp"
                     app:layout_constraintStart_toEndOf="@+id/tvFinishedTimeLabel"
                     app:layout_constraintTop_toBottomOf="@id/finished_date" />
 
@@ -324,7 +347,8 @@
                     android:layout_marginTop="12dp"
                     android:text="Subject:"
                     android:textColor="@color/white"
-                    android:textSize="10sp"
+                    android:fontFamily="@font/lilita_one"
+                    android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvFinishedTimeLabel" />
 
@@ -332,11 +356,12 @@
                     android:id="@+id/finished_subject"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="100dp"
+                    android:layout_marginStart="96dp"
                     android:layout_marginTop="12dp"
-                    android:textSize="10sp"
+                    android:fontFamily="@font/lilita_one"
                     android:text="PED 031"
                     android:textColor="@color/white"
+                    android:textSize="14sp"
                     app:layout_constraintStart_toEndOf="@+id/tvFinishedSubjectLabel"
                     app:layout_constraintTop_toBottomOf="@id/finished_time" />
 
@@ -346,8 +371,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:text="Teacher:"
-                    android:textSize="10sp"
                     android:textColor="@color/white"
+                    android:fontFamily="@font/lilita_one"
+                    android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvFinishedSubjectLabel" />
 
@@ -357,11 +383,12 @@
                     android:id="@+id/finished_teacher"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="98dp"
+                    android:layout_marginStart="94dp"
                     android:layout_marginTop="12dp"
                     android:text="Mrs. Marlyn Ogoy"
                     android:textColor="@color/white"
-                    android:textSize="10sp"
+                    android:fontFamily="@font/lilita_one"
+                    android:textSize="14sp"
                     app:layout_constraintStart_toEndOf="@+id/tvFinishedTeacherLabel"
                     app:layout_constraintTop_toBottomOf="@id/finished_subject" />
 
@@ -370,10 +397,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    android:labelFor="@+id/btFinishedStudentList"
                     android:text="Room:"
                     android:textColor="@color/white"
-                    android:labelFor="@+id/btFinishedStudentList"
-                    android:textSize="10sp"
+                    android:fontFamily="@font/lilita_one"
+                    android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/finished_students_list" />
 
@@ -381,11 +409,12 @@
                     android:id="@+id/finished_room"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="108dp"
+                    android:layout_marginStart="107dp"
                     android:layout_marginTop="8dp"
-                    android:textSize="10sp"
                     android:text="RS 115"
                     android:textColor="@color/white"
+                    android:fontFamily="@font/lilita_one"
+                    android:textSize="14sp"
                     app:layout_constraintStart_toEndOf="@+id/tvFinishedRoomLabel"
                     app:layout_constraintTop_toBottomOf="@id/finished_teacher" />
 
@@ -397,7 +426,8 @@
                     android:labelFor="@+id/btUpcomingStudentList"
                     android:text="Students List:"
                     android:textColor="@color/white"
-                    android:textSize="10sp"
+                    android:fontFamily="@font/lilita_one"
+                    android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvFinishedTeacherLabel" />
 
@@ -405,8 +435,8 @@
                     android:id="@+id/btFinishedStudentList"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
                     android:layout_marginStart="100dp"
+                    android:layout_marginTop="4dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:src="@drawable/baseline_list_24"
                     app:layout_constraintEnd_toEndOf="parent"

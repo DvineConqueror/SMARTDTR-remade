@@ -29,28 +29,19 @@
             android:name=".activityTeachers.teacher_list_student_card"
             android:exported="false" />
         <activity
-            android:name=".activityTeachers.teacher_list_student"
-            android:exported="false" />
-        <activity
             android:name=".activityTeachers.teacher_finished_card"
             android:exported="false" />
         <activity
             android:name=".activityTeachers.teacher_duty_card"
             android:exported="false" />
         <activity
-            android:name=".activityTeachers.teacher_login"
+            android:name=".activityTeachers.activity_login"
             android:exported="false" />
         <activity
-            android:name=".activityTeachers.teacher_create_account"
-            android:exported="false" />
-        <activity
-            android:name=".activityStudents.student_login"
+            android:name=".activityTeachers.activity_create_account"
             android:exported="false" />
         <activity
             android:name=".activityStudents.student_finished_duty_card"
-            android:exported="false" />
-        <activity
-            android:name=".activityStudents.Student_create_account"
             android:exported="false" />
         <activity
             android:name=".activityStudents.Main_student"
@@ -59,14 +50,10 @@
             android:name=".activityTeachers.Main_teacher"
             android:exported="false" />
         <activity
-            android:name=".choose_user_role"
-            android:exported="false" />
-        <activity
             android:name=".splash_screen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

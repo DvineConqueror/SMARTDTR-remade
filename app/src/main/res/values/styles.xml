@@ -11,10 +11,7 @@
     </style>
 
     <style name="CustomEditText" parent="Widget.AppCompat.EditText">
-        <item name="android:textColor">@color/black</item>
-        <item name="android:textColorHint">@color/gray</item>
-        <item name="android:background">@drawable/custom_edittext</item>
-        <item name="android:padding">10dp</item>
+        <item name="android:fontFamily">@font/lilita_one</item>
     </style>
 
     <style name="CustomAlertDialog" parent="Theme.AppCompat.Dialog">

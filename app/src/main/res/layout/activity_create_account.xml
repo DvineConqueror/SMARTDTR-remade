@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:id="@+id/main"
-    tools:context=".activityTeachers.teacher_create_account">
+    tools:context=".activityTeachers.activity_create_account">
 
     <!-- Background ImageView -->
 
@@ -19,6 +19,25 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnBack"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="26dp"
+                android:backgroundTint="@color/white"
+                android:shadowColor="@color/white"
+                android:contentDescription="Back Button"
+                app:icon="@drawable/baseline_arrow_back_ios_24"
+                app:iconTint="@color/brightred"
+                app:layout_constraintBottom_toTopOf="@+id/imageView15"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.058"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                app:strokeColor="@color/white"
+                app:strokeWidth="0dp" />
 
             <ImageView
                 android:id="@+id/imageView100"
@@ -69,9 +88,9 @@
                 android:maxLines="15"
                 android:padding="10dp"
                 android:textColor="@color/black"
-                android:textColorHint="@color/black"
+                android:textColorHint="@color/gray"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.921"
+                app:layout_constraintHorizontal_bias="0.901"
                 app:layout_constraintStart_toStartOf="@+id/etLastname"
                 app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
@@ -88,9 +107,9 @@
                 android:maxLines="15"
                 android:padding="10dp"
                 android:textColor="@color/black"
-                android:textColorHint="@color/black"
+                android:textColorHint="@color/gray"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.077"
+                app:layout_constraintHorizontal_bias="0.09"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
@@ -106,9 +125,8 @@
                 android:inputType="textEmailAddress"
                 android:padding="10dp"
                 android:textColor="@color/black"
-                android:textColorHint="@color/black"
+                android:textColorHint="@color/gray"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.504"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etLastname" />
 
@@ -124,9 +142,8 @@
                 android:inputType="textPassword"
                 android:padding="10dp"
                 android:textColor="@color/black"
-                android:textColorHint="@color/black"
+                android:textColorHint="@color/gray"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.495"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etEmail" />
 
@@ -143,9 +160,8 @@
                 android:inputType="textPassword"
                 android:padding="10dp"
                 android:textColor="@color/black"
-                android:textColorHint="@color/black"
+                android:textColorHint="@color/gray"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.504"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etFirstPassword" />
 
@@ -157,13 +173,12 @@
                 android:background="@drawable/custom_edittext"
                 android:ems="10"
                 android:fontFamily="@font/lilita_one"
-                android:hint="Enter your Teacher ID"
+                android:hint="Enter your ID Number"
                 android:inputType="phone"
                 android:padding="10dp"
                 android:textColor="@color/black"
-                android:textColorHint="@color/black"
+                android:textColorHint="@color/gray"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.504"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etPasswordConfirm" />
 
@@ -179,9 +194,8 @@
                 android:inputType="phone"
                 android:padding="10dp"
                 android:textColor="@color/black"
-                android:textColorHint="@color/black"
+                android:textColorHint="@color/gray"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.504"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etStudentID" />
 

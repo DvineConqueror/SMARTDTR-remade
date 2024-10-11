@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.smartdtr_remade.activityTeachers.teacher_student_list
 import com.example.smartdtr_remade.databinding.FragmentTeacherHomePageBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -32,6 +33,13 @@ class teacher_home_page : Fragment() {
         binding.appointmentButton.setOnClickListener {
             parentFragmentManager.beginTransaction()
                 .replace(R.id.frameLayout, teacher_create_appointment.newInstance("Value1", "Value2")) // Passing null for params if not needed
+                .addToBackStack(null)
+                .commit()
+        }
+
+        binding.btUpcomingStudentList.setOnClickListener(){
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.frameLayout, teacher_student_list.newInstance())
                 .addToBackStack(null)
                 .commit()
         }
