@@ -1,6 +1,7 @@
 package com.example.smartdtr_remade.Api
 
 import com.example.smartdtr_remade.models.Duty
+import com.example.smartdtr_remade.models.Student
 import retrofit2.Call
 import retrofit2.http.*
 interface ApiService {
@@ -20,6 +21,11 @@ interface ApiService {
 
         @DELETE("duties/{id}")
         fun deleteDuty(@Path("id") id: Int): Call<Void>
+    }
+
+    interface StudentApi {
+        @GET("students/get") // Ensure this matches your API route
+        fun getAllStudents(): Call<List<Student>>
     }
 
 }

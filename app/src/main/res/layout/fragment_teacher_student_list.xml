@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:id="@+id/main"
     android:layout_height="match_parent"
-    tools:context=".activityTeachers.teacher_list_student">
+    tools:context=".teacher_student_list">
 
     <ImageView
         android:id="@+id/top_wave"
@@ -32,7 +32,7 @@
         app:layout_constraintTop_toBottomOf="@+id/top_wave" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_dutySchedule"
+        android:id="@+id/recycler_student_list"
         android:layout_width="393dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
