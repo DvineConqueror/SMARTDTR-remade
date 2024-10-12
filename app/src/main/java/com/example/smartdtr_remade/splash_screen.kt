@@ -1,30 +1,37 @@
-package com.example.smartdtr_remade
+package com.example.smartdtr_remade.activitySplashScreen
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
+import android.os.Handler
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import com.example.smartdtr_remade.activityTeachers.Main_teacher
+import com.example.smartdtr_remade.activityStudents.Main_student
 import com.example.smartdtr_remade.activityTeachers.activity_login
+import com.example.smartdtr_remade.PreferencesManager
+import com.example.smartdtr_remade.R
 
-class splash_screen : AppCompatActivity() {
+class SplashScreenActivity : AppCompatActivity() {
+
+    private lateinit var preferencesManager: PreferencesManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+
+        preferencesManager = PreferencesManager(this)
+
         setContentView(R.layout.activity_splash_screen)
 
-        android.os.Handler().postDelayed({
-            val intent = Intent(this@splash_screen, activity_login::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-            startActivity(intent)
+        Handler().postDelayed({
+            val token = preferencesManager.getToken()
+            Log.d("SplashScreenActivity", "Token: $token") // Debugging log
+            if (token != null) {
+                startActivity(Intent(this, Main_teacher::class.java))
+            } else {
+                startActivity(Intent(this, activity_login::class.java))
+            }
             finish()
-        }, 1000)
-
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+        }, 2000)
     }
 }
+

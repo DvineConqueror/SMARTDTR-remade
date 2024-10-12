@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -15,34 +16,39 @@ import com.example.smartdtr_remade.teacher_account_details
 import com.example.smartdtr_remade.teacher_appointment
 import com.example.smartdtr_remade.teacher_history
 import com.example.smartdtr_remade.teacher_home_page
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.example.smartdtr_remade.databinding.ActivityMainTeacherBinding
 import com.example.smartdtr_remade.teacher_create_appointment
+import com.example.smartdtr_remade.PreferencesManager
+import com.example.smartdtr_remade.Api.ApiService
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import com.google.android.material.bottomsheet.BottomSheetDialog
 
 class Main_teacher : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainTeacherBinding
+    private lateinit var preferencesManager: PreferencesManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainTeacherBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        preferencesManager = PreferencesManager(this) // Initialize PreferencesManager
         replaceFragment(teacher_home_page())
 
-        binding.btmNavView.setOnItemSelectedListener {
-
-            when (it.itemId) {
+        binding.btmNavView.setOnItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
                 R.id.home_btn -> replaceFragment(teacher_home_page())
                 R.id.appointment_btn -> replaceFragment(teacher_appointment())
                 R.id.menu_btn -> showBottomSheetDialog()
-
                 else -> {
                     // Handle other cases if needed
                 }
             }
             true
         }
-
     }
 
     private fun replaceFragment(fragment: Fragment) {
@@ -59,19 +65,16 @@ class Main_teacher : AppCompatActivity() {
         bottomSheetDialog.setContentView(view)
         bottomSheetDialog.show()
 
-        // Optionally, handle button clicks in the Bottom Sheet
         val button1 = view.findViewById<Button>(R.id.btn_change_password)
         val button2 = view.findViewById<Button>(R.id.btn_user_details)
         val button3 = view.findViewById<Button>(R.id.btn_history)
         val button4 = view.findViewById<Button>(R.id.btn_log_out)
 
         button1.setOnClickListener {
-            // Handle Button 1 click
             replaceFragment(change_password())
             bottomSheetDialog.dismiss()
         }
         button2.setOnClickListener {
-            // Handle Button 2 click
             replaceFragment(teacher_account_details())
             bottomSheetDialog.dismiss()
         }
@@ -80,39 +83,64 @@ class Main_teacher : AppCompatActivity() {
             bottomSheetDialog.dismiss()
         }
         button4.setOnClickListener {
-            val dialogView = layoutInflater.inflate(R.layout.activity_alert_dialog2, null)
-
-            // Create an AlertDialog and set the custom view
-            val builder = AlertDialog.Builder(this@Main_teacher, R.style.CustomAlertDialog)
-            builder.setView(dialogView)
-
-            // Create and show the AlertDialog
-            val dialog = builder.create()
-            dialog.show()
-
-            // Get references to the buttons in the custom layout
-            val btnCancel = dialogView.findViewById<Button>(R.id.btnDialogCancel)
-            val btnLogOut = dialogView.findViewById<Button>(R.id.btnDialogLogOut)
-
-            //Cancel button function
-            btnCancel.setOnClickListener{
-                dialog.dismiss()
-            }
-
-            btnLogOut.setOnClickListener{
-                bottomSheetDialog.dismiss()
-                startActivity(
-                    Intent(
-                        this@Main_teacher,
-                        activity_login::class.java
-                    )
-                )
-            }
-            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
-            dialog.show()
+            showLogoutConfirmationDialog(bottomSheetDialog)
         }
     }
 
+    private fun showLogoutConfirmationDialog(bottomSheetDialog: BottomSheetDialog) {
+        val dialogView = layoutInflater.inflate(R.layout.activity_alert_dialog2, null)
 
+        val builder = AlertDialog.Builder(this@Main_teacher, R.style.CustomAlertDialog)
+        builder.setView(dialogView)
+
+        val dialog = builder.create()
+        dialog.show()
+
+        val btnCancel = dialogView.findViewById<Button>(R.id.btnDialogCancel)
+        val btnLogOut = dialogView.findViewById<Button>(R.id.btnDialogLogOut)
+
+        // Cancel button function
+        btnCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        // Logout button function
+        btnLogOut.setOnClickListener {
+            val token = preferencesManager.getToken() // Get the stored token
+
+            if (token != null) {
+                logoutUser(token)
+            } else {
+                Toast.makeText(this, "No token found. Please log in again.", Toast.LENGTH_SHORT).show()
+                startActivity(Intent(this@Main_teacher, activity_login::class.java))
+                finish() // Close current activity
+            }
+
+            dialog.dismiss()
+            bottomSheetDialog.dismiss()
+        }
+
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    }
+
+    private fun logoutUser(token: String) {
+        val apiService = ApiService.create() // Create Retrofit instance
+
+        apiService.logout("Bearer $token").enqueue(object : Callback<Void> {
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                if (response.isSuccessful) {
+                    preferencesManager.clearToken() // Clear the token on successful logout
+                    Toast.makeText(this@Main_teacher, "Logged out successfully", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this@Main_teacher, activity_login::class.java))
+                    finish() // Close current activity
+                } else {
+                    Toast.makeText(this@Main_teacher, "Failed to log out", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                Toast.makeText(this@Main_teacher, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
 }
