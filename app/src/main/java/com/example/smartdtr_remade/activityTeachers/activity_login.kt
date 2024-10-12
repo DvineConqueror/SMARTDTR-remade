@@ -18,6 +18,7 @@ import com.example.smartdtr_remade.PreferencesManager
 import com.example.smartdtr_remade.R
 import com.example.smartdtr_remade.activityStudents.Main_student
 import com.example.smartdtr_remade.databinding.ActivityLoginBinding
+import com.example.smartdtr_remade.forgot_password
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -42,7 +43,8 @@ class activity_login : AppCompatActivity() {
         val etIDNumber = binding.etIDNumber
         val etPassword = binding.etPassword
         val btLoginButton = binding.btLogin // Use binding to access login button
-        val textViewButton = binding.tvClickableSignUp // Use binding for the TextView (SignUp)
+        val tvForgotPassButton = binding.tvClickableForgotPass // Use binding for the TextView (SignUp)
+        val tvSignUpButton = binding.tvClickableSignUp // Use binding for the TextView (SignUp)
 
         // Set the icon for the right side of edit text
         etPassword.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.baseline_remove_red_eye_24, 0)
@@ -76,8 +78,13 @@ class activity_login : AppCompatActivity() {
             }
         }
 
+        // Handle Forgot Pass button click
+        tvForgotPassButton.setOnClickListener {
+            startActivity(Intent(this@activity_login, forgot_password::class.java))
+        }
+
         // Handle Signup button click
-        textViewButton.setOnClickListener {
+        tvSignUpButton.setOnClickListener {
             startActivity(Intent(this@activity_login, activity_create_account::class.java))
         }
 

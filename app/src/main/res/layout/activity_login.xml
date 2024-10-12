@@ -9,6 +9,37 @@
     android:orientation="vertical"
     tools:context=".activityTeachers.activity_login">
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/lilita_one"
+        android:text="@string/don_t_have_an_account"
+        android:textColor="@color/brightred"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/tvClickableSignUp"
+        app:layout_constraintHorizontal_bias="0.943"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btLogin" />
+
+    <TextView
+        android:id="@+id/tvClickableSignUp"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="100dp"
+        android:background="@drawable/ripple_effect"
+        android:clickable="true"
+        android:focusable="true"
+        android:fontFamily="@font/lilita_one"
+        android:gravity="center"
+        android:text="@string/sign_up"
+        android:textColor="@color/blue"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btLogin" />
+
     <ImageView
         android:id="@+id/imageView15"
         android:layout_width="191dp"
@@ -44,6 +75,7 @@
         app:srcCompat="@drawable/smart_dtr"
         tools:ignore="MissingConstraints" />
 
+
     <ImageView
         android:id="@+id/imageView18"
         android:layout_width="wrap_content"
@@ -51,10 +83,12 @@
         android:layout_marginEnd="15dp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView15"
         app:layout_constraintEnd_toStartOf="@+id/imageView15"
+        app:layout_constraintHorizontal_bias="0.541"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.812"
         app:srcCompat="@drawable/ellipse12"
         tools:ignore="MissingConstraints" />
-
 
     <ImageView
         android:id="@+id/imageView19"
@@ -64,8 +98,10 @@
         android:layout_marginBottom="88dp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView15"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.069"
         app:layout_constraintStart_toEndOf="@+id/imageView15"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/ellipse13"
         tools:ignore="MissingConstraints" />
 
@@ -124,7 +160,7 @@
         android:id="@+id/btLogin"
         android:layout_width="209dp"
         android:layout_height="58dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="8dp"
         android:backgroundTint="#041AE0"
         android:fontFamily="@font/lilita_one"
         android:text="@string/log_in"
@@ -134,38 +170,27 @@
         app:cornerRadius="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etPassword"
+        app:layout_constraintTop_toBottomOf="@+id/tvClickableForgotPass"
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tvClickableForgotPass"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/don_t_have_an_account"
-        android:fontFamily="@font/lilita_one"
-        android:textColor="@color/brightred"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toStartOf="@+id/tvClickableSignUp"
-        app:layout_constraintHorizontal_bias="0.943"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btLogin" />
-
-    <TextView
-        android:id="@+id/tvClickableSignUp"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="100dp"
-        android:gravity="center"
+        android:layout_height="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="170dp"
         android:background="@drawable/ripple_effect"
         android:clickable="true"
         android:focusable="true"
         android:fontFamily="@font/lilita_one"
-        android:text="@string/sign_up"
+        android:gravity="center"
+        android:text="Forgot Password"
         android:textColor="@color/blue"
         android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btLogin" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etPassword"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
