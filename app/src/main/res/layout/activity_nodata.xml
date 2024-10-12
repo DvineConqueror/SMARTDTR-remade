@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/lilita_one"
-        android:text="No Appointments"
+        android:text="No appointments available"
         android:textColor="#FF5722"
         android:textSize="32sp"
         android:textStyle="bold"
