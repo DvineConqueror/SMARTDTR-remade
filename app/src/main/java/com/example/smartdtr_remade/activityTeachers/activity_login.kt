@@ -60,8 +60,8 @@ class activity_login : AppCompatActivity() {
             val etID = etIDNumber.text.toString()
             val etPasswordText = etPassword.text.toString()
             // Patterns for the student and teacher ID's
-            val teacherPattern = "^UP-\\d{5}$".toRegex()
-            val studentPattern = "^03-\\d{5}$".toRegex()
+            val teacherPattern = "^T-\\d{5}$".toRegex()
+            val studentPattern = "^S-\\d{5}$".toRegex()
 
             if (!teacherPattern.matches(etID) && !studentPattern.matches(etID)) {
                 Toast.makeText(this, "Please enter a valid ID Number!", Toast.LENGTH_SHORT).show()
