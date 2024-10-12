@@ -19,11 +19,11 @@
         android:id="@+id/textView12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No Data"
+        android:text="No Data..."
         android:textColor="#FF5722"
         android:textSize="40sp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="134dp"
+        tools:layout_editor_absoluteX="117dp"
         tools:layout_editor_absoluteY="411dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
