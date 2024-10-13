@@ -6,6 +6,7 @@ use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\DutyController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\HistoryController;
+use App\Http\Controllers\AuthController;
 
 
 //Routes for Students
@@ -17,11 +18,11 @@ Route::prefix('students')->group(function () {
     Route::delete('{id}', [StudentController::class, 'destroy']);  //DELETE a user(student)
 
     // Login route
-    Route::post('/login', [StudentController::class, 'login']);    //user(student) login
+    //Route::post('/login', [StudentController::class, 'login']);    //user(student) login
 
     // Sanctum protected routes
     Route::middleware(['auth:sanctum'])->group(function () {
-        Route::post('/logout', [StudentController::class, 'logout']);
+       // Route::post('/logout', [StudentController::class, 'logout']);
         Route::get('/student/profile', [StudentController::class, 'profile']);
     });
 });
@@ -35,11 +36,11 @@ Route::prefix('teachers')->group(function () {
     Route::delete('{id}', [TeacherController::class, 'destroy']);  // DELETE a user(teacher)
 
     
-    Route::post('/login', [TeacherController::class, 'login']);       //user(teacher) login
+    //Route::post('/login', [TeacherController::class, 'login']);       //user(teacher) login
     
     // Sanctum protected routes
     Route::middleware(['auth:sanctum'])->group(function () {
-        Route::post('/logout', [TeacherController::class, 'logout']);
+       // Route::post('/logout', [TeacherController::class, 'logout']);
         Route::get('/teacher/profile', [TeacherController::class, 'profile']);
     });
     
@@ -54,6 +55,10 @@ Route::prefix('duties')->group(function () {
     Route::put('/{id}', [DutyController::class, 'update']);                     //UPDATE a duty
     Route::delete('/{id}', [DutyController::class, 'destroy']);                 //DELETE a duty
 });
+
+
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/signup', [AuthController::class, 'signup']); 
 
 Route::get('/user', function (Request $request) {
     return $request->user();

@@ -85,10 +85,10 @@ class TeacherController extends Controller
             ], 400);
         }
 
-        //Checks if the student ID already exists
+        //Checks if the teacher ID already exists
         if (Teacher::where('teacher_id', $request->teacher_id)->exists()) {
             return response()->json([
-                'message' => 'Teacher ID is already in use. Please use a different student ID.',
+                'message' => 'Teacher ID is already in use. Please use a different teacher ID.',
             ], 400);
         }
 
@@ -193,7 +193,7 @@ class TeacherController extends Controller
         if ($teacher->update($request->all())) {
             return response()->json([
                 'message' => 'Teacher updated successfully',
-                'data' => $student,
+                'data' => $teacher,
             ], 200);
         } else {
             return response()->json([
