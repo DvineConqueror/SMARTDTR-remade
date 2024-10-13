@@ -9,34 +9,34 @@
     tools:context=".alert_dialog">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:id="@+id/main"
         android:background="@drawable/gradient_background_2"
         android:outlineAmbientShadowColor="@color/black"
         android:padding="16dp">
 
         <TextView
             android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:text="@string/log_out"
-            android:letterSpacing="0.12"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:fontFamily="@font/lilita_one"
+            android:letterSpacing="0.12"
+            android:text="@string/log_out"
             android:textColor="@color/white"
             android:textSize="40sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBottom_toTopOf="@+id/guideline5"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toTopOf="@+id/guideline4" />
 
         <View
             android:id="@+id/View2"
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:layout_marginTop="20dp"
             android:layout_marginStart="24dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="24dp"
             android:background="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
@@ -52,8 +52,8 @@
             android:layout_marginTop="40dp"
             android:layout_marginEnd="24dp"
             android:fontFamily="@font/lilita_one"
-            android:letterSpacing="0.1"
             android:gravity="center"
+            android:letterSpacing="0.1"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:text="@string/sure_to_logout_account"
@@ -108,6 +108,34 @@
 
 
         </LinearLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.28" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.72" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.08" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.24" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
