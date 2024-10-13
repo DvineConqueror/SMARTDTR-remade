@@ -3,6 +3,7 @@ package com.example.smartdtr_remade.Api
 import LoginRequest
 import LoginResponse
 import com.example.smartdtr_remade.models.Duty
+import com.example.smartdtr_remade.models.SignUpRequest
 import com.example.smartdtr_remade.models.Student
 import com.example.smartdtr_remade.models.Teacher
 import retrofit2.Call
@@ -36,8 +37,8 @@ interface ApiService {
     @POST("/api/login")
     fun login(@Body loginRequest: LoginRequest): Call<LoginResponse>
 
-    //@POST("signup")
-    //fun signup(@Body request: SignupRequest): Call<LoginResponse>
+    @POST("signup")
+    fun signup(@Body request: SignUpRequest): Call<LoginResponse>
 
     @POST("logout")
     fun logout(@Header("Authorization") token: String): Call<Void>
