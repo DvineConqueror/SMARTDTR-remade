@@ -1,4 +1,4 @@
-package com.example.smartdtr_remade.activityTeachers
+package com.example.smartdtr_remade
 
 import StudentListAdapter
 import android.os.Bundle
@@ -39,7 +39,7 @@ class teacher_student_list : Fragment() { // Changed to Fragment
         recyclerView.adapter = adapter
 
         // Fetch student data from API
-        RetrofitInstance.studentApi.getAllStudents().enqueue(object : Callback<List<Student>> {
+        RetrofitInstance.studentlistApi.getAllStudents().enqueue(object : Callback<List<Student>> {
             override fun onResponse(call: Call<List<Student>>, response: Response<List<Student>>) {
                 if (response.isSuccessful) {
                     response.body()?.let {

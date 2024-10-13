@@ -4,6 +4,7 @@ import LoginRequest
 import LoginResponse
 import com.example.smartdtr_remade.models.Duty
 import com.example.smartdtr_remade.models.Student
+import com.example.smartdtr_remade.models.Teacher
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -27,19 +28,20 @@ interface ApiService {
         fun deleteDuty(@Path("id") id: Int): Call<Void>
     }
 
-    interface StudentApi {
+    interface StudentListApi {
         @GET("students/get") // Ensure this matches your API route
         fun getAllStudents(): Call<List<Student>>
     }
 
-    @POST("login")
-    fun login(@Body request: LoginRequest): Call<LoginResponse>
+    @POST("/api/login")
+    fun login(@Body loginRequest: LoginRequest): Call<LoginResponse>
 
     //@POST("signup")
     //fun signup(@Body request: SignupRequest): Call<LoginResponse>
 
     @POST("logout")
     fun logout(@Header("Authorization") token: String): Call<Void>
+
     // Companion object to create the Retrofit instance
     companion object {
         private const val BASE_URL = "http://10.0.2.2:8000/api/"
@@ -52,5 +54,19 @@ interface ApiService {
 
             return retrofit.create(ApiService::class.java)
         }
+    }
+
+    interface TeacherApi {
+        @GET("teachers/{userId}")
+        fun getTeacherAccountDetails(
+            @Path("userId") userId: String
+        ): Call<Teacher>
+    }
+
+    interface StudentApi {
+        @GET("students/{userId}")
+        fun getStudentAccountDetails(
+            @Path("userId") userId: String
+        ): Call<Student>
     }
 }

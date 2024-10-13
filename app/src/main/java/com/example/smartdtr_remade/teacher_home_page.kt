@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.smartdtr_remade.activityTeachers.teacher_student_list
+import com.example.smartdtr_remade.teacher_student_list
 import com.example.smartdtr_remade.databinding.FragmentTeacherHomePageBinding
 
 // TODO: Rename parameter arguments, choose names that match

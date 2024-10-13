@@ -18,6 +18,7 @@ import com.example.smartdtr_remade.PreferencesManager
 import com.example.smartdtr_remade.R
 import com.example.smartdtr_remade.activityStudents.Main_student
 import com.example.smartdtr_remade.databinding.ActivityLoginBinding
+import com.example.smartdtr_remade.activityTeachers.Main_teacher
 import com.example.smartdtr_remade.forgot_password
 import retrofit2.Call
 import retrofit2.Callback
@@ -43,7 +44,7 @@ class activity_login : AppCompatActivity() {
         val etIDNumber = binding.etIDNumber
         val etPassword = binding.etPassword
         val btLoginButton = binding.btLogin // Use binding to access login button
-        val tvForgotPassButton = binding.tvClickableForgotPass // Use binding for the TextView (SignUp)
+        // val tvForgotPassButton = binding.tvClickableForgotPass // Use binding for the TextView (SignUp)
         val tvSignUpButton = binding.tvClickableSignUp // Use binding for the TextView (SignUp)
 
         // Set the icon for the right side of edit text
@@ -79,9 +80,9 @@ class activity_login : AppCompatActivity() {
         }
 
         // Handle Forgot Pass button click
-        tvForgotPassButton.setOnClickListener {
-            startActivity(Intent(this@activity_login, forgot_password::class.java))
-        }
+        //tvForgotPassButton.setOnClickListener {
+            //startActivity(Intent(this@activity_login, forgot_password::class.java))
+        //}
 
         // Handle Signup button click
         tvSignUpButton.setOnClickListener {
@@ -104,22 +105,22 @@ class activity_login : AppCompatActivity() {
         apiService.login(loginRequest).enqueue(object : Callback<LoginResponse> {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 if (response.isSuccessful) {
-                    // Assuming your response contains a token
                     val token = response.body()?.token
-                    if (token != null) {
-                        // Save the token to SharedPreferences
+                    val user = response.body()?.user // Get the user object
+
+                    if (token != null && user != null) {
                         preferencesManager.saveToken(token)
 
-                        // Navigate to the main activity based on the ID type
-                        if (id.startsWith("T-")) {
+                        // Save the appropriate ID based on user type
+                        if (user.teacher_id != null) {
+                            preferencesManager.saveTeacherId(user.teacher_id) // Store the teacher ID
                             startActivity(Intent(this@activity_login, Main_teacher::class.java))
-                        } else if (id.startsWith("S-")) {
+                        } else if (user.student_id != null) {
+                            preferencesManager.saveStudentId(user.student_id) // Store the student ID
                             startActivity(Intent(this@activity_login, Main_student::class.java))
                         }
-                        finish() // Close the login activity
+                        finish()
                     }
-                } else {
-                    Toast.makeText(this@activity_login, "Login failed!", Toast.LENGTH_SHORT).show()
                 }
             }
 

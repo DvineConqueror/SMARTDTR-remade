@@ -25,7 +25,10 @@ object RetrofitInstance {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
+
     val dutyApi: ApiService.DutyApi = retrofit.create(ApiService.DutyApi::class.java)
+    val studentlistApi: ApiService.StudentListApi = retrofit.create(ApiService.StudentListApi::class.java)
+    val teacherApi: ApiService.TeacherApi = retrofit.create(ApiService.TeacherApi::class.java)
     val studentApi: ApiService.StudentApi = retrofit.create(ApiService.StudentApi::class.java)
 
 }
