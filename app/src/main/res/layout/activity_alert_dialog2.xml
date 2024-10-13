@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@color/transparent"
     app:cardElevation="10dp"
+    android:orientation="vertical"
     tools:context=".alert_dialog">
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -1,53 +1,40 @@
-package com.example.smartdtr_remade.activityTeachers
+package com.example.smartdtr_remade
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.ArrayAdapter
 import android.widget.Button
-import android.widget.Spinner
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.example.smartdtr_remade.R
-import com.example.smartdtr_remade.teacher_history
+import com.example.smartdtr_remade.activityTeachers.activity_login
 
-class activity_create_account : AppCompatActivity() {
+class forgot_password : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_create_account)
+        setContentView(R.layout.activity_forgot_password)
 
-        val signupButton: Button = findViewById(R.id.btnNext)
-        val spinnerSex: Spinner = findViewById(R.id.spinnerSex)
         val backBtn: Button = findViewById(R.id.btnBack)
-        val adapterSex: ArrayAdapter<CharSequence> = ArrayAdapter.createFromResource(
-            this,
-            R.array.sex_options,
-            R.layout.spinner_text_edit
-        )
-        adapterSex.setDropDownViewResource(R.layout.spinner_text_edit)
-        spinnerSex.adapter = adapterSex
+        val forgotPassButton:Button = findViewById(R.id.btResetPassword)
 
         backBtn.setOnClickListener{
             startActivity(
                 Intent(
-                    this@activity_create_account,
+                    this@forgot_password,
                     activity_login::class.java
                 )
             )
         }
 
-        signupButton.setOnClickListener{
+        forgotPassButton.setOnClickListener{
             startActivity(
                 Intent(
-                    this@activity_create_account,
+                    this@forgot_password,
                     activity_login::class.java
                 )
             )
         }
-
-
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())

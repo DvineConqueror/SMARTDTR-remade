@@ -1,27 +1,31 @@
 package com.example.smartdtr_remade.activityTeachers
 
+import LoginRequest
+import LoginResponse
 import android.annotation.SuppressLint
-import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
 import android.view.MotionEvent
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
-import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.smartdtr_remade.Api.ApiService
+import com.example.smartdtr_remade.PreferencesManager
 import com.example.smartdtr_remade.R
 import com.example.smartdtr_remade.activityStudents.Main_student
 import com.example.smartdtr_remade.databinding.ActivityLoginBinding
+import com.example.smartdtr_remade.forgot_password
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class activity_login : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
+    private lateinit var preferencesManager: PreferencesManager
     private var isPasswordVisible: Boolean = false
 
     @SuppressLint("MissingInflatedId", "ClickableViewAccessibility")
@@ -30,16 +34,20 @@ class activity_login : AppCompatActivity() {
         enableEdgeToEdge()
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
-        setContentView(binding.root) // Set content view to the binding root
+        setContentView(binding.root)
+
+        // Initialize PreferencesManager
+        preferencesManager = PreferencesManager(this)
 
         // Initialize your views
         val etIDNumber = binding.etIDNumber
         val etPassword = binding.etPassword
         val btLoginButton = binding.btLogin // Use binding to access login button
-        val textViewButton = binding.tvClickableSignUp // Use binding for the TextView (SignUp)
+        val tvForgotPassButton = binding.tvClickableForgotPass // Use binding for the TextView (SignUp)
+        val tvSignUpButton = binding.tvClickableSignUp // Use binding for the TextView (SignUp)
 
         // Set the icon for the right side of edit text
-        etPassword.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.baseline_remove_red_eye_24, 0) // Set the initial drawable (eye)
+        etPassword.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.baseline_remove_red_eye_24, 0)
 
         // Toggle password visibility when clicking on the eye icon
         etPassword.setOnTouchListener { _, event ->
@@ -47,7 +55,6 @@ class activity_login : AppCompatActivity() {
                 val drawableEnd = 2 // This is the right drawable
                 val drawableRight = etPassword.compoundDrawables[drawableEnd]
                 if (drawableRight != null && event.rawX >= (etPassword.right - drawableRight.bounds.width())) {
-                    // Toggle password visibility
                     togglePasswordVisibility()
                     return@setOnTouchListener true
                 }
@@ -66,41 +73,19 @@ class activity_login : AppCompatActivity() {
             if (!teacherPattern.matches(etID) && !studentPattern.matches(etID)) {
                 Toast.makeText(this, "Please enter a valid ID Number!", Toast.LENGTH_SHORT).show()
             } else {
-                if (teacherPattern.matches(etID)) {
-                    if (etID == "UP-01111" && etPasswordText == "adminteacher"){
-                        Toast.makeText(this, "Login Successful!", Toast.LENGTH_LONG).show()
-                        // Navigate to Main_teacher activity after delay
-                        Handler().postDelayed({
-                            val intent = Intent(this@activity_login, Main_teacher::class.java)
-                            val options = ActivityOptions.makeSceneTransitionAnimation(this) // Create options for transition
-                            startActivity(intent, options.toBundle()) // Start activity with options
-                        }, 1000)
-                    } else {
-                        Toast.makeText(this, "Password incorrect!", Toast.LENGTH_SHORT).show()
-                    }
-                } else if (studentPattern.matches(etID)) {
-                    if (etID == "03-01111" && etPasswordText == "adminstudent"){
-                        Toast.makeText(this, "Login Successful!", Toast.LENGTH_LONG).show()
-                        // Navigate to Main_teacher activity after delay
-                        Handler().postDelayed({
-                            val intent = Intent(this@activity_login, Main_student::class.java)
-                            val options = ActivityOptions.makeSceneTransitionAnimation(this) // Create options for transition
-                            startActivity(intent, options.toBundle()) // Start activity with options
-                        }, 1000)
-                    } else {
-                        Toast.makeText(this, "Password incorrect!", Toast.LENGTH_SHORT).show()
-                    }
-                } else {
-                    Toast.makeText(this, "Login Failed!", Toast.LENGTH_SHORT).show()
-                }
+                // Call the login function
+                loginUser(etID, etPasswordText)
             }
         }
 
+        // Handle Forgot Pass button click
+        tvForgotPassButton.setOnClickListener {
+            startActivity(Intent(this@activity_login, forgot_password::class.java))
+        }
+
         // Handle Signup button click
-        textViewButton.setOnClickListener {
-            startActivity(
-                Intent(this@activity_login, activity_create_account::class.java)
-            )
+        tvSignUpButton.setOnClickListener {
+            startActivity(Intent(this@activity_login, activity_create_account::class.java))
         }
 
         // Apply window insets for padding
@@ -109,6 +94,39 @@ class activity_login : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+    }
+
+    // Function to call the login API
+    private fun loginUser(id: String, password: String) {
+        val loginRequest = LoginRequest(id, password)
+        val apiService = ApiService.create() // Assuming you have set up Retrofit
+
+        apiService.login(loginRequest).enqueue(object : Callback<LoginResponse> {
+            override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+                if (response.isSuccessful) {
+                    // Assuming your response contains a token
+                    val token = response.body()?.token
+                    if (token != null) {
+                        // Save the token to SharedPreferences
+                        preferencesManager.saveToken(token)
+
+                        // Navigate to the main activity based on the ID type
+                        if (id.startsWith("T-")) {
+                            startActivity(Intent(this@activity_login, Main_teacher::class.java))
+                        } else if (id.startsWith("S-")) {
+                            startActivity(Intent(this@activity_login, Main_student::class.java))
+                        }
+                        finish() // Close the login activity
+                    }
+                } else {
+                    Toast.makeText(this@activity_login, "Login failed!", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                Toast.makeText(this@activity_login, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     // Toggle password visibility and change drawable
