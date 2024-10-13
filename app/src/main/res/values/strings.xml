@@ -103,5 +103,10 @@
         <item>CCJE</item>
         <item>CAHS</item>
     </string-array>
+    <string name="title_activity_notification">notification</string>
+    <string name="notification">Notification</string>
+    <string name="select_all">Select All</string>
+    <string name="p_e">P.E</string>
+    <string name="subject">subject</string>
 
 </resources>
