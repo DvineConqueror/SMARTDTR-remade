@@ -54,7 +54,7 @@
         app:layout_constraintHorizontal_bias="0.038"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.334" />
+        app:layout_constraintVertical_bias="0.329" />
 
     <TextView
         android:id="@+id/tvSelect_all"
@@ -62,8 +62,9 @@
         android:layout_height="28dp"
         android:text="@string/select_all"
         android:textColor="@color/brightred"
-        android:textSize="18sp"
+        android:textSize="20sp"
         android:textStyle="bold"
+        android:fontFamily="@font/lilita_one"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.133"
