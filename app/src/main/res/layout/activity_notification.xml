@@ -33,10 +33,10 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.249"
+            app:layout_constraintHorizontal_bias="0.29"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.045"
+            app:layout_constraintVertical_bias="0.253"
             tools:ignore="HardcodedText" />
 
         <TextView
@@ -95,10 +95,10 @@
             android:layout_height="63dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.018"
+            app:layout_constraintHorizontal_bias="0.044"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.384"
+            app:layout_constraintVertical_bias="0.347"
             app:srcCompat="@drawable/notif_logo" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
