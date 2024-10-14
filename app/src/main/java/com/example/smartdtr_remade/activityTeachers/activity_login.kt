@@ -6,6 +6,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
+import android.util.Log
 import android.view.MotionEvent
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -19,6 +20,7 @@ import com.example.smartdtr_remade.R
 import com.example.smartdtr_remade.activityStudents.Main_student
 import com.example.smartdtr_remade.databinding.ActivityLoginBinding
 import com.example.smartdtr_remade.activityTeachers.Main_teacher
+import com.example.smartdtr_remade.forgot_password
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -35,39 +37,48 @@ class activity_login : AppCompatActivity() {
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        etFocusListeners()
 
         preferencesManager = PreferencesManager(this)
 
-        val etIDNumber = binding.etIDNumber
-        val etPassword = binding.etPassword
+        val etIDNumber = binding.etTextFieldUserID
+        val etPassword = binding.etTextFieldPass
         val btLoginButton = binding.btLogin
         val tvSignUpButton = binding.tvClickableSignUp
-
-        etPassword.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.baseline_remove_red_eye_24, 0)
-
-        etPassword.setOnTouchListener { _, event ->
-            if (event.action == MotionEvent.ACTION_UP) {
-                val drawableEnd = 2
-                val drawableRight = etPassword.compoundDrawables[drawableEnd]
-                if (drawableRight != null && event.rawX >= (etPassword.right - drawableRight.bounds.width())) {
-                    togglePasswordVisibility()
-                    return@setOnTouchListener true
-                }
-            }
-            false
-        }
+        val tvForgotPass = binding.tvClickableForgotPassword
 
         btLoginButton.setOnClickListener {
-            val etID = etIDNumber.text.toString()
-            val etPasswordText = etPassword.text.toString()
+            val etID = binding.etTextFieldUserID.editText?.text.toString().trim()
+            val etPasswordText = binding.etTextFieldPass.editText?.text.toString().trim()
+
             val teacherPattern = "^T-\\d{5}$".toRegex()
             val studentPattern = "^S-\\d{5}$".toRegex()
 
-            if (!teacherPattern.matches(etID) && !studentPattern.matches(etID)) {
-                Toast.makeText(this, "Please enter a valid ID Number!", Toast.LENGTH_SHORT).show()
-            } else {
-                loginUser(etID, etPasswordText)
+            when {
+                !teacherPattern.matches(etID) && !studentPattern.matches(etID) -> {
+                    Toast.makeText(this, "Please enter a valid ID Number!", Toast.LENGTH_SHORT).show()
+                }
+                etPasswordText.length < 8 -> {
+                    Toast.makeText(this, "Password must be at least 8 characters long!", Toast.LENGTH_SHORT).show()
+                }
+                !etPasswordText.matches(Regex(".*[A-Z].*")) -> {
+                    Toast.makeText(this, "Password must contain at least one uppercase letter!", Toast.LENGTH_SHORT).show()
+                }
+                !etPasswordText.matches(Regex(".*\\d.*")) -> {
+                    Toast.makeText(this, "Password must contain at least one number!", Toast.LENGTH_SHORT).show()
+                }
+                else -> {
+                    loginUser(etID, etPasswordText)
+                }
             }
+        }
+
+        tvForgotPass.setOnClickListener{
+            startActivity(
+                Intent(
+                    this@activity_login, forgot_password::class.java
+                )
+            )
         }
 
         tvSignUpButton.setOnClickListener {
@@ -78,6 +89,43 @@ class activity_login : AppCompatActivity() {
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
+    }
+
+    private fun etFocusListeners() {
+        binding.etTextFieldUserID.editText?.setOnFocusChangeListener { _, focused ->
+            if (!focused) {
+                val validationMessage = validateID()
+                Log.d("FocusListener", "Validation triggered. Message: $validationMessage")
+                binding.etTextFieldUserID.helperText = validationMessage
+            }
+        }
+
+        binding.etTextFieldPass.editText?.setOnFocusChangeListener { _, focused ->
+            if (!focused) {
+                val validationMessage = validatePassword()
+                binding.etTextFieldPass.helperText = validationMessage
+            }
+        }
+
+    }
+
+    private fun validateID(): String? {
+        val userIDNumber = binding.etTextFieldPass.editText?.text.toString().trim()
+        return if (userIDNumber.isEmpty()) {
+            "Please enter a valid ID Number!"
+        } else {
+            null
+        }
+    }
+
+    private fun validatePassword(): String? {
+        val password = binding.etTextFieldPass.editText?.text.toString().trim()
+        return when {
+            password.length < 8 -> "Password must be at least 8 characters."
+            !password.matches(Regex(".*[A-Z].*")) -> "Password must contain at least one uppercase letter."
+            !password.matches(Regex(".*\\d.*")) -> "Password must contain at least one number."
+            else -> null
         }
     }
 
@@ -115,20 +163,5 @@ class activity_login : AppCompatActivity() {
                 Toast.makeText(this@activity_login, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
             }
         })
-    }
-
-    private fun togglePasswordVisibility() {
-        isPasswordVisible = !isPasswordVisible
-
-        if (isPasswordVisible) {
-            binding.etPassword.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
-            binding.etPassword.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.baseline_visibility_off_24, 0)
-        } else {
-            binding.etPassword.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
-            binding.etPassword.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.baseline_remove_red_eye_24, 0)
-        }
-
-        binding.etPassword.typeface = ResourcesCompat.getFont(this, R.font.lilita_one)
-        binding.etPassword.setSelection(binding.etPassword.text.length)
     }
 }

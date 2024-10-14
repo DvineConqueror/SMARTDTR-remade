@@ -1,6 +1,7 @@
 package com.example.smartdtr_remade.activityTeachers
 
 import LoginResponse
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -8,11 +9,13 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.example.smartdtr_remade.Api.ApiService
 import com.example.smartdtr_remade.Api.RetrofitInstance
 import com.example.smartdtr_remade.R
 import com.example.smartdtr_remade.models.SignUpRequest
+import com.google.android.material.textfield.TextInputLayout
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,6 +31,7 @@ class activity_create_account : AppCompatActivity() {
     private lateinit var etMobileNumber: EditText
     private lateinit var spinnerSex: Spinner
     private lateinit var btnNext: Button
+    private lateinit var btnBack: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,12 +47,24 @@ class activity_create_account : AppCompatActivity() {
         etMobileNumber = findViewById(R.id.etMobileNumber)
         spinnerSex = findViewById(R.id.spinnerSex)
         btnNext = findViewById(R.id.btnNext)
+        btnBack = findViewById(R.id.btnBack)
 
         // Set onClickListener for the Sign Up button
         btnNext.setOnClickListener {
             performSignUp()
         }
+
+        btnBack.setOnClickListener{
+            startActivity(
+                Intent(
+                    this@activity_create_account,
+                    activity_login::class.java
+                )
+            )
+        }
     }
+
+
 
     private fun performSignUp() {
         val firstname = etFirstname.text.toString().trim()

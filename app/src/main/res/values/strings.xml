@@ -109,5 +109,6 @@
     <string name="select_all">Select All</string>
     <string name="p_e">P.E</string>
     <string name="subject">subject</string>
+    <string name="id_number">ID Number</string>
 
 </resources>
