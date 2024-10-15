@@ -8,10 +8,8 @@
     android:orientation="vertical"
     tools:context=".activityTeachers.activity_create_account">
 
-    <!-- Background ImageView -->
 
 
-    <!-- ScrollView for other content -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -238,7 +236,7 @@
                     android:maxLength="7"
                     android:fontFamily="@font/lilita_one"
                     android:hint="Enter your ID Number"
-                    android:inputType="phone"
+                    android:inputType="textNoSuggestions"
                     android:padding="10dp"
                     android:textColor="@color/black"
                     android:textColorHint="@color/gray"
@@ -248,17 +246,16 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/etTextFieldMobileNum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/etTextFieldMobileNum"
-                android:layout_marginTop="10dp"
+                android:textColorHint="@color/gray"
                 app:boxBackgroundMode="none"
                 app:helperText="Required"
-                android:textColorHint="@color/gray"
                 app:helperTextTextColor="@color/brightred"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etTextFieldStudentID">
+                app:layout_constraintTop_toBottomOf="@+id/etTextFieldDOB">
 
                 <EditText
                     android:id="@+id/etMobileNumber"
@@ -269,14 +266,14 @@
                     android:ems="10"
                     android:fontFamily="@font/lilita_one"
                     android:hint="Enter your mobile number"
-                    android:maxLength="11"
                     android:inputType="phone"
+                    android:maxLength="11"
                     android:padding="10dp"
                     android:textColor="@color/black"
                     android:textColorHint="@color/gray"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/etStudentID" />
+                    app:layout_constraintTop_toBottomOf="@+id/etTextFieldDOB" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -299,7 +296,8 @@
                     android:layout_height="match_parent"
                     android:background="@null"
                     android:paddingEnd="30dp"
-                    android:spinnerMode="dropdown" />
+                    android:spinnerMode="dropdown"
+                    android:entries="@array/sex_options"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -309,6 +307,67 @@
                     android:layout_marginEnd="8dp"
                     android:src="@drawable/baseline_arrow_drop_down_24" />
             </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlYearLevel"
+                android:layout_width="180dp"
+                android:layout_height="55dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="34dp"
+                android:layout_marginRight="140dp"
+                android:background="@drawable/custom_edittext"
+                app:layout_constraintEnd_toEndOf="@+id/btnNext"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etTextFieldStudentID">
+
+                <Spinner
+                    android:id="@+id/spnYearLevel"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:paddingEnd="60dp"
+                    android:spinnerMode="dropdown"
+                    android:entries="@array/year_level"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/baseline_arrow_drop_down_24" />
+            </RelativeLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/etTextFieldDOB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/gray"
+                app:boxBackgroundMode="none"
+                app:helperText="Required"
+                app:helperTextTextColor="@color/brightred"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rlYearLevel">
+
+                <EditText
+                    android:id="@+id/etDateOfBirth"
+                    android:layout_width="375dp"
+                    android:layout_height="55dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/custom_edittext"
+                    android:ems="10"
+                    android:fontFamily="@font/lilita_one"
+                    android:hint="Enter your birthdate(ex. YYYY-MM-DD)"
+                    android:inputType="textNoSuggestions"
+                    android:maxLength="11"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/gray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/rlYearLevel" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <Button
                 android:id="@+id/btnNext"
@@ -325,9 +384,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/relativeLayout"
                 app:layout_constraintTop_toBottomOf="@+id/etTextFieldMobileNum" />
-
-
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

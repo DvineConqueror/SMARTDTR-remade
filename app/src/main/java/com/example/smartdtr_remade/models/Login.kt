@@ -13,5 +13,12 @@ data class User(
     val userId: String,           // Unique identifier for the user
     val name: String,         // Full name of the user
     val student_id: String?,  // Optional student ID (if applicable)
-    val teacher_id: String?   // Optional teacher ID (if applicable)
+    val teacher_id: String?,   // Optional teacher ID (if applicable)
+    val id: String,
+    val firstname: String,
+    val lastname: String,
+    val email: String,
+    val mobileNumber: String,
+    val sex: String
 )
+

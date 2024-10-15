@@ -4,6 +4,7 @@ import LoginRequest
 import LoginResponse
 import com.example.smartdtr_remade.models.Duty
 import com.example.smartdtr_remade.models.SignUpRequest
+import com.example.smartdtr_remade.models.SignupResponse
 import com.example.smartdtr_remade.models.Student
 import com.example.smartdtr_remade.models.Teacher
 import retrofit2.Call
@@ -38,7 +39,7 @@ interface ApiService {
     fun login(@Body loginRequest: LoginRequest): Call<LoginResponse>
 
     @POST("signup")
-    fun signup(@Body request: SignUpRequest): Call<LoginResponse>
+    fun signup(@Body request: SignUpRequest): Call<SignupResponse>
 
     @POST("logout")
     fun logout(@Header("Authorization") token: String): Call<Void>

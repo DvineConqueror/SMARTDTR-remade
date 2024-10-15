@@ -18,7 +18,6 @@ import com.example.smartdtr_remade.PreferencesManager
 import com.example.smartdtr_remade.R
 import com.example.smartdtr_remade.activityStudents.Main_student
 import com.example.smartdtr_remade.databinding.ActivityLoginBinding
-import com.example.smartdtr_remade.activityTeachers.Main_teacher
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
