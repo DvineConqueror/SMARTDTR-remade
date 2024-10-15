@@ -1,5 +1,7 @@
 package com.example.smartdtr_remade.models
 
+import User
+
 data class SignUpRequest(
     val firstname: String,
     val lastname: String,
@@ -14,8 +16,8 @@ data class SignUpRequest(
 
 data class SignupResponse(
     val message: String,
-    val user: String,
-    val userId: String,
-    val token: String
+    val token: String,
+    val user: User,
+    val userId: String
 )
 
