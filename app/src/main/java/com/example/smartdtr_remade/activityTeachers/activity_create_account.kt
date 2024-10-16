@@ -99,7 +99,7 @@ class activity_create_account : AppCompatActivity() {
             ID = id,
             sex = sex,
             date_of_birth = dateOfBirth, // Include date of birth
-            year_level = yearLevel // Include year level if applicable
+            year_level = yearLevel
         )
 
         // Make API call
@@ -112,21 +112,16 @@ class activity_create_account : AppCompatActivity() {
                         // Save token and userId in SharedPreferences
                         with(sharedPreferences.edit()) {
                             putString("token", it.token)
-                            putString("userId", it.userId)
+                            putString("userId", it.userId)// Ensure userId is saved as Int
                             apply()
                         }
 
-                        // Redirect to the appropriate screen based on ID
-                        if (id.startsWith("S")) {
-                            Log.d("Signup", "Redirecting to Student Main Activity")
-                            Toast.makeText(this@activity_create_account, it.message, Toast.LENGTH_SHORT).show()
-                            startActivity(Intent(this@activity_create_account, Main_student::class.java))
-                        } else if (id.startsWith("T")) {
-                            Log.d("Signup", "Redirecting to Teacher Main Activity")
-                            Toast.makeText(this@activity_create_account, it.message, Toast.LENGTH_SHORT).show()
-                            startActivity(Intent(this@activity_create_account, Main_teacher::class.java))
-                        }
-                        finish()
+                        // Show a success message
+                        Toast.makeText(this@activity_create_account, "Account created successfully!", Toast.LENGTH_SHORT).show()
+
+                        // Redirect to the login activity
+                        startActivity(Intent(this@activity_create_account, activity_login::class.java))
+                        finish() // Close the current activity
                     }
                 } else {
                     Log.e("SignupResponse", "Failed: ${response.message()}")

@@ -1,5 +1,6 @@
 package com.example.smartdtr_remade
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.smartdtr_remade.Api.RetrofitInstance
+import com.example.smartdtr_remade.activityTeachers.Main_teacher
 import com.example.smartdtr_remade.models.Teacher
 import retrofit2.Call
 import retrofit2.Callback
@@ -35,7 +37,7 @@ class teacher_account_details : Fragment() {
             fetchTeacherAccountDetails(userId, view)
         } else {
             Toast.makeText(requireContext(), "User ID not found", Toast.LENGTH_SHORT).show()
-            // Optionally, redirect to the login screen or another appropriate action
+            redirectToLogin()
         }
     }
 
@@ -63,5 +65,11 @@ class teacher_account_details : Fragment() {
                 Toast.makeText(requireContext(), "Error: ${t.message}", Toast.LENGTH_SHORT).show()
             }
         })
+    }
+
+    private fun redirectToLogin() {
+        val intent = Intent(requireContext(), Main_teacher::class.java)
+        startActivity(intent)
+        activity?.finish()
     }
 }

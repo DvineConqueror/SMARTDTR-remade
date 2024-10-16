@@ -19,11 +19,11 @@ class PreferencesManager(context: Context) {
 
     // User ID
     fun saveUserId(userId: String) {
-        editor.putString("user_id", userId).apply()
+        editor.putString("userId", userId).apply()
     }
 
     fun getUserId(): String? {
-        return sharedPreferences.getString("user_id", null)
+        return sharedPreferences.getString("userId", null)
     }
 
     // Teacher ID

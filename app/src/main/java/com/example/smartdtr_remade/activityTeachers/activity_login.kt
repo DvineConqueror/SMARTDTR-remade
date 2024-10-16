@@ -5,13 +5,10 @@ import LoginResponse
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.text.InputType
 import android.util.Log
-import android.view.MotionEvent
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.smartdtr_remade.Api.ApiService
@@ -19,7 +16,6 @@ import com.example.smartdtr_remade.PreferencesManager
 import com.example.smartdtr_remade.R
 import com.example.smartdtr_remade.activityStudents.Main_student
 import com.example.smartdtr_remade.databinding.ActivityLoginBinding
-import com.example.smartdtr_remade.activityTeachers.Main_teacher
 import com.example.smartdtr_remade.forgot_password
 import retrofit2.Call
 import retrofit2.Callback
