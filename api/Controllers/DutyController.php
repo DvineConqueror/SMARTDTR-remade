@@ -7,20 +7,21 @@ use Illuminate\Http\Request;
 
 class DutyController extends Controller
 {
-
-    // GET all duties with teacher and student names
+    // GET all duties with teacher and multiple students
     public function index()
     {
         try {
-            // Eager load the teacher and student relationships
-            $duties = Duty::with(['teacher', 'student'])->get();
+            // Eager load the teacher and students relationships
+            $duties = Duty::with(['teacher', 'students'])->get();
 
-            // Modify the response to include the teacher and student full names
+            // Modify the response to include the teacher and all students
             $duties = $duties->map(function ($duty) {
                 return [
                     'id' => $duty->id,
                     'teacher_name' => $duty->teacher ? $duty->teacher->lastname . ', ' . $duty->teacher->firstname : 'N/A',
-                    'student_name' => $duty->student ? $duty->student->lastname . ', ' . $duty->student->firstname : 'N/A',
+                    'students' => $duty->students->map(function ($student) {
+                        return $student->lastname . ', ' . $student->firstname;
+                    })->toArray(),
                     'subject' => $duty->subject,
                     'room' => $duty->room,
                     'date' => $duty->date,
@@ -38,13 +39,14 @@ class DutyController extends Controller
         }
     }
 
-    // CREATE a new duty and upload it to the database
+    // CREATE a new duty and attach multiple students to it
     public function store(Request $request)
     {
         try {
             $validatedData = $request->validate([
                 'teacher_id' => 'required|exists:teachers,id',
-                'student_id' => 'nullable|exists:students,id',
+                'student_ids' => 'nullable|array',
+                'student_ids.*' => 'exists:students,id', // validate each student ID
                 'subject' => 'required|string|max:255',
                 'room' => 'required|string|max:255',
                 'date' => 'required|date',
@@ -53,17 +55,24 @@ class DutyController extends Controller
                 'status' => 'required|in:pending,finished,canceled',
             ]);
 
-            // Attempt to create the duty
+            // Create the duty
             $duty = Duty::create($validatedData);
 
-            // Eager load the newly created duty with teacher and student names
-            $duty = Duty::with(['teacher', 'student'])->find($duty->id);
+            // Attach students to the duty
+            if (!empty($request->student_ids)) {
+                $duty->students()->attach($request->student_ids);
+            }
 
-            // Format the response with teacher and student names
+            // Fetch the newly created duty with teacher and students
+            $duty = Duty::with(['teacher', 'students'])->find($duty->id);
+
+            // Format the response
             $dutyData = [
                 'id' => $duty->id,
                 'teacher_name' => $duty->teacher ? $duty->teacher->lastname . ', ' . $duty->teacher->firstname : 'N/A',
-                'student_name' => $duty->student ? $duty->student->lastname . ', ' . $duty->student->firstname : 'N/A',
+                'students' => $duty->students->map(function ($student) {
+                    return $student->lastname . ', ' . $student->firstname;
+                })->toArray(),
                 'subject' => $duty->subject,
                 'room' => $duty->room,
                 'date' => $duty->date,
@@ -80,17 +89,19 @@ class DutyController extends Controller
         }
     }
 
-    // GET upcoming duties with teacher and student names
+    // GET upcoming duties with teacher and multiple students
     public function getUpcomingDuties()
     {
         try {
-            $upcomingDuties = Duty::upcoming()->with(['teacher', 'student'])->get();
+            $upcomingDuties = Duty::upcoming()->with(['teacher', 'students'])->get();
 
             $upcomingDuties = $upcomingDuties->map(function ($duty) {
                 return [
                     'id' => $duty->id,
                     'teacher_name' => $duty->teacher ? $duty->teacher->lastname . ', ' . $duty->teacher->firstname : 'N/A',
-                    'student_name' => $duty->student ? $duty->student->lastname . ', ' . $duty->student->firstname : 'N/A',
+                    'students' => $duty->students->map(function ($student) {
+                        return $student->lastname . ', ' . $student->firstname;
+                    })->toArray(),
                     'subject' => $duty->subject,
                     'room' => $duty->room,
                     'date' => $duty->date,
@@ -107,17 +118,19 @@ class DutyController extends Controller
         }
     }
 
-    // GET completed duties with teacher and student names
+    // GET completed duties with teacher and multiple students
     public function getCompletedDuties()
     {
         try {
-            $completedDuties = Duty::completed()->with(['teacher', 'student'])->get();
+            $completedDuties = Duty::completed()->with(['teacher', 'students'])->get();
 
             $completedDuties = $completedDuties->map(function ($duty) {
                 return [
                     'id' => $duty->id,
                     'teacher_name' => $duty->teacher ? $duty->teacher->lastname . ', ' . $duty->teacher->firstname : 'N/A',
-                    'student_name' => $duty->student ? $duty->student->lastname . ', ' . $duty->student->firstname : 'N/A',
+                    'students' => $duty->students->map(function ($student) {
+                        return $student->lastname . ', ' . $student->firstname;
+                    })->toArray(),
                     'subject' => $duty->subject,
                     'room' => $duty->room,
                     'date' => $duty->date,
@@ -134,7 +147,7 @@ class DutyController extends Controller
         }
     }
 
-    // UPDATE a duty
+    // UPDATE a duty and sync multiple students
     public function update(Request $request, $id)
     {
         try {
@@ -142,7 +155,8 @@ class DutyController extends Controller
 
             $validatedData = $request->validate([
                 'teacher_id' => 'required|exists:teachers,id',
-                'student_id' => 'nullable|exists:students,id',
+                'student_ids' => 'nullable|array',
+                'student_ids.*' => 'exists:students,id', // validate each student ID
                 'subject' => 'required|string|max:255',
                 'room' => 'required|string|max:255',
                 'date' => 'required|date',
@@ -151,15 +165,23 @@ class DutyController extends Controller
                 'status' => 'required|in:pending,finished,canceled',
             ]);
 
+            // Update duty
             $duty->update($validatedData);
 
-            // Fetch updated duty with teacher and student names
-            $duty = Duty::with(['teacher', 'student'])->find($duty->id);
+            // Sync students (update the list of students associated with the duty)
+            if (!empty($request->student_ids)) {
+                $duty->students()->sync($request->student_ids);
+            }
+
+            // Fetch updated duty with teacher and students
+            $duty = Duty::with(['teacher', 'students'])->find($duty->id);
 
             $dutyData = [
                 'id' => $duty->id,
                 'teacher_name' => $duty->teacher ? $duty->teacher->lastname . ', ' . $duty->teacher->firstname : 'N/A',
-                'student_name' => $duty->student ? $duty->student->lastname . ', ' . $duty->student->firstname : 'N/A',
+                'students' => $duty->students->map(function ($student) {
+                    return $student->lastname . ', ' . $student->firstname;
+                })->toArray(),
                 'subject' => $duty->subject,
                 'room' => $duty->room,
                 'date' => $duty->date,
