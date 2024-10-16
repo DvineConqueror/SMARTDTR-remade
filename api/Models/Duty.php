@@ -11,7 +11,6 @@ class Duty extends Model
 
     protected $fillable = [         
         'teacher_id',         
-        'student_id',         
         'subject',         
         'room',         
         'date',         
@@ -20,15 +19,17 @@ class Duty extends Model
         'status',     
     ];      
 
-    // Relationship to other tables     
+    // Relationship to other tables
+    // A Duty belongs to a Teacher     
     public function teacher()     
     {         
         return $this->belongsTo(Teacher::class, 'teacher_id');     
     }      
 
-    public function student()     
+    // A Duty can have many Students (many-to-many relationship)
+    public function students()     
     {         
-        return $this->belongsTo(Student::class, 'student_id');     
+        return $this->belongsToMany(Student::class, 'duty_student');     
     }      
 
     // Accessor to get the teacher's full name     
@@ -37,10 +38,12 @@ class Duty extends Model
         return $this->teacher ? $this->teacher->last_name . ', ' . $this->teacher->first_name : 'N/A';     
     }      
 
-    // Accessor to get the student's full name     
-    public function getStudentNameAttribute()     
+    // Accessor to get all student names as a comma-separated string     
+    public function getStudentNamesAttribute()     
     {         
-        return $this->student ? $this->student->last_name . ', ' . $this->student->first_name : 'N/A';     
+        return $this->students->pluck('last_name', 'first_name')->map(function($last, $first) {
+            return $last . ', ' . $first;
+        })->implode(', ');     
     }      
 
     // Scope to get upcoming duties (status: pending, date: future or time in future)     

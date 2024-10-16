@@ -62,7 +62,8 @@ class TeacherController extends Controller
 
     // CREATE a new user(teacher)
     public function store(Request $request)
-    {   
+    {
+        // Validate common fields except password, email, and teacher_id
         $request->validate([
             'firstname' => 'required|string|max:255',
             'lastname' => 'required|string|max:255',
@@ -92,54 +93,36 @@ class TeacherController extends Controller
             ], 400);
         }
 
-        //CREATE the user(teacher)
+        //Attempt to create the teacher
         $teacher = Teacher::create([
             'firstname' => $request->firstname,
             'lastname' => $request->lastname,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'password' => Hash::make($request->password), // Hash the password
             'teacher_id' => $request->teacher_id,
             'mobile_number' => $request->mobile_number,
             'date_of_birth' => $request->date_of_birth,
+            'year_level' => $request->year_level,
             'sex' => $request->sex,
         ]);
 
-        if($teacher)
-        {
-             // Generate a Sanctum token for the teacher
-         $token = $teacher->createToken('auth_token',  ['*'])->plainTextToken;
-
-         return response()->json([
-            'message' => 'Teacher created successfully',
-            'token_type' => 'Bearer',
-            'token' => $token,
-         ],201);
-        }
-        else
-        {
-         return response()->json([
-            'message' => 'Failed to create teacher.',
-         ],500);
-        }
-    }
-
-    public function profile(Request $request)
-    {
-        $teacher = $request->user();
-
         if ($teacher) {
+            //Generate a Sanctum token for the teacher
+            $token = $teacher->createToken('auth_token', ['*'])->plainTextToken;
+
             return response()->json([
-                'message' => 'Profile fetched',
-                'data' => $teacher,
-            ], 200);
-        }
-        else
-        {
+                'message' => 'Teacher created successfully',
+                'token_type' => 'Bearer',
+                'token' => $token,
+            ], 201);
+        } else {
             return response()->json([
-                'message' => 'Not authenticated',
-             ],401);
+                'message' => 'Failed to create teacher.',
+            ], 500);
         }
     }
+    
+    
 
     //GET all user(teacher)
     public function index()

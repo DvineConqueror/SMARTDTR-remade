@@ -27,4 +27,9 @@ class Student extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    public function duties()
+    {
+        return $this->belongsToMany(Duty::class);
+    }
 }
