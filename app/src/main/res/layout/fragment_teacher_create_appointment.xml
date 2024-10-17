@@ -97,68 +97,54 @@
             tools:ignore="MissingConstraints">
 
             <TextView
-                android:id="@+id/textView9"
+                android:id="@+id/tvSubject"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="52dp"
-                android:fontFamily="@font/lilita_one"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="56dp"
 
-                android:text="Department"
+                android:fontFamily="@font/lilita_one"
+                android:text="Subject"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.048"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView8"
+                app:layout_constraintTop_toBottomOf="@+id/tvTime"
                 tools:ignore="HardcodedText,MissingConstraints" />
 
             <TextView
-                android:id="@+id/textView10"
+                android:id="@+id/tvRoom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="44dp"
-                android:layout_marginEnd="36dp"
+                android:layout_marginTop="48dp"
                 android:fontFamily="@font/lilita_one"
                 android:letterSpacing="0.1"
                 android:text="Room"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/spinner4"
-                app:layout_constraintTop_toBottomOf="@+id/textView9"
-                tools:ignore="HardcodedText,MissingConstraints" />
-
-            <Spinner
-                android:id="@+id/collegeDepartment"
-                android:background="@drawable/custom_edittext"
-                android:layout_width="180dp"
-                android:layout_height="48dp"
-                android:layout_marginTop="20dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.44"
-                app:layout_constraintStart_toEndOf="@+id/textView9"
-                app:layout_constraintTop_toBottomOf="@+id/timeHour" />
+                app:layout_constraintTop_toBottomOf="@+id/tvSubject"
+                tools:ignore="HardcodedText,MissingConstraints"
+                tools:layout_editor_absoluteX="13dp" />
 
             <TextView
-                android:id="@+id/textView11"
+                android:id="@+id/tvStudents"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="52dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="36dp"
                 android:fontFamily="@font/lilita_one"
                 android:letterSpacing="0.05"
                 android:text="Students"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/spinner3"
-                app:layout_constraintHorizontal_bias="0.619"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView10"
+                app:layout_constraintTop_toBottomOf="@+id/tvRoom"
                 tools:ignore="HardcodedText,SpUsage" />
 
             <TextView
-                android:id="@+id/textView8"
+                android:id="@+id/tvTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
@@ -175,13 +161,13 @@
                 tools:ignore="HardcodedText,MissingConstraints" />
 
             <Button
-                android:id="@+id/button6"
-                android:layout_width="100dp"
+                android:id="@+id/btnCreate"
+                android:layout_width="wrap_content"
                 android:layout_height="48dp"
                 android:layout_marginBottom="16dp"
                 android:backgroundTint="#0008E2"
                 android:fontFamily="@font/lilita_one"
-                android:text="Save"
+                android:text="Create"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -192,46 +178,67 @@
                 tools:ignore="HardcodedText,MissingConstraints" />
 
             <Spinner
-                android:id="@+id/timeMinutes"
+                android:id="@+id/spnrEndTime"
                 android:layout_width="97dp"
                 android:background="@drawable/custom_edittext"
                 android:layout_height="48dp"
                 android:layout_marginTop="40dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.358"
-                app:layout_constraintStart_toEndOf="@+id/timeHour"
+                app:layout_constraintStart_toEndOf="@+id/spnrStartTime"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Spinner
-                android:id="@+id/timeHour"
+                android:id="@+id/spnrStartTime"
                 android:background="@drawable/custom_edittext"
+                android:fontFamily="@font/lilita_one"
                 android:layout_width="97dp"
                 android:layout_height="48dp"
                 android:layout_marginStart="44dp"
                 android:layout_marginTop="40dp"
-                app:layout_constraintStart_toEndOf="@+id/textView8"
+                app:layout_constraintStart_toEndOf="@+id/tvTime"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <Spinner
-                android:id="@+id/spinner3"
-                android:layout_width="211dp"
+            <EditText
+                android:id="@+id/etSubject"
+                android:layout_width="200dp"
                 android:layout_height="48dp"
+                android:layout_marginTop="32dp"
                 android:background="@drawable/custom_edittext"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="28dp"
+                android:fontFamily="@font/lilita_one"
+                android:text="Enter a subject"
+                android:padding="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintTop_toBottomOf="@+id/spinner4" />
+                app:layout_constraintHorizontal_bias="0.442"
+                app:layout_constraintStart_toEndOf="@+id/tvSubject"
+                app:layout_constraintTop_toBottomOf="@+id/spnrStartTime" />
 
-            <Spinner
-                android:id="@+id/spinner4"
-                android:layout_width="211dp"
-                android:background="@drawable/custom_edittext"
+            <EditText
+                android:id="@+id/etRoom"
+                android:layout_width="200dp"
                 android:layout_height="48dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="28dp"
+                android:layout_marginTop="32dp"
+                android:background="@drawable/custom_edittext"
+                android:fontFamily="@font/lilita_one"
+                android:text="Enter a room"
+                android:padding="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/collegeDepartment" />
+                app:layout_constraintHorizontal_bias="0.442"
+                app:layout_constraintStart_toEndOf="@+id/tvRoom"
+                app:layout_constraintTop_toBottomOf="@+id/tvSubject" />
+
+            <ImageButton
+                android:id="@+id/btStudentList"
+                android:layout_width="48dp"
+                android:layout_height="28dp"
+                android:layout_marginTop="24dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/baseline_list_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.04"
+                app:layout_constraintStart_toEndOf="@+id/tvStudents"
+                app:layout_constraintTop_toBottomOf="@+id/etRoom" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:id="@+id/main"
     android:layout_height="match_parent"
-    tools:context=".teacher_student_list">
+    tools:context=".teacher_student_list_create">
 
     <ImageView
         android:id="@+id/top_wave"
@@ -41,7 +41,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvSelect_all"
-        tools:listitem="@layout/rv_teacher_list_student_card" />
+        tools:listitem="@layout/rv_teacher_list_student_create_card" />
 
     <CheckBox
         android:id="@+id/checkBox"

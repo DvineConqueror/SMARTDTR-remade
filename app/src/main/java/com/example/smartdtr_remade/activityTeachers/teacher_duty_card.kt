@@ -2,15 +2,11 @@ package com.example.smartdtr_remade.activityTeachers
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
-import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
-import com.example.smartdtr_remade.R
-import com.example.smartdtr_remade.databinding.FragmentTeacherStudentListBinding
 import com.example.smartdtr_remade.databinding.RvTeacherDutyCardBinding
 // Change this to your actual binding class name
 import com.example.smartdtr_remade.teacher_create_appointment
-import com.example.smartdtr_remade.teacher_student_list
+import com.example.smartdtr_remade.teacher_student_list_create
 
 class teacher_duty_card : AppCompatActivity() {
 
@@ -29,8 +25,8 @@ class teacher_duty_card : AppCompatActivity() {
         }
 
         binding.btStudentList.setOnClickListener {
-            // Replace the current activity with teacher_student_list
-            val intent = Intent(this, teacher_student_list::class.java)
+            // Replace the current activity with teacher_student_list_create
+            val intent = Intent(this, teacher_student_list_create::class.java)
             startActivity(intent)
         }
     }

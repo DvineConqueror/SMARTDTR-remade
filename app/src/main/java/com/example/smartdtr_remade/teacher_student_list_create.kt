@@ -1,6 +1,6 @@
 package com.example.smartdtr_remade
 
-import StudentListAdapter
+import StudentListCreateAdapter
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,16 +10,15 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.smartdtr_remade.Api.RetrofitInstance
-import com.example.smartdtr_remade.R
 import com.example.smartdtr_remade.models.Student
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class teacher_student_list : Fragment() { // Changed to Fragment
+class teacher_student_list_create : Fragment() { // Changed to Fragment
 
     private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: StudentListAdapter
+    private lateinit var adapter: StudentListCreateAdapter
     private val studentList = mutableListOf<Student>()
 
     override fun onCreateView(
@@ -27,7 +26,7 @@ class teacher_student_list : Fragment() { // Changed to Fragment
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_teacher_student_list, container, false)
+        return inflater.inflate(R.layout.fragment_teacher_student_list_create, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -35,7 +34,7 @@ class teacher_student_list : Fragment() { // Changed to Fragment
 
         recyclerView = view.findViewById(R.id.recycler_student_list)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        adapter = StudentListAdapter(studentList)
+        adapter = StudentListCreateAdapter(studentList)
         recyclerView.adapter = adapter
 
         // Fetch student data from API
@@ -56,6 +55,6 @@ class teacher_student_list : Fragment() { // Changed to Fragment
 
     companion object {
         @JvmStatic
-        fun newInstance() = teacher_student_list() // New instance method
+        fun newInstance() = teacher_student_list_create() // New instance method
     }
 }

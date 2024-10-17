@@ -7,11 +7,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.smartdtr_remade.R
 import com.example.smartdtr_remade.models.Student
 
-class StudentListAdapter(private var students: MutableList<Student>) :
-    RecyclerView.Adapter<StudentListAdapter.StudentViewHolder>() {
+class StudentListCreateAdapter(private var students: MutableList<Student>) :
+    RecyclerView.Adapter<StudentListCreateAdapter.StudentViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StudentViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.rv_teacher_list_student_card, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.rv_teacher_list_student_create_card, parent, false)
         return StudentViewHolder(view)
     }
 
