@@ -46,7 +46,7 @@
     <string name="_58844848">58844848</string>
     <string name="history">History</string>
     <string name="teacher_name">teacher name</string>
-    <string name="teacher_id">teacher id</string>
+    <string name="teacher_id">Teacher ID</string>
     <string name="teacher_email">teacher email</string>
     <string name="create_login_text">Make Daily Time Record management more efficient and accessible</string>
     <string name="title_activity_teacher_login">Teacher_login</string>
