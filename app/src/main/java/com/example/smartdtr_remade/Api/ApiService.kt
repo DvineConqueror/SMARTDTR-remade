@@ -3,6 +3,8 @@ package com.example.smartdtr_remade.Api
 import LoginRequest
 import LoginResponse
 import com.example.smartdtr_remade.models.Duty
+import com.example.smartdtr_remade.models.ResetPasswordRequest
+import com.example.smartdtr_remade.models.ResetPasswordResponse
 import com.example.smartdtr_remade.models.SignUpRequest
 import com.example.smartdtr_remade.models.SignupResponse
 import com.example.smartdtr_remade.models.Student
@@ -37,6 +39,9 @@ interface ApiService {
 
     @POST("/api/login")
     fun login(@Body loginRequest: LoginRequest): Call<LoginResponse>
+
+    @POST("your/api/endpoint/reset-password")
+    fun resetPassword(@Body request: ResetPasswordRequest): Call<ResetPasswordResponse>
 
     @POST("signup")
     fun signup(@Body request: SignUpRequest): Call<SignupResponse>

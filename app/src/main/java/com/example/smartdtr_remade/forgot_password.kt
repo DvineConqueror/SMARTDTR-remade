@@ -4,10 +4,17 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import com.example.smartdtr_remade.Api.ApiService
 import com.example.smartdtr_remade.activityTeachers.activity_login
 import com.example.smartdtr_remade.databinding.ActivityForgotPasswordBinding
+import com.example.smartdtr_remade.models.ResetPasswordRequest
+import com.example.smartdtr_remade.models.ResetPasswordResponse
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class forgot_password : AppCompatActivity() {
     // Declare the binding variable
@@ -35,12 +42,12 @@ class forgot_password : AppCompatActivity() {
         }
 
         forgotPassButton.setOnClickListener {
-            startActivity(
-                Intent(
-                    this@forgot_password,
-                    activity_login::class.java
-                )
-            )
+            // Call the reset password function
+            if (validateForm()) {
+                resetPassword()
+            } else {
+                Toast.makeText(this, "Please fix the errors above", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -74,7 +81,6 @@ class forgot_password : AppCompatActivity() {
             }
         }
     }
-
 
     private fun validID(): String? {
         val etUserID = binding.etTextFieldUserID.editText?.text.toString().trim()
@@ -115,5 +121,44 @@ class forgot_password : AppCompatActivity() {
         } else {
             null
         }
+    }
+
+    // Validate all fields before making the API call
+    private fun validateForm(): Boolean {
+        return validID() == null && validateOldPassword() == null &&
+                validateNewPassword() == null && validateConfirmPassword() == null
+    }
+
+    private fun resetPassword() {
+        // Create a ResetPasswordRequest object
+        val userId = binding.etTextFieldUserID.editText?.text.toString().trim()
+        val oldPassword = binding.etTextFieldOldPass.editText?.text.toString().trim()
+        val newPassword = binding.etTextFieldNewPassword.editText?.text.toString().trim()
+
+        val resetPasswordRequest = ResetPasswordRequest(
+            userId = userId,
+            oldPassword = oldPassword,
+            newPassword = newPassword
+        )
+
+        // Make API call using Retrofit
+        val apiService = ApiService.create()
+        apiService.resetPassword(resetPasswordRequest).enqueue(object : Callback<ResetPasswordResponse> {
+            override fun onResponse(call: Call<ResetPasswordResponse>, response: Response<ResetPasswordResponse>) {
+                if (response.isSuccessful) {
+                    Log.d("ResetPasswordResponse", "Successful: ${response.body()}")
+                    Toast.makeText(this@forgot_password, "Password reset successfully!", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this@forgot_password, activity_login::class.java))
+                    finish() // Close current activity
+                } else {
+                    Log.e("ResetPasswordResponse", "Failed: ${response.message()}")
+                    Toast.makeText(this@forgot_password, "Password reset failed: ${response.message()}", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<ResetPasswordResponse>, t: Throwable) {
+                Toast.makeText(this@forgot_password, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 }

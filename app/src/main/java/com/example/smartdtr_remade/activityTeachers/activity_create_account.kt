@@ -33,6 +33,7 @@ class activity_create_account : AppCompatActivity() {
     private lateinit var spinnerSex: Spinner
     private lateinit var spnYearLevel: Spinner
     private lateinit var btnNext: Button
+    private lateinit var btnBack: Button
     private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,6 +52,9 @@ class activity_create_account : AppCompatActivity() {
         spnYearLevel = findViewById(R.id.spnYearLevel)
         etDateOfBirth = findViewById(R.id.etDateOfBirth)
         btnNext = findViewById(R.id.btnNext)
+        btnBack = findViewById(R.id.btnBack)
+
+        etFocusListeners()
 
         // Initialize SharedPreferences
         sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE)
@@ -59,7 +63,140 @@ class activity_create_account : AppCompatActivity() {
         btnNext.setOnClickListener {
             signUp()
         }
+
+        btnBack.setOnClickListener {
+            startActivity(
+                Intent(
+                    this@activity_create_account,
+                    activity_login::class.java
+                )
+            )
+        }
     }
+
+    private fun etFocusListeners() {
+        etFirstname.setOnFocusChangeListener { _, focused ->
+            if (!focused) {
+                etFirstname.error = validateField(etFirstname.text.toString().trim(), "First name")
+            }
+        }
+
+        etLastname.setOnFocusChangeListener { _, focused ->
+            if (!focused) {
+                etLastname.error = validateField(etLastname.text.toString().trim(), "Last name")
+            }
+        }
+
+        etEmail.setOnFocusChangeListener { _, focused ->
+            if (!focused) {
+                etEmail.error = validateEmail()
+            }
+        }
+
+        etFirstPassword.setOnFocusChangeListener { _, focused ->
+            if (!focused) {
+                etFirstPassword.error = validatePassword()
+            }
+        }
+
+        etPasswordConfirm.setOnFocusChangeListener { _, focused ->
+            if (!focused) {
+                etPasswordConfirm.error = validateConfirmPassword()
+            }
+        }
+
+        etID.setOnFocusChangeListener { _, focused ->
+            if (!focused) {
+                etID.error = validID()
+            }
+        }
+
+        etMobileNumber.setOnFocusChangeListener { _, focused ->
+            if (!focused) {
+                etMobileNumber.error = validateField(etMobileNumber.text.toString().trim(), "Mobile number")
+            }
+        }
+
+        etDateOfBirth.setOnFocusChangeListener { _, focused ->
+            if (!focused) {
+                etDateOfBirth.error = validateDateOfBirth()
+            }
+        }
+    }
+
+    private fun validateField(value: String, fieldName: String): String? {
+        return if (value.isEmpty()) {
+            "$fieldName is required."
+        } else {
+            null
+        }
+    }
+
+    private fun validateEmail(): String? {
+        val email = etEmail.text.toString().trim()
+        val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+".toRegex()
+        return if (email.isEmpty()) {
+            "Email is required."
+        } else if (!email.matches(emailPattern)) {
+            "Please enter a valid email address."
+        } else {
+            null
+        }
+    }
+
+    private fun validatePassword(): String? {
+        val password = etFirstPassword.text.toString().trim()
+        return when {
+            password.length < 8 -> "Password must be at least 8 characters."
+            !password.matches(Regex(".*[A-Z].*")) -> "Password must contain at least one uppercase letter."
+            !password.matches(Regex(".*\\d.*")) -> "Password must contain at least one number."
+            else -> null
+        }
+    }
+
+    private fun validateConfirmPassword(): String? {
+        val password = etFirstPassword.text.toString().trim()
+        val confirmPassword = etPasswordConfirm.text.toString().trim()
+        return if (confirmPassword != password) {
+            "Passwords do not match."
+        } else {
+            null
+        }
+    }
+
+    private fun validID(): String? {
+        val id = etID.text.toString().trim()
+        val teacherPattern = "^T-\\d{5}$".toRegex(RegexOption.IGNORE_CASE)
+        val studentPattern = "^S-\\d{5}$".toRegex(RegexOption.IGNORE_CASE)
+
+        return if (!teacherPattern.matches(id) && !studentPattern.matches(id)) {
+            "Please enter a valid ID number."
+        } else {
+            null
+        }
+    }
+
+    private fun validateDateOfBirth(): String? {
+        val dob = etDateOfBirth.text.toString().trim()
+        val dobPattern = "^\\d{4}-\\d{2}-\\d{2}$".toRegex()
+
+        return when {
+            dob.isEmpty() -> "Date of birth is required."
+            !dob.matches(dobPattern) -> "Please enter the date of birth in the format YYYY-MM-DD."
+            else -> null
+        }
+    }
+
+
+    private fun validateForm(): Boolean {
+        val fields = listOf(
+            etFirstname, etLastname, etEmail, etFirstPassword, etPasswordConfirm,
+            etID, etMobileNumber, etDateOfBirth
+        )
+        return fields.all { it.error == null }
+    }
+
+
 
     private fun signUp() {
         val firstname = etFirstname.text.toString().trim()
