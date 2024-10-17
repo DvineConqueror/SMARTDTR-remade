@@ -16,11 +16,17 @@ import retrofit2.http.*
 interface ApiService {
 
     interface DutyApi {
-        @GET("duties/upcoming")
-        fun getUpcomingDuties(): Call<List<Duty>>
+        @GET("duties/upcoming-students")
+        fun getUpcomingDutiesStudent(@Query("student_id") studentId: String): Call<List<Duty>>
 
-        @GET("duties/completed")
-        fun getCompletedDuties(): Call<List<Duty>>
+        @GET("duties/upcoming-teachers")
+        fun getUpcomingDutiesTeacher(@Query("teacher_id") teacherId: String): Call<List<Duty>>
+
+        @GET("duties/completed-students")
+        fun getCompletedDutiesStudent(@Query("student_id") studentId: String): Call<List<Duty>>
+
+        @GET("duties/completed-teachers")
+        fun getCompletedDutiesTeacher(@Query("teacher_id") teacherId: String): Call<List<Duty>>
 
         @POST("duties")
         fun createDuty(@Body duty: Duty): Call<Duty>

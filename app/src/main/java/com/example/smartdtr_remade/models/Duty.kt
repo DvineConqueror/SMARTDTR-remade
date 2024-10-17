@@ -1,11 +1,11 @@
 package com.example.smartdtr_remade.models
 
-class Dutydata class Duty(
+data class Duty(
     val id: Int,
     val teacher_id: Int,
-    val teacher_name: String?,
-    val student_id: Int?,
-    val student_name: String?,
+    val teacher_name: String?, // Teacher's name as a nullable string
+    val student_id: String,
+    val students: List<String>?, // List of student names or IDs
     val subject: String,
     val room: String,
     val date: String,
@@ -13,3 +13,4 @@ class Dutydata class Duty(
     val end_time: String,
     val status: String
 )
+
