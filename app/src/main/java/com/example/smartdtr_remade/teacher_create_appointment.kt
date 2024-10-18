@@ -1,6 +1,7 @@
 package com.example.smartdtr_remade
 
 import StudentListCreateAdapter
+import android.icu.util.Calendar
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -95,11 +96,26 @@ class teacher_create_appointment : Fragment() {
 
         // Set a listener to capture the selected date
         calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
+            val calendar = Calendar.getInstance()
+            calendar.set(year, month, dayOfMonth)
+
+            // Check if the selected day is Sunday
+            if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+                Toast.makeText(requireContext(), "Sundays are not selectable", Toast.LENGTH_SHORT).show()
+                return@setOnDateChangeListener // Exit if it's Sunday
+            }
+
             selectedDate = String.format("%04d-%02d-%02d", year, month + 1, dayOfMonth) // Format date as YYYY-MM-DD
         }
 
-        // Handle Create button click
         createButton.setOnClickListener {
+            // Check if a date has been selected
+            if (!::selectedDate.isInitialized) {
+                Toast.makeText(requireContext(), "Please select a date", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener // Stay in the fragment without exiting
+            }
+
+            // Proceed with duty creation if a date is selected
             uploadDutyData(
                 etSubject.text.toString(),
                 etRoom.text.toString(),
@@ -158,7 +174,11 @@ class teacher_create_appointment : Fragment() {
             override fun onResponse(call: Call<Duty>, response: Response<Duty>) {
                 if (response.isSuccessful) {
                     Toast.makeText(requireContext(), "Duty created successfully", Toast.LENGTH_SHORT).show()
-                    // Handle success (e.g., navigate back or clear fields)
+
+                    // Navigate back to home fragment
+                    parentFragmentManager.beginTransaction()
+                        .replace(R.id.frameLayout, teacher_home_page()) // Replace with your actual HomeFragment
+                        .commit()
                 } else {
                     Toast.makeText(requireContext(), "Failed to create duty", Toast.LENGTH_SHORT).show()
                 }
@@ -169,20 +189,6 @@ class teacher_create_appointment : Fragment() {
                 Toast.makeText(requireContext(), "Error occurred", Toast.LENGTH_SHORT).show()
             }
         })
-    }
-
-    companion object {
-        private const val ARG_PARAM1 = "param1"
-        private const val ARG_PARAM2 = "param2"
-
-        @JvmStatic
-        fun newInstance(param1: String?, param2: String?) =
-            teacher_create_appointment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
 }
 

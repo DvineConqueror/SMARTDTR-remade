@@ -31,7 +31,7 @@ class teacher_home_page : Fragment() {
         // In your Fragment where the button is located, e.g., teacher_home_page
         binding.appointmentButton.setOnClickListener {
             parentFragmentManager.beginTransaction()
-                .replace(R.id.frameLayout, teacher_create_appointment.newInstance("Value1", "Value2")) // Passing null for params if not needed
+                .replace(R.id.frameLayout, teacher_create_appointment()) // Passing null for params if not needed
                 .addToBackStack(null)
                 .commit()
         }
