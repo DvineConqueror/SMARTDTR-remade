@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB; // Import DB
+use Illuminate\Support\Facades\Log; // Import Log
 use App\Models\Duty;
 use Illuminate\Http\Request;
 
@@ -58,9 +60,9 @@ class DutyController extends Controller
             // Create the duty
             $duty = Duty::create($validatedData);
 
-            // Attach students to the duty
             if (!empty($request->student_ids)) {
                 $duty->students()->attach($request->student_ids);
+                \Log::info('Attached student IDs:', $request->student_ids);
             }
 
             // Fetch the newly created duty with teacher and students
@@ -146,6 +148,209 @@ class DutyController extends Controller
             return response()->json('Failed to retrieve completed duties.', 500);
         }
     }
+
+   // GET upcoming duties for a specific teacher
+    public function getUpcomingDutiesForTeachers(Request $request)
+    {
+        try {
+            $teacherId = $request->query('teacher_id'); // Get the teacher ID from the request
+
+            // Log the received teacher ID
+            \Log::info("Received teacher ID: " . $teacherId);
+
+            if (empty($teacherId)) {
+                return response()->json(['error' => 'Teacher ID is required'], 400);
+            }
+
+            // Fetch upcoming duties for the teacher with eager loading of the students relationship
+            $duties = Duty::with('students') // Eager load the students relationship
+                ->upcoming()
+                ->where('teacher_id', $teacherId)
+                ->get();
+
+            // Optionally log the retrieved duties for debugging
+            \Log::info("Fetched upcoming duties for teacher: ", $duties->toArray());
+
+            // Map the duties to include teacher name in "LastName, FirstName" format
+            $mappedDuties = $duties->map(function ($duty) {
+                return [
+                    'id' => $duty->id,
+                    'teacher_name' => $duty->teacher ? "{$duty->teacher->lastname}, {$duty->teacher->firstname}" : 'N/A',
+                    'students' => $duty->students->map(function ($student) {
+                        return "{$student->lastname}, {$student->firstname}";
+                    })->toArray(),
+                    'subject' => $duty->subject,
+                    'room' => $duty->room,
+                    'date' => $duty->date,
+                    'start_time' => $duty->start_time,
+                    'end_time' => $duty->end_time,
+                    'status' => $duty->status,
+                ];
+            });
+
+            return response()->json($mappedDuties, 200);
+        } catch (\Exception $e) {
+            \Log::error($e->getMessage());
+            return response()->json(['error' => 'Failed to retrieve upcoming duties for teacher.', 'details' => $e->getMessage()], 500);
+        }
+    }
+
+    // GET completed duties for a specific teacher
+    public function getCompletedDutiesForTeachers(Request $request)
+    {
+        try {
+            $teacherId = $request->query('teacher_id');
+
+            // Log the received teacher ID
+            \Log::info("Received teacher ID: " . $teacherId);
+
+            if (empty($teacherId)) {
+                return response()->json(['error' => 'Teacher ID is required'], 400);
+            }
+
+            // Fetch completed duties for the teacher with eager loading of the students relationship
+            $duties = Duty::with('students') // Eager load the students relationship
+                ->completed()
+                ->where('teacher_id', $teacherId)
+                ->get();
+
+            // Optionally log the retrieved duties for debugging
+            \Log::info("Fetched completed duties for teacher: ", $duties->toArray());
+
+            // Map the duties to include teacher name in "LastName, FirstName" format
+            $mappedDuties = $duties->map(function ($duty) {
+                return [
+                    'id' => $duty->id,
+                    'teacher_name' => $duty->teacher ? "{$duty->teacher->lastname}, {$duty->teacher->firstname}" : 'N/A',
+                    'students' => $duty->students->map(function ($student) {
+                        return "{$student->lastname}, {$student->firstname}";
+                    })->toArray(),
+                    'subject' => $duty->subject,
+                    'room' => $duty->room,
+                    'date' => $duty->date,
+                    'start_time' => $duty->start_time,
+                    'end_time' => $duty->end_time,
+                    'status' => $duty->status,
+                ];
+            });
+
+            return response()->json($mappedDuties, 200);
+        } catch (\Exception $e) {
+            \Log::error($e->getMessage());
+            return response()->json(['error' => 'Failed to retrieve completed duties for teacher.', 'details' => $e->getMessage()], 500);
+        }
+    }
+
+    // GET completed duties for a specific student
+    public function getCompletedDutiesForStudents(Request $request)
+    {
+        try {
+            $studentId = $request->query('student_id');
+
+            // Log the received student ID
+            \Log::info("Received student ID: " . $studentId);
+
+            if (empty($studentId)) {
+                return response()->json(['error' => 'Student ID is required'], 400);
+            }
+
+            // Fetch completed duties for the student with eager loading of the teacher relationship
+            $duties = Duty::with('teacher') // Eager load the teacher relationship
+                ->completed()
+                ->whereExists(function ($query) use ($studentId) {
+                    $query->select(DB::raw(1)) // Use raw 1 to check existence
+                        ->from('duty_student')
+                        ->join('students', 'students.id', '=', 'duty_student.student_id')
+                        ->where('duty_student.duty_id', '=', DB::raw('duties.id')) // Fully qualify 'duties.id'
+                        ->where('students.id', '=', $studentId); // Specify the student ID correctly
+                })
+                ->get();
+
+            // Optionally log the retrieved duties for debugging
+            \Log::info("Fetched completed duties for student: ", $duties->toArray());
+
+            // Map the duties to include teacher name in "LastName, FirstName" format
+            $mappedDuties = $duties->map(function ($duty) {
+                return [
+                    'id' => $duty->id,
+                    'teacher_name' => $duty->teacher ? "{$duty->teacher->lastname}, {$duty->teacher->firstname}" : 'N/A',
+                    'subject' => $duty->subject,
+                    'room' => $duty->room,
+                    'date' => $duty->date,
+                    'start_time' => $duty->start_time,
+                    'end_time' => $duty->end_time,
+                    'status' => $duty->status,
+                ];
+            });
+
+            return response()->json($mappedDuties, 200);
+        } catch (\Exception $e) {
+            \Log::error($e->getMessage());
+            return response()->json(['error' => 'Failed to retrieve completed duties for student.', 'details' => $e->getMessage()], 500);
+        }
+    }
+
+
+    // GET upcoming duties for a specific student
+    public function getUpcomingDutiesForStudents(Request $request)
+    {
+        try {
+            $studentId = $request->query('student_id');
+
+            // Log the received student ID
+            \Log::info("Received student ID: " . $studentId);
+
+            if (empty($studentId)) {
+                return response()->json(['error' => 'Student ID is required'], 400);
+            }
+
+            // Fetch upcoming duties for the student with eager loading of the teacher relationship
+            $duties = Duty::with('teacher') // Eager load the teacher relationship
+                ->upcoming()
+                ->whereExists(function ($query) use ($studentId) {
+                    $query->select(DB::raw(1)) // Use raw 1 to check existence
+                        ->from('duty_student')
+                        ->join('students', 'students.id', '=', 'duty_student.student_id')
+                        ->where('duty_student.duty_id', '=', DB::raw('duties.id')) // Fully qualify 'duties.id'
+                        ->where('students.id', '=', $studentId); // Specify the student ID correctly
+                })
+                ->get();
+
+            // Log the retrieved duties for debugging
+            \Log::info("Fetched duties: ", $duties->toArray());
+
+            // Map the duties to include the teacher name in "LastName, FirstName" format
+            $mappedDuties = $duties->map(function ($duty) {
+                if ($duty->teacher) {
+                    // Ensure the teacher's attributes are accessible
+                    $teacherFullName = "{$duty->teacher->lastname}, {$duty->teacher->firstname}";
+                } else {
+                    $teacherFullName = 'N/A'; // Default if no teacher is associated
+                }
+
+                return [
+                    'id' => $duty->id,
+                    'teacher_name' => $teacherFullName, // Format teacher's name
+                    'student_id' => $duty->student_id,
+                    'subject' => $duty->subject,
+                    'room' => $duty->room,
+                    'date' => $duty->date,
+                    'start_time' => $duty->start_time,
+                    'end_time' => $duty->end_time,
+                    'status' => $duty->status,
+                ];
+            });
+
+            return response()->json($mappedDuties);
+        } catch (\Exception $e) {
+            \Log::error($e->getMessage());
+            return response()->json(['error' => 'Failed to retrieve upcoming duties for student.', 'details' => $e->getMessage()], 500);
+        }
+    }
+
+
+
+
 
     // UPDATE a duty and sync multiple students
     public function update(Request $request, $id)
