@@ -29,15 +29,13 @@ class Duty extends Model
     // A Duty can have many Students (many-to-many relationship)
     public function students()     
     {         
-        return $this->belongsToMany(Student::class, 'duty_student');     
+        return $this->belongsToMany(Student::class);     
     }      
 
-    // Accessor to get the teacher's full name     
     public function getTeacherNameAttribute()     
     {         
         return $this->teacher ? $this->teacher->last_name . ', ' . $this->teacher->first_name : 'N/A';     
-    }      
-
+    }
     // Accessor to get all student names as a comma-separated string     
     public function getStudentNamesAttribute()     
     {         
