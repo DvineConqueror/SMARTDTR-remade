@@ -47,8 +47,8 @@ class activity_login : AppCompatActivity() {
             val etID = binding.etTextFieldUserID.editText?.text.toString().trim()
             val etPasswordText = binding.etTextFieldPass.editText?.text.toString().trim()
 
-            val teacherPattern = "^T-\\d{5}$".toRegex()
-            val studentPattern = "^S-\\d{5}$".toRegex()
+            val teacherPattern = "^T-\\d{5}$".toRegex(RegexOption.IGNORE_CASE)
+            val studentPattern = "^S-\\d{5}$".toRegex(RegexOption.IGNORE_CASE)
 
             when {
                 !teacherPattern.matches(etID) && !studentPattern.matches(etID) -> {
@@ -107,11 +107,19 @@ class activity_login : AppCompatActivity() {
     }
 
     private fun validateID(): String? {
-        val userIDNumber = binding.etTextFieldPass.editText?.text.toString().trim()
-        return if (userIDNumber.isEmpty()) {
-            "Please enter a valid ID Number!"
-        } else {
-            null
+        val userIDNumber = binding.etTextFieldUserID.editText?.text.toString().trim()
+        val teacherPattern = "^T-\\d{5}$".toRegex(RegexOption.IGNORE_CASE)
+        val studentPattern = "^S-\\d{5}$".toRegex(RegexOption.IGNORE_CASE)
+        return when {
+            userIDNumber.isEmpty() -> {
+                "Please enter a valid ID Number!"
+            }
+            !userIDNumber.matches(teacherPattern) && !userIDNumber.matches(studentPattern) -> {
+                "ID Number must be in the format T-***** or S-*****"
+            }
+            else -> {
+                null
+            }
         }
     }
 
@@ -144,9 +152,11 @@ class activity_login : AppCompatActivity() {
                         if (user.teacher_id != null) {
                             preferencesManager.saveTeacherId(user.teacher_id)
                             startActivity(Intent(this@activity_login, Main_teacher::class.java))
+                            Toast.makeText(this@activity_login, "Login Successful!", Toast.LENGTH_SHORT).show()
                         } else if (user.student_id != null) {
                             preferencesManager.saveStudentId(user.student_id)
                             startActivity(Intent(this@activity_login, Main_student::class.java))
+                            Toast.makeText(this@activity_login, "Login Successful!", Toast.LENGTH_SHORT).show()
                         }
                         finish()
                     }
