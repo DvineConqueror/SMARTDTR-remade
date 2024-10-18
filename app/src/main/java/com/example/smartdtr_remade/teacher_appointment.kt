@@ -20,7 +20,7 @@ class teacher_appointment : Fragment() {
 
     private lateinit var teacherUpcomingDutyAdapter: TeacherUpcomingDutyAdapter
     private lateinit var recyclerView: RecyclerView
-    private lateinit var preferencesManager: PreferencesManager // Declare PreferencesManager
+    private lateinit var preferencesManager: PreferencesManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -32,8 +32,8 @@ class teacher_appointment : Fragment() {
         recyclerView = view.findViewById(R.id.recycler_dutySchedule)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        // Set up adapter
-        teacherUpcomingDutyAdapter = TeacherUpcomingDutyAdapter(mutableListOf())
+        // Set up adapter and pass the parent activity
+        teacherUpcomingDutyAdapter = TeacherUpcomingDutyAdapter(mutableListOf(), requireActivity())
         recyclerView.adapter = teacherUpcomingDutyAdapter
 
         // Initialize PreferencesManager
@@ -46,23 +46,16 @@ class teacher_appointment : Fragment() {
     }
 
     private fun fetchUpcomingDuties() {
-        // Get the logged-in teacher's ID
-        val loggedInTeacherId = preferencesManager.getUserId() // Adjust method if needed to get teacher ID
-
-        Log.d("TeacherAppointment", "Logged-in Teacher ID: $loggedInTeacherId")
+        val loggedInTeacherId = preferencesManager.getUserId()
 
         if (loggedInTeacherId != null) {
-            // Call the API to get upcoming duties for the logged-in teacher
             RetrofitInstance.dutyApi.getUpcomingDutiesTeacher(loggedInTeacherId).enqueue(object : Callback<List<Duty>> {
                 override fun onResponse(call: Call<List<Duty>>, response: Response<List<Duty>>) {
                     if (response.isSuccessful) {
                         val duties = response.body()
                         duties?.let {
-                            Log.d("DutyResponse", "Number of duties: ${it.size}") // Log the size of the duties list
                             teacherUpcomingDutyAdapter.updateDuties(it)
-                        } ?: Log.e("DutyResponse", "Response body is null")
-                    } else {
-                        Log.e("DutyResponse", "Error: ${response.code()}")
+                        }
                     }
                 }
 
@@ -70,8 +63,6 @@ class teacher_appointment : Fragment() {
                     Log.e("DutyResponse", "Failure: ${t.message}")
                 }
             })
-        } else {
-            Log.e("TeacherAppointment", "Teacher ID is null or invalid")
         }
     }
 }

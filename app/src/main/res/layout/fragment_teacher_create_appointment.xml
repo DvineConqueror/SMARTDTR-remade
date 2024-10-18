@@ -84,13 +84,14 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/timeSelector"
-            android:layout_width="347dp"
-            android:layout_height="370dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="360dp"
             android:layout_marginBottom="30dp"
             android:background="@drawable/gradient_background_3"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView6"
             app:layout_constraintVertical_bias="0.0"
@@ -148,10 +149,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
-                android:text="Time"
-                android:textColor="@color/white"
                 android:fontFamily="@font/lilita_one"
                 android:letterSpacing="0.1"
+                android:text="Time"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -164,7 +165,7 @@
                 android:id="@+id/btnCreate"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginTop="12dp"
                 android:backgroundTint="#0008E2"
                 android:fontFamily="@font/lilita_one"
                 android:text="Create"
@@ -172,17 +173,18 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:cornerRadius="50dp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHorizontal_bias="0.492"
+                app:layout_constraintStart_toEndOf="@+id/tvStudents"
+                app:layout_constraintTop_toBottomOf="@+id/etRoom"
                 tools:ignore="HardcodedText,MissingConstraints" />
 
             <Spinner
                 android:id="@+id/spnrEndTime"
                 android:layout_width="97dp"
-                android:background="@drawable/custom_edittext"
                 android:layout_height="48dp"
                 android:layout_marginTop="40dp"
+                android:background="@drawable/custom_edittext"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.358"
                 app:layout_constraintStart_toEndOf="@+id/spnrStartTime"
@@ -190,12 +192,12 @@
 
             <Spinner
                 android:id="@+id/spnrStartTime"
-                android:background="@drawable/custom_edittext"
-                android:fontFamily="@font/lilita_one"
                 android:layout_width="97dp"
                 android:layout_height="48dp"
                 android:layout_marginStart="44dp"
                 android:layout_marginTop="40dp"
+                android:background="@drawable/custom_edittext"
+                android:fontFamily="@font/lilita_one"
                 app:layout_constraintStart_toEndOf="@+id/tvTime"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -206,8 +208,8 @@
                 android:layout_marginTop="32dp"
                 android:background="@drawable/custom_edittext"
                 android:fontFamily="@font/lilita_one"
-                android:text="Enter a subject"
                 android:padding="10dp"
+                android:text="Enter a subject"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.442"
                 app:layout_constraintStart_toEndOf="@+id/tvSubject"
@@ -217,28 +219,39 @@
                 android:id="@+id/etRoom"
                 android:layout_width="200dp"
                 android:layout_height="48dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="12dp"
                 android:background="@drawable/custom_edittext"
                 android:fontFamily="@font/lilita_one"
-                android:text="Enter a room"
                 android:padding="10dp"
+                android:text="Enter a room"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.442"
+                app:layout_constraintHorizontal_bias="0.468"
                 app:layout_constraintStart_toEndOf="@+id/tvRoom"
-                app:layout_constraintTop_toBottomOf="@+id/tvSubject" />
+                app:layout_constraintTop_toBottomOf="@+id/etSubject" />
 
-            <ImageButton
-                android:id="@+id/btStudentList"
-                android:layout_width="48dp"
-                android:layout_height="28dp"
-                android:layout_marginTop="24dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/baseline_list_24"
+            <CheckBox
+                android:id="@+id/checkBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="4dp"
+                android:text="Select All"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvStudents" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_student_list"
+                android:layout_width="393dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.04"
-                app:layout_constraintStart_toEndOf="@+id/tvStudents"
-                app:layout_constraintTop_toBottomOf="@+id/etRoom" />
-
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/checkBox"
+                tools:listitem="@layout/rv_teacher_list_student_create_card" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

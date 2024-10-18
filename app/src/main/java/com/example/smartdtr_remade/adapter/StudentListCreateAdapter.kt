@@ -19,10 +19,24 @@ class StudentListCreateAdapter(private var students: MutableList<Student>) :
         val student = students[position]
         holder.tvNameValue.text = "${student.firstname} ${student.lastname}"
         holder.tvStudentIdValue.text = student.student_id
+        holder.checkBox.isChecked = student.isChecked
+
+        // Update the checked state when the checkbox is toggled
+        holder.checkBox.setOnCheckedChangeListener { _, isChecked ->
+            student.isChecked = isChecked
+        }
     }
 
     override fun getItemCount(): Int {
         return students.size
+    }
+
+    // Function to select/deselect all students
+    fun selectAllStudents(isChecked: Boolean) {
+        for (student in students) {
+            student.isChecked = isChecked
+        }
+        notifyDataSetChanged()
     }
 
     fun updateStudents(newStudents: List<Student>) {
@@ -37,3 +51,4 @@ class StudentListCreateAdapter(private var students: MutableList<Student>) :
         val checkBox: CheckBox = itemView.findViewById(R.id.checkBox)
     }
 }
+

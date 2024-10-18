@@ -9,5 +9,6 @@ data class Student(
     val password: String,
     val sex: String,
     val student_id: String,
-    val year_level: String
+    val year_level: String,
+    var isChecked: Boolean = false
 )

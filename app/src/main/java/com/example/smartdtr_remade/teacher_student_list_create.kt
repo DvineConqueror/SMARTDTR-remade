@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,17 +16,17 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class teacher_student_list_create : Fragment() { // Changed to Fragment
+class teacher_student_list_create : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: StudentListCreateAdapter
+    private lateinit var selectAllCheckBox: CheckBox
     private val studentList = mutableListOf<Student>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_teacher_student_list_create, container, false)
     }
 
@@ -33,6 +34,8 @@ class teacher_student_list_create : Fragment() { // Changed to Fragment
         super.onViewCreated(view, savedInstanceState)
 
         recyclerView = view.findViewById(R.id.recycler_student_list)
+        selectAllCheckBox = view.findViewById(R.id.checkBox)
+
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         adapter = StudentListCreateAdapter(studentList)
         recyclerView.adapter = adapter
@@ -51,10 +54,16 @@ class teacher_student_list_create : Fragment() { // Changed to Fragment
                 Log.e("TeacherStudentListFragment", "Error fetching data", t)
             }
         })
+
+        // Handle "Select All" checkbox behavior
+        selectAllCheckBox.setOnCheckedChangeListener { _, isChecked ->
+            adapter.selectAllStudents(isChecked)
+        }
     }
 
     companion object {
         @JvmStatic
-        fun newInstance() = teacher_student_list_create() // New instance method
+        fun newInstance() = teacher_student_list_create()
     }
 }
+

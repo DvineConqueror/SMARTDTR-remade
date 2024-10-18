@@ -17,14 +17,12 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class forgot_password : AppCompatActivity() {
-    // Declare the binding variable
     private lateinit var binding: ActivityForgotPasswordBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        // Inflate the layout using binding
         binding = ActivityForgotPasswordBinding.inflate(layoutInflater)
         setContentView(binding.root)
         etFocusListeners()
@@ -33,16 +31,10 @@ class forgot_password : AppCompatActivity() {
         val forgotPassButton: Button = binding.btResetPassword
 
         backBtn.setOnClickListener {
-            startActivity(
-                Intent(
-                    this@forgot_password,
-                    activity_login::class.java
-                )
-            )
+            startActivity(Intent(this, activity_login::class.java))
         }
 
         forgotPassButton.setOnClickListener {
-            // Call the reset password function
             if (validateForm()) {
                 resetPassword()
             } else {
@@ -123,42 +115,59 @@ class forgot_password : AppCompatActivity() {
         }
     }
 
-    // Validate all fields before making the API call
     private fun validateForm(): Boolean {
         return validID() == null && validateOldPassword() == null &&
                 validateNewPassword() == null && validateConfirmPassword() == null
     }
 
     private fun resetPassword() {
-        // Create a ResetPasswordRequest object
         val userId = binding.etTextFieldUserID.editText?.text.toString().trim()
         val oldPassword = binding.etTextFieldOldPass.editText?.text.toString().trim()
         val newPassword = binding.etTextFieldNewPassword.editText?.text.toString().trim()
 
-        val resetPasswordRequest = ResetPasswordRequest(
+        val resetPassword = ResetPasswordRequest(
             userId = userId,
             oldPassword = oldPassword,
             newPassword = newPassword
         )
 
-        // Make API call using Retrofit
         val apiService = ApiService.create()
-        apiService.resetPassword(resetPasswordRequest).enqueue(object : Callback<ResetPasswordResponse> {
-            override fun onResponse(call: Call<ResetPasswordResponse>, response: Response<ResetPasswordResponse>) {
-                if (response.isSuccessful) {
-                    Log.d("ResetPasswordResponse", "Successful: ${response.body()}")
-                    Toast.makeText(this@forgot_password, "Password reset successfully!", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this@forgot_password, activity_login::class.java))
-                    finish() // Close current activity
-                } else {
-                    Log.e("ResetPasswordResponse", "Failed: ${response.message()}")
-                    Toast.makeText(this@forgot_password, "Password reset failed: ${response.message()}", Toast.LENGTH_SHORT).show()
-                }
-            }
 
-            override fun onFailure(call: Call<ResetPasswordResponse>, t: Throwable) {
-                Toast.makeText(this@forgot_password, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
-            }
-        })
+        // Determine if the user is a student or teacher and call the appropriate API method
+        if (userId.startsWith("S-", true)) { // If ID starts with "S-", it's a student
+            apiService.updateStudent(userId, resetPassword).enqueue(object : Callback<ResetPasswordResponse> {
+                override fun onResponse(call: Call<ResetPasswordResponse>, response: Response<ResetPasswordResponse>) {
+                    handleApiResponse(response)
+                }
+
+                override fun onFailure(call: Call<ResetPasswordResponse>, t: Throwable) {
+                    Toast.makeText(this@forgot_password, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+                }
+            })
+        } else if (userId.startsWith("T-", true)) { // If ID starts with "T-", it's a teacher
+            apiService.updateTeacher(userId, resetPassword).enqueue(object : Callback<ResetPasswordResponse> {
+                override fun onResponse(call: Call<ResetPasswordResponse>, response: Response<ResetPasswordResponse>) {
+                    handleApiResponse(response)
+                }
+
+                override fun onFailure(call: Call<ResetPasswordResponse>, t: Throwable) {
+                    Toast.makeText(this@forgot_password, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+                }
+            })
+        } else {
+            Toast.makeText(this, "Invalid ID format", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun handleApiResponse(response: Response<ResetPasswordResponse>) {
+        if (response.isSuccessful) {
+            Log.d("ResetPasswordResponse", "Successful: ${response.body()}")
+            Toast.makeText(this@forgot_password, "Password reset successfully!", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this@forgot_password, activity_login::class.java))
+            finish() // Close current activity
+        } else {
+            Log.e("ResetPasswordResponse", "Failed: ${response.message()}")
+            Toast.makeText(this@forgot_password, "Password reset failed: ${response.message()}", Toast.LENGTH_SHORT).show()
+        }
     }
 }

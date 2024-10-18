@@ -7,41 +7,56 @@
     android:background="@color/white"
     tools:context=".teacher_appointment">
 
-    <ImageView
-        android:id="@+id/top_wave"
+        <ImageView
+            android:id="@+id/top_wave"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:contentDescription="@string/top_wave"
+            android:scaleType="fitXY"
+            android:src="@drawable/top_wave"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/duty_schedule_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/duty_schedule_label"
+            android:textColor="@color/blue"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/top_wave" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:contentDescription="@string/top_wave"
-        android:scaleType="fitXY"
-        android:src="@drawable/top_wave"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/duty_schedule_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:text="@string/duty_schedule_label"
-        android:textColor="@color/blue"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/top_wave" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_dutySchedule"
-        android:layout_width="393dp"
-        android:layout_height="wrap_content"
-        android:paddingBottom="56dp"
+        android:layout_height="350dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/gradient_background_4"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/duty_schedule_label"
         app:layout_constraintVertical_bias="0.0"
-        tools:listitem="@layout/rv_teacher_duty_card" />
+        tools:ignore="MissingConstraints">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_dutySchedule"
+            android:layout_width="393dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/container"
+            app:layout_constraintEnd_toEndOf="@+id/container"
+            app:layout_constraintStart_toStartOf="@+id/container"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            tools:listitem="@layout/rv_teacher_duty_card" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

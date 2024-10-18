@@ -1,6 +1,5 @@
 package com.example.smartdtr_remade
 
-import StudentListCreateAdapter
 import StudentListViewAdapter
 import android.os.Bundle
 import android.util.Log

@@ -46,8 +46,11 @@ interface ApiService {
     @POST("/api/login")
     fun login(@Body loginRequest: LoginRequest): Call<LoginResponse>
 
-    @POST("your/api/endpoint/reset-password")
-    fun resetPassword(@Body request: ResetPasswordRequest): Call<ResetPasswordResponse>
+    @PUT("/students/{id}") // Use the correct endpoint for password updates
+    fun updateStudent(@Path("id") id: String, @Body request: ResetPasswordRequest): Call<ResetPasswordResponse>
+
+    @PUT("/teachers/{id}") // Use the correct endpoint for password updates
+    fun updateTeacher(@Path("id") id: String, @Body request: ResetPasswordRequest): Call<ResetPasswordResponse>
 
     @POST("signup")
     fun signup(@Body request: SignUpRequest): Call<SignupResponse>
