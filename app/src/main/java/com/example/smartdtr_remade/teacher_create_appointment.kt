@@ -65,13 +65,12 @@ class teacher_create_appointment : Fragment() {
                         studentList.clear()
                         studentList.addAll(it)
                         adapter.notifyDataSetChanged()
-                        Log.d("StudentData", "Fetched students: $it")
                     }
                 }
             }
 
             override fun onFailure(call: Call<List<Student>>, t: Throwable) {
-                Log.e("TeacherCreateAppointment", "Error fetching students", t)
+                Log.e("TeacherCreateAppointment", "Error fetching data", t)
             }
         })
 
@@ -136,21 +135,22 @@ class teacher_create_appointment : Fragment() {
     }
 
     private fun uploadDutyData(subject: String, room: String, startTime: String, endTime: String) {
-        // Get selected students and their IDs
-        val selectedStudentsIds = adapter.getSelectedStudentIds()
+        // Get checked students from the adapter
+        val selectedStudents = adapter.getSelectedStudents().map { it.id.toString() }// Use student id as String
 
-        // Create Duty object and pass the list of selected student IDs
+        // Create Duty object
         val duty = Duty(
-            id = 0, // Set to 0 or an appropriate value
+            id = 0, // Set to 0 or appropriate value
             teacher_id = teacherId ?: 0, // Use the retrieved teacher ID
-            teacher_name = "Teacher Name",
-            student_ids = selectedStudentsIds, // Send the list of selected student IDs
+            teacher_name = "Teacher Name", // Replace with actual teacher's name if available
+            student_id = "", // Optionally add logic for a main student ID if needed
+            students = selectedStudents,
             subject = subject,
             room = room,
             date = selectedDate,
             start_time = startTime,
             end_time = endTime,
-            status = "pending"
+            status = "pending" // Replace with actual status as needed
         )
 
         // Call the API to create the duty
@@ -158,6 +158,7 @@ class teacher_create_appointment : Fragment() {
             override fun onResponse(call: Call<Duty>, response: Response<Duty>) {
                 if (response.isSuccessful) {
                     Toast.makeText(requireContext(), "Duty created successfully", Toast.LENGTH_SHORT).show()
+                    // Handle success (e.g., navigate back or clear fields)
                 } else {
                     Toast.makeText(requireContext(), "Failed to create duty", Toast.LENGTH_SHORT).show()
                 }
