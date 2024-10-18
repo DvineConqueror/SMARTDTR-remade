@@ -6,14 +6,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.CheckBox
-import android.widget.EditText
-import android.widget.Spinner
+import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.smartdtr_remade.Api.RetrofitInstance
+import com.example.smartdtr_remade.models.Duty
 import com.example.smartdtr_remade.models.Student
 import com.google.android.material.button.MaterialButton
 import retrofit2.Call
@@ -22,26 +20,18 @@ import retrofit2.Response
 
 class teacher_create_appointment : Fragment() {
 
-    private var param1: String? = null
-    private var param2: String? = null
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: StudentListCreateAdapter
     private lateinit var selectAllCheckBox: CheckBox
+    private lateinit var calendarView: CalendarView
     private val studentList = mutableListOf<Student>()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var selectedDate: String
+    private var teacherId: Int? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_teacher_create_appointment, container, false)
     }
 
@@ -50,10 +40,14 @@ class teacher_create_appointment : Fragment() {
 
         // Initialize views
         val backButton: MaterialButton = view.findViewById(R.id.btnBack)
+        val createButton: MaterialButton = view.findViewById(R.id.btnCreate)
         val spnrStartTime: Spinner = view.findViewById(R.id.spnrStartTime)
         val spnrEndTime: Spinner = view.findViewById(R.id.spnrEndTime)
         val etSubject: EditText = view.findViewById(R.id.etSubject)
         val etRoom: EditText = view.findViewById(R.id.etRoom)
+
+        // Retrieve teacher ID from PreferencesManager
+        teacherId = PreferencesManager(requireContext()).getUserId()?.toIntOrNull()
 
         // Setup RecyclerView and adapter
         recyclerView = view.findViewById(R.id.recycler_student_list)
@@ -64,7 +58,21 @@ class teacher_create_appointment : Fragment() {
         recyclerView.adapter = adapter
 
         // Fetch student data from API
-        fetchStudentData()
+        RetrofitInstance.studentlistApi.getAllStudents().enqueue(object : Callback<List<Student>> {
+            override fun onResponse(call: Call<List<Student>>, response: Response<List<Student>>) {
+                if (response.isSuccessful) {
+                    response.body()?.let {
+                        studentList.clear()
+                        studentList.addAll(it)
+                        adapter.notifyDataSetChanged()
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<List<Student>>, t: Throwable) {
+                Log.e("TeacherCreateAppointment", "Error fetching data", t)
+            }
+        })
 
         // Handle "Select All" checkbox behavior
         selectAllCheckBox.setOnCheckedChangeListener { _, isChecked ->
@@ -78,24 +86,41 @@ class teacher_create_appointment : Fragment() {
 
         // Setup spinners for time selection
         setupTimeSpinners(spnrStartTime, spnrEndTime)
-    }
 
-    private fun fetchStudentData() {
-        RetrofitInstance.studentlistApi.getAllStudents().enqueue(object : Callback<List<Student>> {
-            override fun onResponse(call: Call<List<Student>>, response: Response<List<Student>>) {
-                if (response.isSuccessful) {
-                    response.body()?.let {
-                        studentList.clear()  // Clear existing list
-                        studentList.addAll(it)  // Add new students
-                        adapter.notifyDataSetChanged()  // Notify adapter of data changes
-                    }
-                }
-            }
+        // Initialize CalendarView
+        calendarView = view.findViewById(R.id.calendarView)
 
-            override fun onFailure(call: Call<List<Student>>, t: Throwable) {
-                Log.e("TeacherCreateAppointment", "Error fetching data", t)
+        // Set the minimum date to today
+        calendarView.minDate = System.currentTimeMillis()
+
+        // Set a listener to capture the selected date
+        calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
+            selectedDate = String.format("%04d-%02d-%02d", year, month + 1, dayOfMonth) // Format date as YYYY-MM-DD
+        }
+
+        // Handle Create button click
+        createButton.setOnClickListener {
+            uploadDutyData(
+                etSubject.text.toString(),
+                etRoom.text.toString(),
+                spnrStartTime.selectedItem.toString(),
+                spnrEndTime.selectedItem.toString()
+            )
+        }
+
+        // Prevent text from disappearing in the subject EditText
+        etSubject.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus && etSubject.text.toString() == "Enter a subject") {
+                etSubject.setText("") // Clear if default text is shown
             }
-        })
+        }
+
+        // Prevent text from disappearing in the room EditText
+        etRoom.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus && etRoom.text.toString() == "Enter a room") {
+                etRoom.setText("") // Clear if default text is shown
+            }
+        }
     }
 
     private fun setupTimeSpinners(startSpinner: Spinner, endSpinner: Spinner) {
@@ -107,6 +132,43 @@ class teacher_create_appointment : Fragment() {
         adapterTimeHour.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         startSpinner.adapter = adapterTimeHour
         endSpinner.adapter = adapterTimeHour // Assuming both use the same array; adjust as needed
+    }
+
+    private fun uploadDutyData(subject: String, room: String, startTime: String, endTime: String) {
+        // Get checked students from the adapter
+        val selectedStudents = adapter.getSelectedStudents().map { it.id.toString() }// Use student id as String
+
+        // Create Duty object
+        val duty = Duty(
+            id = 0, // Set to 0 or appropriate value
+            teacher_id = teacherId ?: 0, // Use the retrieved teacher ID
+            teacher_name = "Teacher Name", // Replace with actual teacher's name if available
+            student_id = "", // Optionally add logic for a main student ID if needed
+            students = selectedStudents,
+            subject = subject,
+            room = room,
+            date = selectedDate,
+            start_time = startTime,
+            end_time = endTime,
+            status = "pending" // Replace with actual status as needed
+        )
+
+        // Call the API to create the duty
+        RetrofitInstance.dutyApi.createDuty(duty).enqueue(object : Callback<Duty> {
+            override fun onResponse(call: Call<Duty>, response: Response<Duty>) {
+                if (response.isSuccessful) {
+                    Toast.makeText(requireContext(), "Duty created successfully", Toast.LENGTH_SHORT).show()
+                    // Handle success (e.g., navigate back or clear fields)
+                } else {
+                    Toast.makeText(requireContext(), "Failed to create duty", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<Duty>, t: Throwable) {
+                Log.e("CreateDuty", "Error: ${t.message}", t)
+                Toast.makeText(requireContext(), "Error occurred", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     companion object {
@@ -123,3 +185,4 @@ class teacher_create_appointment : Fragment() {
             }
     }
 }
+

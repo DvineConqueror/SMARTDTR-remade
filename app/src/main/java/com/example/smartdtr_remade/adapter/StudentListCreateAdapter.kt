@@ -39,6 +39,11 @@ class StudentListCreateAdapter(private var students: MutableList<Student>) :
         notifyDataSetChanged()
     }
 
+    // Get a list of selected students
+    fun getSelectedStudents(): List<Student> {
+        return students.filter { it.isChecked }
+    }
+
     fun updateStudents(newStudents: List<Student>) {
         students.clear()
         students.addAll(newStudents)
@@ -51,4 +56,3 @@ class StudentListCreateAdapter(private var students: MutableList<Student>) :
         val checkBox: CheckBox = itemView.findViewById(R.id.checkBox)
     }
 }
-

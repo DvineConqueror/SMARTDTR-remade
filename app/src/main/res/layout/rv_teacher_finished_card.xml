@@ -12,7 +12,7 @@
         android:layout_width="300dp"
         android:layout_height="180dp"
         android:layout_gravity="center"
-        android:layout_margin="5dp"
+        android:layout_margin="10dp"
         android:elevation="6dp"
         app:cardBackgroundColor="@color/yellow"
         app:cardCornerRadius="20dp"
@@ -148,15 +148,12 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvFinishedTeacherLabel" />
 
-
-            app:layout_constraintTop_toBottomOf="@+id/Finished_date" />
-
             <TextView
                 android:id="@+id/finished_teacher"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
                 android:layout_marginTop="4dp"
+                android:layout_marginStart="10dp"
                 android:text="Mrs. Marlyn Ogoy"
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
