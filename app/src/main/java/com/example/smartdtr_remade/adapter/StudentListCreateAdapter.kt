@@ -40,8 +40,8 @@ class StudentListCreateAdapter(private var students: MutableList<Student>) :
     }
 
     // Get a list of selected students
-    fun getSelectedStudents(): List<Student> {
-        return students.filter { it.isChecked }
+    fun getSelectedStudentIds(): List<Int> {
+        return students.filter { it.isChecked }.map { it.id }
     }
 
     fun updateStudents(newStudents: List<Student>) {

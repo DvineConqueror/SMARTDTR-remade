@@ -152,15 +152,14 @@ class teacher_create_appointment : Fragment() {
 
     private fun uploadDutyData(subject: String, room: String, startTime: String, endTime: String) {
         // Get checked students from the adapter
-        val selectedStudents = adapter.getSelectedStudents().map { it.id.toString() }// Use student id as String
+        val selectedStudentsIds = adapter.getSelectedStudentIds()
 
         // Create Duty object
         val duty = Duty(
             id = 0, // Set to 0 or appropriate value
             teacher_id = teacherId ?: 0, // Use the retrieved teacher ID
             teacher_name = "Teacher Name", // Replace with actual teacher's name if available
-            student_id = "", // Optionally add logic for a main student ID if needed
-            students = selectedStudents,
+            student_ids = selectedStudentsIds,
             subject = subject,
             room = room,
             date = selectedDate,
