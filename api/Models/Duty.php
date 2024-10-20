@@ -47,7 +47,7 @@ class Duty extends Model
     // Scope to get upcoming duties (status: pending, date: future or time in future)     
     public function scopeUpcoming($query)     
     {         
-        return $query->where('status', 'pending')->where(function ($query) {             
+        return $query->where('status', 'Pending')->where(function ($query) {             
             $query->where('date', '>', now()->toDateString())                   
                   ->orWhere(function ($query) {                       
                       $query->where('date', '=', now()->toDateString())                             
@@ -59,10 +59,10 @@ class Duty extends Model
     // Scope to get completed duties (status: finished or date/time has passed)     
     public function scopeCompleted($query)     
     {         
-        return $query->where('status', 'finished')             
+        return $query->where('status', 'Finished')             
             ->orWhere(function ($query) {                 
                 // Automatically mark duties as finished if the time has passed                 
-                $query->where('status', 'pending')                       
+                $query->where('status', 'Pending')                       
                       ->where(function ($query) {                           
                           $query->where('date', '<', now()->toDateString())                                 
                                 ->orWhere(function ($query) {                                     
@@ -87,19 +87,19 @@ class Duty extends Model
 
             // Check if the duty is in the future             
             if ($dutyDate->isFuture() || ($dutyDate->isToday() && $startTime->gt($nowTime))) {                 
-                $this->attributes['status'] = 'pending';             
+                $this->attributes['status'] = 'Pending';             
             }             
             // Check if the duty is pending             
             elseif ($dutyDate->isToday() && $startTime->lte($nowTime) && $endTime->gt($nowTime)) {                 
-                $this->attributes['status'] = 'pending';             
+                $this->attributes['status'] = 'Pending';             
             }             
             // Otherwise, it must be finished             
             else {                 
-                $this->attributes['status'] = 'finished';             
+                $this->attributes['status'] = 'Finished';             
             }         
         } else {             
             // If no date or time is set, default to the passed value or 'pending'             
-            $this->attributes['status'] = $value ?: 'pending';         
+            $this->attributes['status'] = $value ?: 'Pending';         
         }     
     }      
 

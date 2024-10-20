@@ -69,7 +69,7 @@ class StudentController extends Controller
             'lastname' => 'required|string|max:255',
             'mobile_number' => 'required|string',
             'year_level' => 'required|integer',
-            'sex' => 'required|in:male,female,other',
+            'sex' => 'required|in:Male,Female',
         ]);
 
         //Checks if the password is above the minimum of 8 char

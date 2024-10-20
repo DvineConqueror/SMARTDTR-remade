@@ -54,7 +54,7 @@ class AuthController extends Controller
                 'lastname' => 'required|string|max:255',
                 'mobile_number' => 'required|string|max:11',
                 'date_of_birth' => 'required|date',
-                'sex' => 'required|in:male,female,other',
+                'sex' => 'required|in:Male,Female',
             ];
     
             // Add specific validation based on whether the user is a student or teacher

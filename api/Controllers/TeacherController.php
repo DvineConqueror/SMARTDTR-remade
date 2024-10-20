@@ -68,7 +68,7 @@ class TeacherController extends Controller
             'firstname' => 'required|string|max:255',
             'lastname' => 'required|string|max:255',
             'mobile_number' => 'required|string',
-            'sex' => 'required|in:male,female,other',
+            'sex' => 'required|in:Male,female',
         ]);
 
         //Checks if the password is above the minimum of 8 char

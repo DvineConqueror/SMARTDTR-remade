@@ -16,7 +16,7 @@ class CreateTeachersTable extends Migration
             $table->string('password');
             $table->string('teacher_id')->unique();
             $table->string('mobile_number');
-            $table->enum('sex', ['male', 'female', 'other']);
+            $table->enum('sex', ['Male', 'Female']);
             $table->timestamps();
         });
     }
