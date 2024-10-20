@@ -52,6 +52,9 @@ interface ApiService {
     @PUT("/teachers/{id}") // Use the correct endpoint for password updates
     fun updateTeacher(@Path("id") id: String, @Body request: ResetPasswordRequest): Call<ResetPasswordResponse>
 
+    @POST("/changepassword")
+    fun changePassword(@Body request: ResetPasswordRequest): Call<ResetPasswordResponse>
+
     @POST("signup")
     fun signup(@Body request: SignUpRequest): Call<SignupResponse>
 

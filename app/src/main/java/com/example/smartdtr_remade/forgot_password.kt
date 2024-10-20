@@ -44,32 +44,28 @@ class forgot_password : AppCompatActivity() {
     }
 
     private fun etFocusListeners() {
+        // Add focus listeners to validate inputs
         binding.etTextFieldUserID.editText?.setOnFocusChangeListener { _, focused ->
             if (!focused) {
-                val validationMessage = validID()
-                Log.d("FocusListener", "Validation triggered. Message: $validationMessage")
-                binding.etTextFieldUserID.helperText = validationMessage
+                binding.etTextFieldUserID.helperText = validID()
             }
         }
 
         binding.etTextFieldOldPass.editText?.setOnFocusChangeListener { _, focused ->
             if (!focused) {
-                val validationMessage = validateOldPassword()
-                binding.etTextFieldOldPass.helperText = validationMessage
+                binding.etTextFieldOldPass.helperText = validateOldPassword()
             }
         }
 
         binding.etTextFieldNewPassword.editText?.setOnFocusChangeListener { _, focused ->
             if (!focused) {
-                val validationMessage = validateNewPassword()
-                binding.etTextFieldNewPassword.helperText = validationMessage
+                binding.etTextFieldNewPassword.helperText = validateNewPassword()
             }
         }
 
         binding.etTextFieldNewPasswordConfirm.editText?.setOnFocusChangeListener { _, focused ->
             if (!focused) {
-                val validationMessage = validateConfirmPassword()
-                binding.etTextFieldNewPasswordConfirm.helperText = validationMessage
+                binding.etTextFieldNewPasswordConfirm.helperText = validateConfirmPassword()
             }
         }
     }
@@ -122,52 +118,42 @@ class forgot_password : AppCompatActivity() {
 
     private fun resetPassword() {
         val userId = binding.etTextFieldUserID.editText?.text.toString().trim()
-        val oldPassword = binding.etTextFieldOldPass.editText?.text.toString().trim()
-        val newPassword = binding.etTextFieldNewPassword.editText?.text.toString().trim()
+        val old_password = binding.etTextFieldOldPass.editText?.text.toString().trim()
+        val new_password = binding.etTextFieldNewPassword.editText?.text.toString().trim()
 
         val resetPassword = ResetPasswordRequest(
             userId = userId,
-            oldPassword = oldPassword,
-            newPassword = newPassword
+            old_password = old_password,
+            new_password = new_password,
+            new_password_confirmation = new_password // Pass new password as confirmation
         )
 
         val apiService = ApiService.create()
 
-        // Determine if the user is a student or teacher and call the appropriate API method
-        if (userId.startsWith("S-", true)) { // If ID starts with "S-", it's a student
-            apiService.updateStudent(userId, resetPassword).enqueue(object : Callback<ResetPasswordResponse> {
-                override fun onResponse(call: Call<ResetPasswordResponse>, response: Response<ResetPasswordResponse>) {
-                    handleApiResponse(response)
-                }
+        // Unified API call for both students and teachers
+        apiService.changePassword(resetPassword).enqueue(object : Callback<ResetPasswordResponse> {
+            override fun onResponse(call: Call<ResetPasswordResponse>, response: Response<ResetPasswordResponse>) {
+                handleApiResponse(response)
+            }
 
-                override fun onFailure(call: Call<ResetPasswordResponse>, t: Throwable) {
-                    Toast.makeText(this@forgot_password, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
-                }
-            })
-        } else if (userId.startsWith("T-", true)) { // If ID starts with "T-", it's a teacher
-            apiService.updateTeacher(userId, resetPassword).enqueue(object : Callback<ResetPasswordResponse> {
-                override fun onResponse(call: Call<ResetPasswordResponse>, response: Response<ResetPasswordResponse>) {
-                    handleApiResponse(response)
-                }
-
-                override fun onFailure(call: Call<ResetPasswordResponse>, t: Throwable) {
-                    Toast.makeText(this@forgot_password, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
-                }
-            })
-        } else {
-            Toast.makeText(this, "Invalid ID format", Toast.LENGTH_SHORT).show()
-        }
+            override fun onFailure(call: Call<ResetPasswordResponse>, t: Throwable) {
+                Toast.makeText(this@forgot_password, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
-
     private fun handleApiResponse(response: Response<ResetPasswordResponse>) {
         if (response.isSuccessful) {
             Log.d("ResetPasswordResponse", "Successful: ${response.body()}")
-            Toast.makeText(this@forgot_password, "Password reset successfully!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@forgot_password, response.body()?.message ?: "Password reset successfully!", Toast.LENGTH_SHORT).show()
+
             startActivity(Intent(this@forgot_password, activity_login::class.java))
             finish() // Close current activity
         } else {
             Log.e("ResetPasswordResponse", "Failed: ${response.message()}")
-            Toast.makeText(this@forgot_password, "Password reset failed: ${response.message()}", Toast.LENGTH_SHORT).show()
+            // Handle error message from the response body if available
+            val errorMessage = response.errorBody()?.string() ?: "Password reset failed."
+            Toast.makeText(this@forgot_password, errorMessage, Toast.LENGTH_SHORT).show()
         }
     }
+
 }
