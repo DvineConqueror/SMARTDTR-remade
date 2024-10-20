@@ -136,58 +136,42 @@ class AuthController extends Controller
 
 
     // Logout method
-    public function logout(Request $request)
-    {
-        // Get the token from the request
-        $token = $request->bearerToken();
-
-        if ($token) {
-            // Find and revoke the token
-            $personalAccessToken = PersonalAccessToken::findToken($token);
-            if ($personalAccessToken) {
-                $personalAccessToken->delete(); // Revoke the token
-                return response()->json(['message' => 'Logged out successfully'], 200);
-            }
-        }
-
-        return response()->json(['error' => 'Invalid token'], 401);
-    }
-
-    // Method for changing password
     public function changePassword(Request $request)
     {
         // Validate the request data
         $request->validate([
-            'userId' => 'required', // Make sure the user_id is provided
+            'userId' => 'required', // Ensure userId is provided
             'old_password' => 'required',
-            'new_password' => 'required|min:8|confirmed', // 'confirmed' means there should be a field 'new_password_confirmation'
+            'new_password' => 'required|min:8|confirmed', // Use 'confirmed' to check new_password_confirmation
         ]);
-
+    
         // Check if the user_id belongs to a teacher
-        $user = Teacher::where('teacher_id', $request->id)->first();
-
+        $user = Teacher::where('teacher_id', $request->userId)->first();
+    
         // If not a teacher, check if it's a student
         if (!$user) {
-            $user = Student::where('student_id', $request->id)->first();
+            $user = Student::where('student_id', $request->userId)->first();
         }
-
+    
         // If the user is not found, return an error
         if (!$user) {
             return response()->json(['message' => 'User not found'], 404);
         }
-
+    
         // Check if the old password matches the current password
         if (!Hash::check($request->old_password, $user->password)) {
             return response()->json(['message' => 'Old password is incorrect'], 400);
         }
-
+    
         // Update the password to the new password
         $user->password = Hash::make($request->new_password);
         $user->save();
-
+    
         // Return a success response
         return response()->json(['message' => 'Password changed successfully'], 200);
     }
+    
+    
 }
 
 
