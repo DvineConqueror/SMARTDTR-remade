@@ -106,20 +106,6 @@
             app:layout_constraintTop_toBottomOf="@+id/email_value" />
 
         <TextView
-            android:id="@+id/date_of_birth_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
-            android:text=""
-            android:fontFamily="@font/lilita_one"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.361"
-            app:layout_constraintStart_toEndOf="@+id/date_of_birth_label"
-            app:layout_constraintTop_toBottomOf="@+id/mobile_number_value" />
-
-        <TextView
             android:id="@+id/student_id_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -169,15 +155,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="@string/year_level_label"
             android:fontFamily="@font/lilita_one"
+            android:text="@string/year_level_label"
             android:textColor="@color/yellow"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.15"
+            app:layout_constraintHorizontal_bias="0.148"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/date_of_birth_label" />
+            app:layout_constraintTop_toBottomOf="@+id/mobile_number" />
 
         <TextView
             android:id="@+id/sex_label"
@@ -195,33 +181,18 @@
             app:layout_constraintTop_toBottomOf="@+id/Year_level_label" />
 
         <TextView
-            android:id="@+id/date_of_birth_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
-            android:text="@string/date_of_birth_label"
-            android:fontFamily="@font/lilita_one"
-            android:textColor="@color/yellow"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.164"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mobile_number" />
-
-        <TextView
             android:id="@+id/Year_level_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text=""
             android:fontFamily="@font/lilita_one"
+            android:text=""
             android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.519"
+            app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toEndOf="@+id/Year_level_label"
-            app:layout_constraintTop_toBottomOf="@+id/date_of_birth_value" />
+            app:layout_constraintTop_toBottomOf="@+id/mobile_number_value" />
 
         <TextView
             android:id="@+id/sex_value"

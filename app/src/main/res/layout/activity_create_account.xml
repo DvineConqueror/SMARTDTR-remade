@@ -259,13 +259,13 @@
                 android:layout_height="wrap_content"
                 android:textColorHint="@color/gray"
                 app:boxBackgroundMode="none"
-                app:counterMaxLength="11"
                 app:counterEnabled="true"
+                app:counterMaxLength="11"
                 app:helperText=""
                 app:helperTextTextColor="@color/brightred"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etTextFieldDOB">
+                app:layout_constraintTop_toBottomOf="@+id/rlYearLevel">
 
                 <EditText
                     android:id="@+id/etMobileNumber"
@@ -358,26 +358,7 @@
                 app:helperTextTextColor="@color/brightred"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rlYearLevel">
-
-                <EditText
-                    android:id="@+id/etDateOfBirth"
-                    android:layout_width="375dp"
-                    android:layout_height="55dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/custom_edittext"
-                    android:ems="10"
-                    android:fontFamily="@font/lilita_one"
-                    android:hint="Enter your birthdate(ex. YYYY-MM-DD)"
-                    android:inputType="textNoSuggestions"
-                    android:maxLength="11"
-                    android:padding="10dp"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/gray"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/rlYearLevel" />
-            </com.google.android.material.textfield.TextInputLayout>
+                app:layout_constraintTop_toBottomOf="@+id/rlYearLevel"/>
 
             <Button
                 android:id="@+id/btnNext"

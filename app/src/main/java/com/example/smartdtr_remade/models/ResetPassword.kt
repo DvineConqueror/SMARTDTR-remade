@@ -19,7 +19,6 @@ data class StudentData(
     val email: String,
     val student_id: String,
     val mobile_number: String,
-    val date_of_birth: String,
     val year_level: Int,
     val sex: String,
     val created_at: String,
@@ -33,7 +32,6 @@ data class TeacherData(
     val email: String,
     val teacher_id: String,
     val mobile_number: String,
-    val date_of_birth: String,
     val sex: String,
     val created_at: String,
     val updated_at: String
