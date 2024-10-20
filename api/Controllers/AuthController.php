@@ -53,6 +53,7 @@ class AuthController extends Controller
                 'firstname' => 'required|string|max:255',
                 'lastname' => 'required|string|max:255',
                 'mobile_number' => 'required|string|max:11',
+                'date_of_birth' => 'required|date',
                 'sex' => 'required|in:Male,Female',
             ];
     
@@ -87,6 +88,7 @@ class AuthController extends Controller
                     'email' => $request->email,
                     'password' => Hash::make($request->password),
                     'mobile_number' => $request->mobile_number,
+                    'date_of_birth' => $request->date_of_birth,
                     'year_level' => $request->year_level,
                     'sex' => $request->sex,
                 ]);
@@ -99,6 +101,7 @@ class AuthController extends Controller
                     'email' => $request->email,
                     'password' => Hash::make($request->password),
                     'mobile_number' => $request->mobile_number,
+                    'date_of_birth' => $request->date_of_birth,
                     'sex' => $request->sex,
                 ]);
             }
@@ -136,43 +139,20 @@ class AuthController extends Controller
 
 
     // Logout method
-    public function changePassword(Request $request)
+    public function logout(Request $request)
     {
-        // Validate the request data
-        $request->validate([
-            'userId' => 'required', // Ensure userId is provided
-            'old_password' => 'required',
-            'new_password' => 'required|min:8|confirmed', // Use 'confirmed' to check new_password_confirmation
-        ]);
-    
-        // Check if the user_id belongs to a teacher
-        $user = Teacher::where('teacher_id', $request->userId)->first();
-    
-        // If not a teacher, check if it's a student
-        if (!$user) {
-            $user = Student::where('student_id', $request->userId)->first();
+        // Get the token from the request
+        $token = $request->bearerToken();
+
+        if ($token) {
+            // Find and revoke the token
+            $personalAccessToken = PersonalAccessToken::findToken($token);
+            if ($personalAccessToken) {
+                $personalAccessToken->delete(); // Revoke the token
+                return response()->json(['message' => 'Logged out successfully'], 200);
+            }
         }
-    
-        // If the user is not found, return an error
-        if (!$user) {
-            return response()->json(['message' => 'User not found'], 404);
-        }
-    
-        // Check if the old password matches the current password
-        if (!Hash::check($request->old_password, $user->password)) {
-            return response()->json(['message' => 'Old password is incorrect'], 400);
-        }
-    
-        // Update the password to the new password
-        $user->password = Hash::make($request->new_password);
-        $user->save();
-    
-        // Return a success response
-        return response()->json(['message' => 'Password changed successfully'], 200);
+
+        return response()->json(['error' => 'Invalid token'], 401);
     }
-    
-    
 }
-
-
-
