@@ -37,18 +37,34 @@
             android:id="@+id/timer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="9dp"
+            android:layout_marginStart="64dp"
+            android:fontFamily="@font/lilita_one"
             android:gravity="center"
-            android:text="90 Hours Left"
+            android:text="90"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/rectange_blue"
+            app:layout_constraintStart_toStartOf="@+id/rectange_blue"
+            app:layout_constraintTop_toTopOf="@+id/rectange_blue"
+            app:layout_constraintVertical_bias="0.52" />
+
+        <TextView
+            android:id="@+id/tvHoursLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lilita_one"
+            android:gravity="center"
+            android:text="Hours Left"
             android:textColor="@color/white"
             android:textSize="30sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/rectange_blue"
             app:layout_constraintEnd_toEndOf="@+id/rectange_blue"
-            app:layout_constraintHorizontal_bias="0.491"
-            app:layout_constraintStart_toStartOf="@+id/rectange_blue"
+            app:layout_constraintHorizontal_bias="0.183"
+            app:layout_constraintStart_toEndOf="@+id/timer"
             app:layout_constraintTop_toTopOf="@+id/rectange_blue"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.52" />
 
         <TextView
             android:id="@+id/upcoming_duty_label"
@@ -91,8 +107,8 @@
                     android:textColor="@color/white"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/upcoming_date"
@@ -222,9 +238,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.494"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/finished_duty_label"
             tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteY="29dp"
-            app:layout_constraintTop_toBottomOf="@+id/finished_duty_label">
+            tools:layout_editor_absoluteY="29dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -239,8 +255,8 @@
                     android:textColor="@color/white"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/finished_date"
