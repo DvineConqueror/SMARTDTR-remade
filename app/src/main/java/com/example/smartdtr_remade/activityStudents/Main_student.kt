@@ -4,8 +4,11 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.widget.Button
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -28,6 +31,8 @@ class Main_student : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainStudentBinding
     private lateinit var preferencesManager: PreferencesManager
+    private var doubleBackExitPressedOnce = false
+    private val backPressHandler = Handler(Looper.getMainLooper())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +53,23 @@ class Main_student : AppCompatActivity() {
             }
             true
         }
+
+        // Register a callback for handling back presses
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (doubleBackExitPressedOnce) {
+                    finish()  // Exit the app
+                } else {
+                    doubleBackExitPressedOnce = true
+                    Toast.makeText(this@Main_student, "Press back again to exit", Toast.LENGTH_SHORT).show()
+
+                    // Reset the flag after 2 seconds
+                    backPressHandler.postDelayed({
+                        doubleBackExitPressedOnce = false
+                    }, 2000)
+                }
+            }
+        })
     }
 
     private fun replaceFragment(fragment: Fragment) {
