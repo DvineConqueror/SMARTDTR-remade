@@ -68,7 +68,6 @@ class TeacherController extends Controller
             'firstname' => 'required|string|max:255',
             'lastname' => 'required|string|max:255',
             'mobile_number' => 'required|string',
-            'date_of_birth' => 'required|date',
             'sex' => 'required|in:male,female,other',
         ]);
 
@@ -101,7 +100,6 @@ class TeacherController extends Controller
             'password' => Hash::make($request->password), // Hash the password
             'teacher_id' => $request->teacher_id,
             'mobile_number' => $request->mobile_number,
-            'date_of_birth' => $request->date_of_birth,
             'year_level' => $request->year_level,
             'sex' => $request->sex,
         ]);
