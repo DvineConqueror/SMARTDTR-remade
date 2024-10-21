@@ -1,5 +1,6 @@
 package com.example.smartdtr_remade
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -25,26 +26,23 @@ class forgot_password : AppCompatActivity() {
 
         binding = ActivityForgotPasswordBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        etFocusListeners()
 
-        val backBtn: Button = binding.btnBack
-        val forgotPassButton: Button = binding.btResetPassword
+        setupFocusListeners()
 
-        backBtn.setOnClickListener {
+        binding.btnBack.setOnClickListener {
             startActivity(Intent(this, activity_login::class.java))
         }
 
-        forgotPassButton.setOnClickListener {
+        binding.btResetPassword.setOnClickListener {
             if (validateForm()) {
-                resetPassword()
+                showLogoutConfirmationDialog()
             } else {
-                Toast.makeText(this, "Please fix the errors above", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Please double-check the information provided!", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    private fun etFocusListeners() {
-        // Add focus listeners to validate inputs
+    private fun setupFocusListeners() {
         binding.etTextFieldUserID.editText?.setOnFocusChangeListener { _, focused ->
             if (!focused) {
                 binding.etTextFieldUserID.helperText = validID()
@@ -102,18 +100,16 @@ class forgot_password : AppCompatActivity() {
 
     private fun resetPassword() {
         val userId = binding.etTextFieldUserID.editText?.text.toString().trim()
-        val new_password = binding.etTextFieldNewPassword.editText?.text.toString().trim()
+        val newPassword = binding.etTextFieldNewPassword.editText?.text.toString().trim()
 
-        val resetPassword = ResetPasswordRequest(
+        val resetPasswordRequest = ResetPasswordRequest(
             userId = userId,
-            new_password = new_password,
-            new_password_confirmation = new_password // Pass new password as confirmation
+            new_password = newPassword,
+            new_password_confirmation = newPassword // Pass new password as confirmation
         )
 
         val apiService = ApiService.create()
-
-        // Unified API call for both students and teachers
-        apiService.changePassword(resetPassword).enqueue(object : Callback<ResetPasswordResponse> {
+        apiService.changePassword(resetPasswordRequest).enqueue(object : Callback<ResetPasswordResponse> {
             override fun onResponse(call: Call<ResetPasswordResponse>, response: Response<ResetPasswordResponse>) {
                 handleApiResponse(response)
             }
@@ -127,15 +123,40 @@ class forgot_password : AppCompatActivity() {
     private fun handleApiResponse(response: Response<ResetPasswordResponse>) {
         if (response.isSuccessful) {
             Log.d("ResetPasswordResponse", "Successful: ${response.body()}")
-            Toast.makeText(this@forgot_password, response.body()?.message ?: "Password reset successfully!", Toast.LENGTH_SHORT).show()
-
-            startActivity(Intent(this@forgot_password, activity_login::class.java))
-            finish() // Close current activity
+            showSuccessDialog(response.body()?.message ?: "Password reset successfully!")
         } else {
             Log.e("ResetPasswordResponse", "Failed: ${response.message()}")
-            // Handle error message from the response body if available
             val errorMessage = response.errorBody()?.string() ?: "Password reset failed."
             Toast.makeText(this@forgot_password, errorMessage, Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun showLogoutConfirmationDialog() {
+        AlertDialog.Builder(this)
+            .setTitle("Proceed with Password Reset?")
+            .setMessage("Do you wish to proceed with resetting your password?")
+            .setPositiveButton("Yes") { dialog, _ ->
+                dialog.dismiss()
+                resetPassword() // Call the password reset method
+            }
+            .setNegativeButton("No") { dialog, _ ->
+                dialog.dismiss()
+                Toast.makeText(this, "Password Reset Aborted", Toast.LENGTH_SHORT).show()
+            }
+            .setCancelable(false)
+            .show()
+    }
+
+    private fun showSuccessDialog(successMessage: String) {
+        AlertDialog.Builder(this)
+            .setTitle("Password Reset")
+            .setMessage(successMessage)
+            .setPositiveButton("OK") { innerDialog, _ ->
+                innerDialog.dismiss()
+                startActivity(Intent(this, activity_login::class.java))
+                finish() // Close current activity
+            }
+            .setCancelable(false)
+            .show()
     }
 }

@@ -17,6 +17,10 @@ class PreferencesManager(context: Context) {
         return sharedPreferences.getString("token", null)
     }
 
+    fun clearToken() {
+        editor.remove("token").apply()
+    }
+
     // User ID
     fun saveUserId(userId: String) {
         editor.putString("userId", userId).apply()
