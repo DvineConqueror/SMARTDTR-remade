@@ -54,7 +54,7 @@ class DutyController extends Controller
                 'date' => 'required|date',
                 'start_time' => 'required|date_format:H:i',
                 'end_time' => 'required|date_format:H:i|after:start_time',
-                'status' => 'required|in:Pending,Finished,Canceled',
+                'status' => 'required|in:pending,finished,canceled',
             ]);
 
             // Create the duty

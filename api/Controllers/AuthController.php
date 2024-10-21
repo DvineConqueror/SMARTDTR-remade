@@ -39,6 +39,32 @@ class AuthController extends Controller
         }
     }
 
+    // Change password method
+    public function changePassword(Request $request){
+        $request->validate([
+            'userId' => 'required|string',
+            'new_password' => 'required|string|min:8|confirmed',
+        ]);
+
+        // Find the user by ID, determine if it's a Student or Teacher
+        $user = null;
+        if (str_starts_with($request->userId, 'S')) {
+            $user = Student::where('student_id', $request->userId)->first();
+        } elseif (str_starts_with($request->userId, 'T')) {
+            $user = Teacher::where('teacher_id', $request->userId)->first();
+        }
+
+        if (!$user) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+
+        // Update the user's password
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
+        return response()->json(['message' => 'Password updated successfully'], 200);
+    }
+
     // Signup method
     public function signup(Request $request)
     {
@@ -53,7 +79,6 @@ class AuthController extends Controller
                 'firstname' => 'required|string|max:255',
                 'lastname' => 'required|string|max:255',
                 'mobile_number' => 'required|string|max:11',
-                'date_of_birth' => 'required|date',
                 'sex' => 'required|in:Male,Female',
             ];
     
@@ -88,7 +113,6 @@ class AuthController extends Controller
                     'email' => $request->email,
                     'password' => Hash::make($request->password),
                     'mobile_number' => $request->mobile_number,
-                    'date_of_birth' => $request->date_of_birth,
                     'year_level' => $request->year_level,
                     'sex' => $request->sex,
                 ]);
@@ -101,7 +125,6 @@ class AuthController extends Controller
                     'email' => $request->email,
                     'password' => Hash::make($request->password),
                     'mobile_number' => $request->mobile_number,
-                    'date_of_birth' => $request->date_of_birth,
                     'sex' => $request->sex,
                 ]);
             }
