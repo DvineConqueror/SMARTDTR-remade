@@ -144,21 +144,26 @@ class activity_login : AppCompatActivity() {
                     val userId = response.body()?.userId
                     val user = response.body()?.user
 
-                    if (token != null && user != null) {
+                    Log.d("LoginResponse", "Token: $token, User: $user")
+
+                    if (token != null) {
                         preferencesManager.saveToken(token)
                         preferencesManager.saveUserId(userId ?: "")
 
-                        // Save the appropriate ID based on user type
-                        if (user.teacher_id != null) {
-                            preferencesManager.saveTeacherId(user.teacher_id)
-                            startActivity(Intent(this@activity_login, Main_teacher::class.java))
-                            Toast.makeText(this@activity_login, "Login Successful!", Toast.LENGTH_SHORT).show()
-                        } else if (user.student_id != null) {
-                            preferencesManager.saveStudentId(user.student_id)
-                            startActivity(Intent(this@activity_login, Main_student::class.java))
-                            Toast.makeText(this@activity_login, "Login Successful!", Toast.LENGTH_SHORT).show()
+                        when {
+                            user?.teacher_id != null -> {
+                                preferencesManager.saveTeacherId(user.teacher_id)
+                                startActivity(Intent(this@activity_login, Main_teacher::class.java))
+                            }
+                            user?.student_id != null -> {
+                                preferencesManager.saveStudentId(user.student_id)
+                                startActivity(Intent(this@activity_login, Main_student::class.java))
+                            }
                         }
+                        Toast.makeText(this@activity_login, "Login Successful!", Toast.LENGTH_SHORT).show()
                         finish()
+                    } else {
+                        Toast.makeText(this@activity_login, "Login failed: No token received", Toast.LENGTH_SHORT).show()
                     }
                 } else {
                     Toast.makeText(this@activity_login, "Login failed: ${response.message()}", Toast.LENGTH_SHORT).show()

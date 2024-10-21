@@ -10,8 +10,12 @@ class PreferencesManager(context: Context) {
 
     // Token
     fun saveToken(token: String) {
-        editor.putString("token", token).apply()
+        val existingToken = getToken()
+        if (existingToken != token) {
+            editor.putString("token", token).apply()
+        }
     }
+
 
     fun getToken(): String? {
         return sharedPreferences.getString("token", null)

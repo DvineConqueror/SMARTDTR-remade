@@ -151,7 +151,7 @@ class Main_teacher : AppCompatActivity() {
         apiService.logout("Bearer $token").enqueue(object : Callback<Void> {
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
                 if (response.isSuccessful) {
-                    preferencesManager.clear() // Clear the token on successful logout
+                    preferencesManager.clearToken() // Call the new method to clear the token
                     Toast.makeText(this@Main_teacher, "Logged out successfully", Toast.LENGTH_SHORT).show()
                     startActivity(Intent(this@Main_teacher, activity_login::class.java))
                     finish() // Close current activity
