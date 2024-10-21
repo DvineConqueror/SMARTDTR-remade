@@ -29,10 +29,12 @@ class AuthController extends Controller
         if ($user && Hash::check($password, $user->password)) {
             // Create and return the token
             $token = $user->createToken('loginToken')->plainTextToken;
+            $userType = str_starts_with($user->id, 'S') ? 'student' : 'teacher';
             return response()->json([
                 'token' => $token,
                 'user' => $user,
                 'userId' => $user->id, // Directly access the ID
+                'userType' => $userType,
             ], 200);
         } else {
             return response()->json(['error' => 'Invalid credentials'], 401);
