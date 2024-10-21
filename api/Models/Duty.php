@@ -87,19 +87,19 @@ class Duty extends Model
 
             // Check if the duty is in the future             
             if ($dutyDate->isFuture() || ($dutyDate->isToday() && $startTime->gt($nowTime))) {                 
-                $this->attributes['status'] = 'Pending';             
+                $this->attributes['status'] = 'pending';             
             }             
             // Check if the duty is pending             
             elseif ($dutyDate->isToday() && $startTime->lte($nowTime) && $endTime->gt($nowTime)) {                 
-                $this->attributes['status'] = 'Pending';             
+                $this->attributes['status'] = 'pending';             
             }             
             // Otherwise, it must be finished             
             else {                 
-                $this->attributes['status'] = 'Finished';             
+                $this->attributes['status'] = 'finished';             
             }         
         } else {             
             // If no date or time is set, default to the passed value or 'pending'             
-            $this->attributes['status'] = $value ?: 'Pending';         
+            $this->attributes['status'] = $value ?: 'pending';         
         }     
     }      
 
