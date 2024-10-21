@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
@@ -52,6 +53,25 @@ class activity_create_account : AppCompatActivity() {
         btnNext = findViewById(R.id.btnNext)
         btnBack = findViewById(R.id.btnBack)
 
+        //Set spinner font to app font
+        val adapter1 = ArrayAdapter.createFromResource(
+            this,
+            R.array.year_level,
+            R.layout.spinner_text_edit
+        )
+
+        val adapter2 = ArrayAdapter.createFromResource(
+            this,
+            R.array.sex_options,
+            R.layout.spinner_text_edit
+        )
+
+        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerSex.adapter = adapter1
+
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spnYearLevel.adapter = adapter2
+
         etFocusListeners()
 
         // Initialize SharedPreferences
@@ -93,13 +113,21 @@ class activity_create_account : AppCompatActivity() {
 
         etFirstPassword.setOnFocusChangeListener { _, focused ->
             if (!focused) {
-                etFirstPassword.error = validatePassword()
+                val errorMsg = validatePassword()
+                if (errorMsg != null) {
+                    etFirstPassword.error = null // Hide error icon
+                    etFirstPassword.setError(errorMsg, null) // Show only error text
+                }
             }
         }
 
         etPasswordConfirm.setOnFocusChangeListener { _, focused ->
             if (!focused) {
-                etPasswordConfirm.error = validateConfirmPassword()
+                val errorMsg = validateConfirmPassword()
+                if (errorMsg != null) {
+                    etPasswordConfirm.error = null // Hide error icon
+                    etPasswordConfirm.setError(errorMsg, null) // Show only error text
+                }
             }
         }
 

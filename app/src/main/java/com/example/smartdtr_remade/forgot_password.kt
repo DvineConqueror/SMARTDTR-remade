@@ -51,12 +51,6 @@ class forgot_password : AppCompatActivity() {
             }
         }
 
-        binding.etTextFieldOldPass.editText?.setOnFocusChangeListener { _, focused ->
-            if (!focused) {
-                binding.etTextFieldOldPass.helperText = validateOldPassword()
-            }
-        }
-
         binding.etTextFieldNewPassword.editText?.setOnFocusChangeListener { _, focused ->
             if (!focused) {
                 binding.etTextFieldNewPassword.helperText = validateNewPassword()
@@ -77,15 +71,6 @@ class forgot_password : AppCompatActivity() {
 
         return if (!teacherPattern.matches(etUserID) && !studentPattern.matches(etUserID)) {
             "Please enter a valid ID Number!"
-        } else {
-            null
-        }
-    }
-
-    private fun validateOldPassword(): String? {
-        val oldPassword = binding.etTextFieldOldPass.editText?.text.toString().trim()
-        return if (oldPassword.isEmpty()) {
-            "Old password is required."
         } else {
             null
         }
@@ -112,18 +97,15 @@ class forgot_password : AppCompatActivity() {
     }
 
     private fun validateForm(): Boolean {
-        return validID() == null && validateOldPassword() == null &&
-                validateNewPassword() == null && validateConfirmPassword() == null
+        return validID() == null && validateNewPassword() == null && validateConfirmPassword() == null
     }
 
     private fun resetPassword() {
         val userId = binding.etTextFieldUserID.editText?.text.toString().trim()
-        val old_password = binding.etTextFieldOldPass.editText?.text.toString().trim()
         val new_password = binding.etTextFieldNewPassword.editText?.text.toString().trim()
 
         val resetPassword = ResetPasswordRequest(
             userId = userId,
-            old_password = old_password,
             new_password = new_password,
             new_password_confirmation = new_password // Pass new password as confirmation
         )
@@ -141,6 +123,7 @@ class forgot_password : AppCompatActivity() {
             }
         })
     }
+
     private fun handleApiResponse(response: Response<ResetPasswordResponse>) {
         if (response.isSuccessful) {
             Log.d("ResetPasswordResponse", "Successful: ${response.body()}")
@@ -155,5 +138,4 @@ class forgot_password : AppCompatActivity() {
             Toast.makeText(this@forgot_password, errorMessage, Toast.LENGTH_SHORT).show()
         }
     }
-
 }

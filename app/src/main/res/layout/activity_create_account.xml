@@ -23,8 +23,8 @@
                 android:id="@+id/btnBack"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_marginTop="26dp"
                 android:layout_marginLeft="20dp"
+                android:layout_marginTop="26dp"
                 android:backgroundTint="@color/white"
                 android:contentDescription="Back Button"
                 android:shadowColor="@color/white"
@@ -81,17 +81,17 @@
                 android:layout_marginTop="40dp"
                 android:background="@drawable/custom_edittext"
                 android:ems="10"
-                android:maxLength="12"
                 android:fontFamily="@font/lilita_one"
                 android:hint="Last Name"
                 android:inputType="textPersonName"
+                android:maxLength="12"
                 android:maxLines="15"
                 android:padding="10dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/gray"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.901"
-                app:layout_constraintStart_toStartOf="@+id/etLastname"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
             <EditText
@@ -102,9 +102,9 @@
                 android:background="@drawable/custom_edittext"
                 android:ems="10"
                 android:fontFamily="@font/lilita_one"
-                android:maxLength="12"
                 android:hint="First Name"
                 android:inputType="textPersonName"
+                android:maxLength="12"
                 android:maxLines="15"
                 android:padding="10dp"
                 android:textColor="@color/black"
@@ -115,15 +115,15 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/etTextFieldEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/etTextFieldEmail"
-                android:layout_marginTop="10dp"
-                app:boxBackgroundMode="none"
-                app:counterMaxLength="50"
-                app:counterEnabled="true"
-                app:helperText=""
+                android:layout_marginTop="20dp"
                 android:textColorHint="@color/gray"
+                app:boxBackgroundMode="none"
+                app:counterEnabled="true"
+                app:counterMaxLength="50"
+                app:helperText=""
                 app:helperTextTextColor="@color/brightred"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -137,9 +137,9 @@
                     android:background="@drawable/custom_edittext"
                     android:ems="10"
                     android:fontFamily="@font/lilita_one"
-                    android:maxLength="50"
                     android:hint="Enter your email"
                     android:inputType="textEmailAddress"
+                    android:maxLength="50"
                     android:padding="10dp"
                     android:textColor="@color/black"
                     android:textColorHint="@color/gray"
@@ -150,20 +150,21 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/etTextFieldPassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/etTextFieldPassword"
                 android:layout_marginTop="10dp"
+                android:textColorHint="@color/gray"
                 app:boxBackgroundMode="none"
                 app:counterEnabled="true"
                 app:counterMaxLength="16"
                 app:helperText=""
-                app:passwordToggleEnabled="true"
-                android:textColorHint="@color/gray"
                 app:helperTextTextColor="@color/brightred"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etTextFieldEmail">
+                app:layout_constraintTop_toBottomOf="@+id/etTextFieldEmail"
+                app:passwordToggleEnabled="true">
+
                 <EditText
                     android:id="@+id/etFirstPassword"
                     android:layout_width="375dp"
@@ -172,9 +173,9 @@
                     android:background="@drawable/custom_edittext"
                     android:ems="10"
                     android:fontFamily="@font/lilita_one"
-                    android:maxLength="16"
                     android:hint="Enter your password"
                     android:inputType="textPassword"
+                    android:maxLength="16"
                     android:padding="10dp"
                     android:textColor="@color/black"
                     android:textColorHint="@color/gray"
@@ -184,20 +185,20 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/etTextFieldPasswordConfirm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/etTextFieldPasswordConfirm"
                 android:layout_marginTop="10dp"
-                app:boxBackgroundMode="none"
-                app:counterMaxLength="16"
-                app:counterEnabled="true"
-                app:helperText=""
-                app:passwordToggleEnabled="true"
-                app:helperTextTextColor="@color/brightred"
                 android:textColorHint="@color/gray"
+                app:boxBackgroundMode="none"
+                app:counterEnabled="true"
+                app:counterMaxLength="16"
+                app:helperText=""
+                app:helperTextTextColor="@color/brightred"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etTextFieldPassword">
+                app:layout_constraintTop_toBottomOf="@+id/etTextFieldPassword"
+                app:passwordToggleEnabled="true">
 
                 <EditText
                     android:id="@+id/etPasswordConfirm"
@@ -206,11 +207,11 @@
                     android:layout_marginTop="10dp"
                     android:background="@drawable/custom_edittext"
                     android:ems="10"
-                    android:maxLength="16"
                     android:fontFamily="@font/lilita_one"
-                    android:letterSpacing="0.0"
                     android:hint="Enter to confirm your password"
                     android:inputType="textPassword"
+                    android:letterSpacing="0.0"
+                    android:maxLength="16"
                     android:padding="10dp"
                     android:textColor="@color/black"
                     android:textColorHint="@color/gray"
@@ -220,16 +221,16 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/etTextFieldStudentID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/etTextFieldStudentID"
                 android:layout_marginTop="10dp"
+                android:textColorHint="@color/gray"
                 app:boxBackgroundMode="none"
                 app:counterEnabled="true"
                 app:counterMaxLength="7"
                 app:helperText=""
                 app:helperTextTextColor="@color/brightred"
-                android:textColorHint="@color/gray"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etTextFieldPasswordConfirm">
@@ -241,10 +242,10 @@
                     android:layout_marginTop="10dp"
                     android:background="@drawable/custom_edittext"
                     android:ems="10"
-                    android:maxLength="7"
                     android:fontFamily="@font/lilita_one"
                     android:hint="Enter your ID Number"
                     android:inputType="textNoSuggestions"
+                    android:maxLength="7"
                     android:padding="10dp"
                     android:textColor="@color/black"
                     android:textColorHint="@color/gray"
@@ -265,7 +266,7 @@
                 app:helperTextTextColor="@color/brightred"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rlYearLevel">
+                app:layout_constraintTop_toBottomOf="@+id/etTextFieldStudentID">
 
                 <EditText
                     android:id="@+id/etMobileNumber"
@@ -287,16 +288,14 @@
             </com.google.android.material.textfield.TextInputLayout>
 
 
-
             <RelativeLayout
                 android:id="@+id/relativeLayout"
                 android:layout_width="180dp"
                 android:layout_height="55dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="34dp"
-                android:layout_marginRight="140dp"
+                android:layout_marginRight="190dp"
                 android:background="@drawable/custom_edittext"
-                app:layout_constraintEnd_toEndOf="@+id/btnNext"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etTextFieldMobileNum">
 
@@ -305,9 +304,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@null"
+                    android:entries="@array/sex_options"
                     android:paddingEnd="30dp"
-                    android:spinnerMode="dropdown"
-                    android:entries="@array/sex_options"/>
+                    android:spinnerMode="dropdown" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -323,21 +322,20 @@
                 android:layout_width="180dp"
                 android:layout_height="55dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="34dp"
-                android:layout_marginRight="140dp"
+                android:layout_marginLeft="190dp"
                 android:background="@drawable/custom_edittext"
-                app:layout_constraintEnd_toEndOf="@+id/btnNext"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etTextFieldStudentID">
+                app:layout_constraintTop_toBottomOf="@+id/etTextFieldMobileNum">
 
                 <Spinner
                     android:id="@+id/spnYearLevel"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@null"
+                    android:entries="@array/year_level"
                     android:paddingEnd="60dp"
-                    android:spinnerMode="dropdown"
-                    android:entries="@array/year_level"/>
+                    android:spinnerMode="dropdown" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -358,23 +356,23 @@
                 app:helperTextTextColor="@color/brightred"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rlYearLevel"/>
+                app:layout_constraintTop_toBottomOf="@+id/rlYearLevel" />
 
             <Button
                 android:id="@+id/btnNext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="30dp"
                 android:backgroundTint="#041AE0"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="28dp"
                 android:fontFamily="@font/lilita_one"
                 android:text="Sign Up"
                 android:textSize="18sp"
                 app:cornerRadius="50dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/relativeLayout"
-                app:layout_constraintTop_toBottomOf="@+id/etTextFieldMobileNum" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etTextFieldDOB" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
