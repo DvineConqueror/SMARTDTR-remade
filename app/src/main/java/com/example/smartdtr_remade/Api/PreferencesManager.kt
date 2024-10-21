@@ -52,6 +52,14 @@ class PreferencesManager(context: Context) {
         return sharedPreferences.getString("student_id", null)
     }
 
+    fun saveUserType(userType: String){
+        editor.putString("user_type", userType).apply()
+    }
+
+    fun getUserType(): String?{
+        return sharedPreferences.getString("user_type", null)
+    }
+
     // Clear all preferences (optional)
     fun clear() {
         editor.clear().apply()

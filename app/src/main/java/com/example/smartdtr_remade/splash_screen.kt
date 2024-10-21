@@ -24,12 +24,20 @@ class SplashScreenActivity : AppCompatActivity() {
 
         Handler().postDelayed({
             val token = preferencesManager.getToken()
-            Log.d("SplashScreenActivity", "Token: $token") // Debugging log
+            val userType = preferencesManager.getUserType() // Get the user type from PreferencesManager
+            Log.d("SplashScreenActivity", "Token: $token, UserType: $userType") // Debugging log
+
             if (token != null) {
-                startActivity(Intent(this, Main_teacher::class.java))
+                // Navigate based on user type
+                when (userType) {
+                    "teacher" -> startActivity(Intent(this, Main_teacher::class.java))
+                    "student" -> startActivity(Intent(this, Main_student::class.java))
+                    else -> startActivity(Intent(this, activity_login::class.java)) // Fallback if user type is not recognized
+                }
             } else {
                 startActivity(Intent(this, activity_login::class.java))
             }
+
             finish()
         }, 1500)
     }
