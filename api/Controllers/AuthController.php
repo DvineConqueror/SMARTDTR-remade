@@ -58,6 +58,11 @@ class AuthController extends Controller
             return response()->json(['error' => 'User not found'], 404);
         }
 
+        // Check if the new password is the same as the current password
+        if (Hash::check($request->new_password, $user->password)) {
+            return response()->json(['error' => 'New password cannot be the same as the current password'], 400);
+        }
+
         // Update the user's password
         $user->password = Hash::make($request->new_password);
         $user->save();
