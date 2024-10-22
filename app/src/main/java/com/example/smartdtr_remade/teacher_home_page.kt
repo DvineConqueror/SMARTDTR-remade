@@ -38,7 +38,7 @@ class teacher_home_page : Fragment() {
 
         binding.btUpcomingStudentList.setOnClickListener(){
             parentFragmentManager.beginTransaction()
-                .replace(R.id.frameLayout, teacher_student_list_view.newInstance())
+                .replace(R.id.frameLayout, teacher_student_list_view())
                 .addToBackStack(null)
                 .commit()
         }

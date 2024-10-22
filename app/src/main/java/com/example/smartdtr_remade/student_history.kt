@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewStub // Import ViewStub
 import com.example.smartdtr_remade.Api.RetrofitInstance
 import com.example.smartdtr_remade.models.Duty
 import com.example.smartdtr_remade.PreferencesManager // Make sure to import PreferencesManager
@@ -21,6 +22,7 @@ class student_history : Fragment() {
     private lateinit var studentFinishedDutyAdapter: StudentFinishedDutyAdapter
     private lateinit var recyclerView: RecyclerView
     private lateinit var preferencesManager: PreferencesManager // Declare PreferencesManager
+    private lateinit var viewStub: ViewStub // Declare ViewStub
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -31,6 +33,9 @@ class student_history : Fragment() {
         // Initialize RecyclerView
         recyclerView = view.findViewById(R.id.recycler_dutySchedule)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        // Initialize ViewStub
+        viewStub = view.findViewById(R.id.nodata_viewstub) // Make sure the ID matches your layout
 
         // Set up adapter
         studentFinishedDutyAdapter = StudentFinishedDutyAdapter(mutableListOf())
@@ -53,8 +58,11 @@ class student_history : Fragment() {
                 override fun onResponse(call: Call<List<Duty>>, response: Response<List<Duty>>) {
                     if (response.isSuccessful) {
                         val duties = response.body()
-                        duties?.let {
-                            studentFinishedDutyAdapter.updateDuties(it)
+                        if (duties.isNullOrEmpty()) {
+                            showNoDataView() // Show "No Data" view if duties list is empty
+                        } else {
+                            recyclerView.visibility = View.VISIBLE
+                            studentFinishedDutyAdapter.updateDuties(duties)
 
                             // Calculate total hours worked
                             val totalHoursWorked = studentFinishedDutyAdapter.calculateTotalHoursWorked()
@@ -68,9 +76,16 @@ class student_history : Fragment() {
 
                 override fun onFailure(call: Call<List<Duty>>, t: Throwable) {
                     Log.e("DutyResponse", "Failure: ${t.message}")
+                    showNoDataView() // Show "No Data" view on failure
                 }
             })
         }
+    }
+
+    private fun showNoDataView() {
+        // Inflate the ViewStub and display the no data layout
+        recyclerView.visibility = View.GONE // Hide RecyclerView
+        viewStub.visibility = View.VISIBLE  // Inflate and show the no data view
     }
 
     private fun updateTimerOnHomePage(remainingHours: Int) {
