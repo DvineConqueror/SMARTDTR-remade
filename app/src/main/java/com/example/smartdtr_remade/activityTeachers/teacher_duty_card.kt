@@ -16,18 +16,5 @@ class teacher_duty_card : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = RvTeacherDutyCardBinding.inflate(layoutInflater) // Inflate the binding layout
         setContentView(binding.root) // Set the content view to the root of the binding
-
-        // Set up the ImageButton
-        binding.editButton.setOnClickListener {
-            // Replace the current activity with teacher_create_appointment
-            val intent = Intent(this, teacher_create_appointment::class.java)
-            startActivity(intent)
-        }
-
-        binding.btStudentList.setOnClickListener {
-            // Replace the current activity with teacher_student_list_create
-            val intent = Intent(this, teacher_student_list_create::class.java)
-            startActivity(intent)
-        }
     }
 }

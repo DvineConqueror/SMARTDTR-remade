@@ -64,7 +64,7 @@ interface ApiService {
 
     // Companion object to create the Retrofit instance
     companion object {
-        private const val BASE_URL = "http://192.168.0.30:3306/api/" // Ensure you have the correct base URL
+        private const val BASE_URL = "http://10.0.2.2:8000/api/" // Ensure you have the correct base URL
 
         fun create(): ApiService {
             val retrofit = Retrofit.Builder()

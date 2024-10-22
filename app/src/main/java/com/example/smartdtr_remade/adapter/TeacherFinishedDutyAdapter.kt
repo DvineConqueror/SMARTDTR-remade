@@ -8,7 +8,10 @@ import com.example.smartdtr_remade.models.Duty
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-class TeacherFinishedDutyAdapter(private var duties: MutableList<Duty>) : RecyclerView.Adapter<TeacherFinishedDutyAdapter.DutyViewHolder>() {
+class TeacherFinishedDutyAdapter(
+    private var duties: MutableList<Duty>,
+    private val onItemClick: (Duty) -> Unit // Callback for item click
+) : RecyclerView.Adapter<TeacherFinishedDutyAdapter.DutyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DutyViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.rv_teacher_finished_card, parent, false)
@@ -18,7 +21,7 @@ class TeacherFinishedDutyAdapter(private var duties: MutableList<Duty>) : Recycl
     override fun onBindViewHolder(holder: DutyViewHolder, position: Int) {
         val duty = duties[position]
 
-        // Formatting the time
+        // Set item views
         holder.statusTextView.text = duty.status
         holder.dateTextView.text = duty.date
         holder.startTimeTextView.text = formatTime(duty.start_time)
@@ -26,6 +29,11 @@ class TeacherFinishedDutyAdapter(private var duties: MutableList<Duty>) : Recycl
         holder.teacherTextView.text = duty.teacher_name.toString()
         holder.subjectTextView.text = duty.subject
         holder.roomTextView.text = duty.room
+
+        // Set item click listener
+        holder.itemView.setOnClickListener {
+            onItemClick(duty) // Call the callback with the clicked Duty item
+        }
     }
 
     override fun getItemCount(): Int {

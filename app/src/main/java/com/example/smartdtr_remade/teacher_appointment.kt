@@ -36,8 +36,22 @@ class teacher_appointment : Fragment() {
         // Initialize ViewStub
         viewStub = view.findViewById(R.id.nodata_viewstub)
 
-        // Set up adapter and pass the parent activity
-        teacherUpcomingDutyAdapter = TeacherUpcomingDutyAdapter(mutableListOf(), requireActivity())
+        // Set up adapter with the click listener
+        teacherUpcomingDutyAdapter = TeacherUpcomingDutyAdapter(mutableListOf(), requireActivity()) { duty ->
+            // Handle item click to replace the current fragment with DutyDetailFragment
+            val dutyDetailFragment = teacher_create_appointment().apply {
+                arguments = Bundle().apply {
+                    putSerializable("DUTY_DETAILS", duty) // Pass the clicked Duty object
+                }
+            }
+
+            // Replace the current fragment with DutyDetailFragment
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.frameLayout, dutyDetailFragment) // Change to your actual container ID
+                .addToBackStack(null) // Optional: adds the transaction to the back stack
+                .commit()
+        }
+
         recyclerView.adapter = teacherUpcomingDutyAdapter
 
         // Initialize PreferencesManager
@@ -80,3 +94,4 @@ class teacher_appointment : Fragment() {
         viewStub.visibility = View.VISIBLE  // Inflate and show the no data view
     }
 }
+

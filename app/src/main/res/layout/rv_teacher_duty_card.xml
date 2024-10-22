@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="205dp"
+    android:layout_height="185dp"
     android:background="@color/white"
     tools:context=".activityTeachers.teacher_duty_card">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_upcoming_duty"
         android:layout_width="300dp"
-        android:layout_height="180dp"
+        android:layout_height="160dp"
         android:layout_gravity="center"
         android:layout_margin="5dp"
         android:elevation="6dp"
@@ -158,38 +158,6 @@
                 android:textColor="@color/white"
                 app:layout_constraintStart_toEndOf="@+id/tvUpcomingRoomLabel"
                 app:layout_constraintTop_toBottomOf="@id/upcoming_teacher" />
-
-            <TextView
-                android:id="@+id/upcoming_students_list"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="Students List:"
-                android:textColor="@color/white"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/upcoming_room" />
-
-            <ImageButton
-                android:id="@+id/btStudentList"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="17dp"
-                android:layout_marginTop="4dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/baseline_list_24"
-                app:layout_constraintStart_toEndOf="@+id/upcoming_students_list"
-                app:layout_constraintTop_toBottomOf="@+id/upcoming_room" />
-
-            <ImageButton
-                android:id="@+id/edit_button"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginBottom="1dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/baseline_edit_24"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
