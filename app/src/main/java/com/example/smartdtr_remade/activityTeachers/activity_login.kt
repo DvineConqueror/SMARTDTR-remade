@@ -5,6 +5,7 @@ import LoginResponse
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputFilter
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -16,7 +17,6 @@ import com.example.smartdtr_remade.PreferencesManager
 import com.example.smartdtr_remade.R
 import com.example.smartdtr_remade.activityStudents.Main_student
 import com.example.smartdtr_remade.databinding.ActivityLoginBinding
-import com.example.smartdtr_remade.forgot_password
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -37,11 +37,27 @@ class activity_login : AppCompatActivity() {
 
         preferencesManager = PreferencesManager(this)
 
+        //Input filter to block symbols etc.
+        val blockedChars = " .,/;'\":{}[]|\\_=+!@#$%^&*()?<> "
+        val synbolTextFilter = InputFilter { source, _, _, _, _, _  ->
+            if (source.any { it in blockedChars }){
+                return@InputFilter ""
+            }
+            null
+        }
+
+        //Because space filter overrides the other filters, we need to set the max lengths of our text fields here
+        val maxLengthUserId = InputFilter.LengthFilter(7)
+        val maxLengthPassword = InputFilter.LengthFilter(16)
+
+        binding.etTextFieldUserID.editText?.filters = arrayOf(synbolTextFilter, maxLengthUserId)
+        binding.etTextFieldPass.editText?.filters = arrayOf(synbolTextFilter, maxLengthPassword)
+        //Input filter to block spaces
+
         val etIDNumber = binding.etTextFieldUserID
         val etPassword = binding.etTextFieldPass
         val btLoginButton = binding.btLogin
         val tvSignUpButton = binding.tvClickableSignUp
-        val tvForgotPass = binding.tvClickableForgotPassword
 
         btLoginButton.setOnClickListener {
             val etID = binding.etTextFieldUserID.editText?.text.toString().trim()
@@ -67,14 +83,6 @@ class activity_login : AppCompatActivity() {
                     loginUser(etID, etPasswordText)
                 }
             }
-        }
-
-        tvForgotPass.setOnClickListener{
-            startActivity(
-                Intent(
-                    this@activity_login, forgot_password::class.java
-                )
-            )
         }
 
         tvSignUpButton.setOnClickListener {

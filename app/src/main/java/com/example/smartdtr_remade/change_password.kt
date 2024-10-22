@@ -3,6 +3,8 @@ package com.example.smartdtr_remade
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.renderscript.ScriptGroup.Input
+import android.text.InputFilter
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -33,13 +35,32 @@ class change_password : Fragment() {
         // Initialize PreferencesManager
         preferencesManager = PreferencesManager(requireContext())
 
+        //Input filter to block spaces
+        val blockedChars = " .,/;'\":{}[]|\\_=+!@#$%^&*()?<> "
+        val synbolTextFilter = InputFilter { source, _, _, _, _, _  ->
+            if (source.any { it in blockedChars }){
+                return@InputFilter ""
+            }
+            null
+        }
+
+        //Because space filter overrides the other filters, we need to set the max lengths of our text fields here
+        val maxLengthUserId = InputFilter.LengthFilter(7)
+        val maxLengthPassword = InputFilter.LengthFilter(16)
+
+        binding.etTextFieldUserID.editText?.filters = arrayOf(synbolTextFilter, maxLengthUserId)
+        binding.etTextFieldOldPassword.editText?.filters = arrayOf(synbolTextFilter, maxLengthPassword)
+        binding.etTextFieldNewPassword.editText?.filters = arrayOf(synbolTextFilter, maxLengthPassword)
+        binding.etTextFieldNewPasswordConfirm.editText?.filters = arrayOf(synbolTextFilter, maxLengthPassword)
+        //Input filter to block spaces
+
         setupFocusListeners()
 
         binding.btResetPassword.setOnClickListener {
             if (validateForm()) {
                 showLogoutConfirmationDialog()
             } else {
-                Toast.makeText(requireContext(), "Ensure that all details entered are accurate!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Ensure that all details entered are accurate.", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -50,6 +71,12 @@ class change_password : Fragment() {
         binding.etTextFieldUserID.editText?.setOnFocusChangeListener { _, focused ->
             if (!focused) {
                 binding.etTextFieldUserID.helperText = validID()
+            }
+        }
+
+        binding.etTextFieldOldPassword.editText?.setOnFocusChangeListener { _, focused ->
+            if (!focused) {
+                binding.etTextFieldOldPassword.helperText = validateOldPassword()
             }
         }
 
@@ -78,9 +105,19 @@ class change_password : Fragment() {
         }
     }
 
+    private fun validateOldPassword(): String? {
+        val oldPassword = binding.etTextFieldOldPassword.editText?.text.toString().trim()
+        return if (oldPassword.isEmpty()) {
+            "Old password is required."
+        } else {
+            null
+        }
+    }
+
     private fun validateNewPassword(): String? {
         val newPassword = binding.etTextFieldNewPassword.editText?.text.toString().trim()
         return when {
+            newPassword.isEmpty() -> "New password is required."
             newPassword.length < 8 -> "Password must be at least 8 characters."
             !newPassword.matches(Regex(".*[A-Z].*")) -> "Password must contain at least one uppercase letter."
             !newPassword.matches(Regex(".*\\d.*")) -> "Password must contain at least one number."
@@ -99,15 +136,18 @@ class change_password : Fragment() {
     }
 
     private fun validateForm(): Boolean {
-        return validID() == null && validateNewPassword() == null && validateConfirmPassword() == null
+        return validID() == null && validateOldPassword() == null &&
+                validateNewPassword() == null && validateConfirmPassword() == null
     }
 
     private fun resetPassword() {
         val userId = binding.etTextFieldUserID.editText?.text.toString().trim()
+        val oldPassword = binding.etTextFieldOldPassword.editText?.text.toString().trim()
         val newPassword = binding.etTextFieldNewPassword.editText?.text.toString().trim()
 
         val resetPasswordRequest = ResetPasswordRequest(
             userId = userId,
+            old_password = oldPassword,
             new_password = newPassword,
             new_password_confirmation = newPassword // Pass new password as confirmation
         )

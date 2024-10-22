@@ -23,10 +23,6 @@
             android:name=".activityTeachers.rv_teacher_list_student_view"
             android:exported="false" />
         <activity
-            android:name=".forgot_password"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".nodata"
             android:exported="false"
             android:screenOrientation="portrait" />

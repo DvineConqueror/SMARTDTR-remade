@@ -62,6 +62,7 @@
             android:id="@+id/nodata_viewstub"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="70dp"
             android:inflatedId="@+id/nodata_view"
             android:layout="@layout/activity_nodata"
             app:layout_constraintTop_toTopOf="parent"
