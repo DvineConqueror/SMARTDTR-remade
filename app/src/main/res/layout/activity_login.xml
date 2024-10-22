@@ -11,27 +11,28 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/etTextFieldUserID"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:textColorHint="@color/gray"
         app:boxBackgroundMode="none"
+        android:fontFamily="@font/lilita_one"
         app:helperText=""
         app:helperTextTextColor="@color/brightred"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toStartOf="@+id/guideline9"
         app:layout_constraintStart_toStartOf="@+id/guideline6"
-        app:layout_constraintTop_toTopOf="@+id/guideline64">
+        app:layout_constraintTop_toTopOf="@+id/guideline7">
 
         <EditText
             android:id="@+id/etUserID"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="350dp"
+            android:layout_height="55dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/custom_edittext"
             android:ems="10"
-            android:fontFamily="@font/lilita_one"
             android:hint="@string/id_number"
-            android:inputType="textCapWords"
+            android:fontFamily="@font/lilita_one"
+            android:inputType="textCapCharacters"
             android:letterSpacing="0.0"
             android:maxLength="16"
             android:padding="10dp"
@@ -44,13 +45,14 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/etTextFieldPass"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:textColorHint="@color/gray"
         app:boxBackgroundMode="none"
         app:helperText=""
         app:counterEnabled="true"
         app:counterMaxLength="16"
+        android:fontFamily="@font/lilita_one"
         app:helperTextTextColor="@color/brightred"
         app:layout_constraintBottom_toTopOf="@+id/guideline12"
         app:layout_constraintEnd_toStartOf="@+id/guideline9"
@@ -60,8 +62,8 @@
 
         <EditText
             android:id="@+id/etPassword"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="350dp"
+            android:layout_height="55dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/custom_edittext"
             android:ems="10"
@@ -155,8 +157,8 @@
 
     <Button
         android:id="@+id/btLogin"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="209dp"
+        android:layout_height="58dp"
         android:autoSizeMaxTextSize="1000sp"
         android:autoSizeMinTextSize="1sp"
         android:autoSizeTextType="uniform"
@@ -171,7 +173,7 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline34"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline33"
-        app:layout_constraintTop_toTopOf="@+id/guideline50"
+        app:layout_constraintTop_toTopOf="@+id/guideline30"
         app:layout_constraintVertical_bias="1.0"
         tools:ignore="MissingConstraints" />
 
@@ -199,7 +201,6 @@
         android:layout_height="0dp"
         android:autoSizeMaxTextSize="1000sp"
         android:autoSizeMinTextSize="1sp"
-        android:autoSizeTextType="uniform"
         android:background="@drawable/ripple_effect"
         android:clickable="true"
         android:focusable="true"
@@ -207,7 +208,7 @@
         android:gravity="center"
         android:text="@string/sign_up"
         android:textColor="@color/blue"
-        android:textSize="10sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline42"
         app:layout_constraintEnd_toStartOf="@+id/guideline41"
         app:layout_constraintHorizontal_bias="0.0"
@@ -514,8 +515,6 @@
         android:text="@string/forgot_password"
         android:textColor="@color/blue"
         android:textSize="16sp"
-        android:autoSizeMaxTextSize="1000sp"
-        android:autoSizeMinTextSize="0sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline30"
         app:layout_constraintEnd_toStartOf="@+id/guideline49"
         app:layout_constraintHorizontal_bias="1.0"
@@ -550,20 +549,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.7" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline63"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="14dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline64"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.41" />
+        app:layout_constraintGuide_percent="0.69" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

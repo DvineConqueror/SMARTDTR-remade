@@ -52,7 +52,6 @@ class student_account_details : Fragment() {
                     view.findViewById<TextView>(R.id.student_id_value)?.text = accountDetails?.student_id
                     view.findViewById<TextView>(R.id.email_value)?.text = accountDetails?.email
                     view.findViewById<TextView>(R.id.mobile_number_value)?.text = accountDetails?.mobile_number
-                    view.findViewById<TextView>(R.id.date_of_birth_value)?.text = accountDetails?.date_of_birth
                     view.findViewById<TextView>(R.id.Year_level_value)?.text = accountDetails?.year_level
                     view.findViewById<TextView>(R.id.sex_value)?.text = accountDetails?.sex
                 } else {

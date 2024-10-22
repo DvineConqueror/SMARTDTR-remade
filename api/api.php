@@ -66,6 +66,7 @@ Route::prefix('duties')->group(function () {
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/signup', [AuthController::class, 'signup']); 
 Route::post('/logout', [AuthController::class, 'logout']);
+Route::post('/changepassword', [AuthController::class, 'changePassword']);
 
 Route::get('/user', function (Request $request) {
     return $request->user();

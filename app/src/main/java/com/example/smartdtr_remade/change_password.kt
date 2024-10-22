@@ -1,59 +1,200 @@
 package com.example.smartdtr_remade
 
+import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import com.example.smartdtr_remade.Api.ApiService
+import com.example.smartdtr_remade.activityTeachers.activity_login
+import com.example.smartdtr_remade.databinding.FragmentChangePasswordBinding
+import com.example.smartdtr_remade.models.ResetPasswordRequest
+import com.example.smartdtr_remade.models.ResetPasswordResponse
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [change_password.newInstance] factory method to
- * create an instance of this fragment.
- */
 class change_password : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private var _binding: FragmentChangePasswordBinding? = null
+    private val binding get() = _binding!!
+    private lateinit var preferencesManager: PreferencesManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_change_password, container, false)
+    ): View {
+        _binding = FragmentChangePasswordBinding.inflate(inflater, container, false)
+
+        // Initialize PreferencesManager
+        preferencesManager = PreferencesManager(requireContext())
+
+        setupFocusListeners()
+
+        binding.btResetPassword.setOnClickListener {
+            if (validateForm()) {
+                showLogoutConfirmationDialog()
+            } else {
+                Toast.makeText(requireContext(), "Ensure that all details entered are accurate!", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment change_password.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            change_password().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    private fun setupFocusListeners() {
+        binding.etTextFieldUserID.editText?.setOnFocusChangeListener { _, focused ->
+            if (!focused) {
+                binding.etTextFieldUserID.helperText = validID()
             }
+        }
+
+        binding.etTextFieldNewPassword.editText?.setOnFocusChangeListener { _, focused ->
+            if (!focused) {
+                binding.etTextFieldNewPassword.helperText = validateNewPassword()
+            }
+        }
+
+        binding.etTextFieldNewPasswordConfirm.editText?.setOnFocusChangeListener { _, focused ->
+            if (!focused) {
+                binding.etTextFieldNewPasswordConfirm.helperText = validateConfirmPassword()
+            }
+        }
+    }
+
+    private fun validID(): String? {
+        val etUserID = binding.etTextFieldUserID.editText?.text.toString().trim()
+        val teacherPattern = "^T-\\d{5}$".toRegex(RegexOption.IGNORE_CASE)
+        val studentPattern = "^S-\\d{5}$".toRegex(RegexOption.IGNORE_CASE)
+
+        return if (!teacherPattern.matches(etUserID) && !studentPattern.matches(etUserID)) {
+            "Please enter a valid ID Number!"
+        } else {
+            null
+        }
+    }
+
+    private fun validateNewPassword(): String? {
+        val newPassword = binding.etTextFieldNewPassword.editText?.text.toString().trim()
+        return when {
+            newPassword.length < 8 -> "Password must be at least 8 characters."
+            !newPassword.matches(Regex(".*[A-Z].*")) -> "Password must contain at least one uppercase letter."
+            !newPassword.matches(Regex(".*\\d.*")) -> "Password must contain at least one number."
+            else -> null
+        }
+    }
+
+    private fun validateConfirmPassword(): String? {
+        val newPassword = binding.etTextFieldNewPassword.editText?.text.toString().trim()
+        val confirmPassword = binding.etTextFieldNewPasswordConfirm.editText?.text.toString().trim()
+        return if (confirmPassword != newPassword) {
+            "Passwords do not match."
+        } else {
+            null
+        }
+    }
+
+    private fun validateForm(): Boolean {
+        return validID() == null && validateNewPassword() == null && validateConfirmPassword() == null
+    }
+
+    private fun resetPassword() {
+        val userId = binding.etTextFieldUserID.editText?.text.toString().trim()
+        val newPassword = binding.etTextFieldNewPassword.editText?.text.toString().trim()
+
+        val resetPasswordRequest = ResetPasswordRequest(
+            userId = userId,
+            new_password = newPassword,
+            new_password_confirmation = newPassword // Pass new password as confirmation
+        )
+
+        val apiService = ApiService.create()
+        apiService.changePassword(resetPasswordRequest).enqueue(object : Callback<ResetPasswordResponse> {
+            override fun onResponse(call: Call<ResetPasswordResponse>, response: Response<ResetPasswordResponse>) {
+                handleApiResponse(response)
+            }
+
+            override fun onFailure(call: Call<ResetPasswordResponse>, t: Throwable) {
+                Toast.makeText(requireContext(), "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    private fun handleApiResponse(response: Response<ResetPasswordResponse>) {
+        if (response.isSuccessful) {
+            Log.d("ResetPasswordResponse", "Successful: ${response.body()}")
+            showPasswordChangedDialog()
+        } else {
+            Log.e("ResetPasswordResponse", "Failed: ${response.message()}")
+            val errorMessage = response.errorBody()?.string() ?: "Password change failed."
+            Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun showLogoutConfirmationDialog() {
+        showAlertDialog(
+            title = "Proceed with Password Change?",
+            message = "You will be logged out of your account if you proceed. Do you want to continue?",
+            positiveText = "Yes",
+            positiveAction = {
+                resetPassword() // Call the password reset method
+            },
+            negativeText = "No",
+            negativeAction = {
+                Toast.makeText(requireContext(), "Password Change Aborted", Toast.LENGTH_SHORT).show()
+            }
+        )
+    }
+
+    private fun showPasswordChangedDialog() {
+        showAlertDialog(
+            title = "Password Changed",
+            message = "Your password has been successfully changed. You will now be logged out.",
+            positiveText = "OK",
+            positiveAction = {
+                // Clear the stored token
+                preferencesManager.clearToken() // Call the new method to clear the token
+
+                startActivity(Intent(requireContext(), activity_login::class.java))
+                activity?.finish() // Close current fragment
+            }
+        )
+    }
+
+    private fun showAlertDialog(
+        title: String,
+        message: String,
+        positiveText: String,
+        positiveAction: () -> Unit,
+        negativeText: String? = null,
+        negativeAction: (() -> Unit)? = null
+    ) {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle(title)
+            .setMessage(message)
+            .setPositiveButton(positiveText) { dialog, _ ->
+                dialog.dismiss()
+                positiveAction()
+            }
+
+        // Show the negative button if text and action are provided
+        negativeText?.let {
+            builder.setNegativeButton(it) { dialog, _ ->
+                dialog.dismiss()
+                negativeAction?.invoke()
+            }
+        }
+
+        builder.setCancelable(false) // Prevent clicking outside to dismiss
+        builder.show()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

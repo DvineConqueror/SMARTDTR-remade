@@ -18,7 +18,6 @@ class Teacher extends Authenticatable
         'password',
         'teacher_id',
         'mobile_number',
-        'date_of_birth',
         'sex',
     ];
 

@@ -46,23 +46,23 @@ class student_history : Fragment() {
     }
 
     private fun fetchFinishedDuties() {
-        // Get the logged-in student's ID
         val loggedInStudentId = preferencesManager.getUserId()
 
-        Log.d("StudentHistory", "Logged-in Student ID: $loggedInStudentId")
-
         if (loggedInStudentId != null) {
-            // Call the API to get completed duties for the logged-in student
             RetrofitInstance.dutyApi.getCompletedDutiesStudent(loggedInStudentId).enqueue(object : Callback<List<Duty>> {
                 override fun onResponse(call: Call<List<Duty>>, response: Response<List<Duty>>) {
                     if (response.isSuccessful) {
                         val duties = response.body()
                         duties?.let {
-                            Log.d("DutyResponse", "Number of duties: ${it.size}") // Log the size of the duties list
                             studentFinishedDutyAdapter.updateDuties(it)
-                        } ?: Log.e("DutyResponse", "Response body is null")
-                    } else {
-                        Log.e("DutyResponse", "Error: ${response.code()}")
+
+                            // Calculate total hours worked
+                            val totalHoursWorked = studentFinishedDutyAdapter.calculateTotalHoursWorked()
+                            val remainingHours = 90 - totalHoursWorked
+
+                            // Update the timer on the home page
+                            updateTimerOnHomePage(remainingHours)
+                        }
                     }
                 }
 
@@ -70,8 +70,12 @@ class student_history : Fragment() {
                     Log.e("DutyResponse", "Failure: ${t.message}")
                 }
             })
-        } else {
-            Log.e("StudentHistory", "Student ID is null or invalid")
         }
+    }
+
+    private fun updateTimerOnHomePage(remainingHours: Int) {
+        // Assuming you have a reference to the home fragment or activity
+        val homeFragment = parentFragmentManager.findFragmentByTag("homeFragment") as? student_home_page
+        homeFragment?.updateTimerTextView(remainingHours)
     }
 }

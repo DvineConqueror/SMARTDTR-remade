@@ -19,7 +19,6 @@ data class User(
     val lastname: String,
     val email: String,
     val mobile_number: String,
-    val date_of_birth: String,
     val sex: String,
     val year_level: String?
 )

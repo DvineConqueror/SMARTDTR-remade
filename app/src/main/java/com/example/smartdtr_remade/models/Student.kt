@@ -2,7 +2,6 @@ package com.example.smartdtr_remade.models
 
 data class Student(
     val id: Int,
-    val date_of_birth: String,
     val email: String,
     val firstname: String,
     val lastname: String,

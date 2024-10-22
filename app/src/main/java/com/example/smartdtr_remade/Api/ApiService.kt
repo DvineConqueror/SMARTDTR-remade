@@ -13,6 +13,7 @@ import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
+
 interface ApiService {
 
     interface DutyApi {
@@ -52,6 +53,9 @@ interface ApiService {
     @PUT("/teachers/{id}") // Use the correct endpoint for password updates
     fun updateTeacher(@Path("id") id: String, @Body request: ResetPasswordRequest): Call<ResetPasswordResponse>
 
+    @POST("changepassword")
+    fun changePassword(@Body request: ResetPasswordRequest): Call<ResetPasswordResponse>
+
     @POST("signup")
     fun signup(@Body request: SignUpRequest): Call<SignupResponse>
 
@@ -60,12 +64,12 @@ interface ApiService {
 
     // Companion object to create the Retrofit instance
     companion object {
-        private const val BASE_URL = "http://10.0.2.2:8000/api/"
+        private const val BASE_URL = "http://10.0.2.2:8000/api/" // Ensure you have the correct base URL
 
         fun create(): ApiService {
             val retrofit = Retrofit.Builder()
-                .baseUrl(BASE_URL) // Ensure you have the correct base URL
-                .addConverterFactory(GsonConverterFactory.create()) // For JSON conversion
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
                 .build()
 
             return retrofit.create(ApiService::class.java)

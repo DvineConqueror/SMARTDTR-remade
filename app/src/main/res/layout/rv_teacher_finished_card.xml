@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="210dp"
+    android:layout_height="200dp"
     tools:context=".activityTeachers.teacher_finished_card">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_finished_duty"
         android:layout_width="300dp"
-        android:layout_height="180dp"
+        android:layout_height="155dp"
         android:layout_gravity="center"
         android:layout_margin="10dp"
         android:elevation="6dp"
@@ -111,18 +111,6 @@
                 app:layout_constraintTop_toBottomOf="@id/Finished_date" />
 
             <TextView
-                android:id="@+id/finished_students_list"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="Students List:"
-                android:textColor="@color/white"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvFinishedRoomLabel" />
-
-            <TextView
                 android:id="@+id/tvFinishedTeacherLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -173,18 +161,6 @@
                 app:layout_constraintHorizontal_bias="0.223"
                 app:layout_constraintStart_toEndOf="@+id/tvFinishedRoomLabel"
                 app:layout_constraintTop_toBottomOf="@+id/finished_teacher" />
-
-            <ImageButton
-                android:id="@+id/btStudentList"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/baseline_list_24"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.173"
-                app:layout_constraintStart_toEndOf="@+id/finished_students_list"
-                app:layout_constraintTop_toBottomOf="@+id/finished_room" />
 
             <TextView
                 android:id="@+id/finished_subject"

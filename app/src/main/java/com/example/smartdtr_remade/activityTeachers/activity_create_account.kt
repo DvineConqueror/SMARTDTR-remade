@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
@@ -29,7 +30,6 @@ class activity_create_account : AppCompatActivity() {
     private lateinit var etPasswordConfirm: EditText
     private lateinit var etID: EditText
     private lateinit var etMobileNumber: EditText
-    private lateinit var etDateOfBirth: EditText // New field for date of birth
     private lateinit var spinnerSex: Spinner
     private lateinit var spnYearLevel: Spinner
     private lateinit var btnNext: Button
@@ -47,12 +47,30 @@ class activity_create_account : AppCompatActivity() {
         etFirstPassword = findViewById(R.id.etFirstPassword)
         etPasswordConfirm = findViewById(R.id.etPasswordConfirm)
         etID = findViewById(R.id.etID)
-        etMobileNumber = findViewById(R.id.etMobileNumber)// Initialize date of birth field
+        etMobileNumber = findViewById(R.id.etMobileNumber)
         spinnerSex = findViewById(R.id.spinnerSex)
         spnYearLevel = findViewById(R.id.spnYearLevel)
-        etDateOfBirth = findViewById(R.id.etDateOfBirth)
         btnNext = findViewById(R.id.btnNext)
         btnBack = findViewById(R.id.btnBack)
+
+        //Set spinner font to app font
+        val adapter1 = ArrayAdapter.createFromResource(
+            this,
+            R.array.year_level,
+            R.layout.spinner_text_edit
+        )
+
+        val adapter2 = ArrayAdapter.createFromResource(
+            this,
+            R.array.sex_options,
+            R.layout.spinner_text_edit
+        )
+
+        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerSex.adapter = adapter1
+
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spnYearLevel.adapter = adapter2
 
         etFocusListeners()
 
@@ -95,13 +113,21 @@ class activity_create_account : AppCompatActivity() {
 
         etFirstPassword.setOnFocusChangeListener { _, focused ->
             if (!focused) {
-                etFirstPassword.error = validatePassword()
+                val errorMsg = validatePassword()
+                if (errorMsg != null) {
+                    etFirstPassword.error = null // Hide error icon
+                    etFirstPassword.setError(errorMsg, null) // Show only error text
+                }
             }
         }
 
         etPasswordConfirm.setOnFocusChangeListener { _, focused ->
             if (!focused) {
-                etPasswordConfirm.error = validateConfirmPassword()
+                val errorMsg = validateConfirmPassword()
+                if (errorMsg != null) {
+                    etPasswordConfirm.error = null // Hide error icon
+                    etPasswordConfirm.setError(errorMsg, null) // Show only error text
+                }
             }
         }
 
@@ -117,11 +143,6 @@ class activity_create_account : AppCompatActivity() {
             }
         }
 
-        etDateOfBirth.setOnFocusChangeListener { _, focused ->
-            if (!focused) {
-                etDateOfBirth.error = validateDateOfBirth()
-            }
-        }
     }
 
     private fun validateField(value: String, fieldName: String): String? {
@@ -176,22 +197,11 @@ class activity_create_account : AppCompatActivity() {
         }
     }
 
-    private fun validateDateOfBirth(): String? {
-        val dob = etDateOfBirth.text.toString().trim()
-        val dobPattern = "^\\d{4}-\\d{2}-\\d{2}$".toRegex()
-
-        return when {
-            dob.isEmpty() -> "Date of birth is required."
-            !dob.matches(dobPattern) -> "Please enter the date of birth in the format YYYY-MM-DD."
-            else -> null
-        }
-    }
-
 
     private fun validateForm(): Boolean {
         val fields = listOf(
             etFirstname, etLastname, etEmail, etFirstPassword, etPasswordConfirm,
-            etID, etMobileNumber, etDateOfBirth
+            etID, etMobileNumber
         )
         return fields.all { it.error == null }
     }
@@ -207,7 +217,6 @@ class activity_create_account : AppCompatActivity() {
         val mobileNumber = etMobileNumber.text.toString().trim()
         val id = etID.text.toString().trim()
         val sex = spinnerSex.selectedItem.toString()
-        val dateOfBirth = etDateOfBirth.text.toString().trim() // Get the date of birth
         val yearLevel = if (id.startsWith("S")) {
             spnYearLevel.selectedItem.toString() // Get the selected year level if ID starts with "S"
         } else {
@@ -216,7 +225,7 @@ class activity_create_account : AppCompatActivity() {
 
         // Validate fields
         if (firstname.isEmpty() || lastname.isEmpty() || email.isEmpty() ||
-            password.isEmpty() || mobileNumber.isEmpty() || id.isEmpty() || dateOfBirth.isEmpty()) {
+            password.isEmpty() || mobileNumber.isEmpty() || id.isEmpty()) {
             Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
             return
         }
@@ -235,7 +244,6 @@ class activity_create_account : AppCompatActivity() {
             mobile_number = mobileNumber,
             ID = id,
             sex = sex,
-            date_of_birth = dateOfBirth, // Include date of birth
             year_level = yearLevel
         )
 

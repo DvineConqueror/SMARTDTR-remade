@@ -165,7 +165,7 @@ class teacher_create_appointment : Fragment() {
             date = selectedDate,
             start_time = startTime,
             end_time = endTime,
-            status = "pending" // Replace with actual status as needed
+            status = "Pending" // Replace with actual status as needed
         )
 
         // Call the API to create the duty

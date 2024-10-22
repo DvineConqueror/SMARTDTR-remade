@@ -23,8 +23,8 @@
                 android:id="@+id/btnBack"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_marginTop="26dp"
                 android:layout_marginLeft="20dp"
+                android:layout_marginTop="26dp"
                 android:backgroundTint="@color/white"
                 android:contentDescription="Back Button"
                 android:shadowColor="@color/white"
@@ -42,7 +42,6 @@
                 android:id="@+id/imageView100"
                 android:layout_width="600dp"
                 android:layout_height="285dp"
-                app:layout_constraintBottom_toTopOf="@+id/guideline51"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.502"
                 app:layout_constraintStart_toStartOf="parent"
@@ -65,15 +64,15 @@
                 android:id="@+id/textView7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="56dp"
                 android:fontFamily="@font/lilita_one"
                 android:text="Create Account"
                 android:textColor="@color/blue"
                 android:textSize="38sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/guideline52"
-                app:layout_constraintEnd_toStartOf="@+id/guideline54"
-                app:layout_constraintStart_toStartOf="@+id/guideline53"
-                app:layout_constraintTop_toTopOf="@+id/guideline51" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView15" />
 
             <EditText
                 android:id="@+id/etFirstname"
@@ -82,23 +81,24 @@
                 android:layout_marginTop="40dp"
                 android:background="@drawable/custom_edittext"
                 android:ems="10"
-                android:maxLength="12"
                 android:fontFamily="@font/lilita_one"
                 android:hint="Last Name"
                 android:inputType="textPersonName"
+                android:maxLength="12"
                 android:maxLines="15"
                 android:padding="10dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/gray"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.901"
-                app:layout_constraintStart_toStartOf="@+id/etLastname"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
             <EditText
                 android:id="@+id/etLastname"
                 android:layout_width="180dp"
                 android:layout_height="55dp"
+                android:layout_marginTop="40dp"
                 android:background="@drawable/custom_edittext"
                 android:ems="10"
                 android:fontFamily="@font/lilita_one"
@@ -109,33 +109,29 @@
                 android:padding="10dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/gray"
-                app:layout_constraintBottom_toTopOf="@+id/guideline56"
-                app:layout_constraintEnd_toStartOf="@+id/guideline58"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.09"
-                app:layout_constraintStart_toStartOf="@+id/guideline57"
-                app:layout_constraintTop_toTopOf="@+id/guideline55" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/etTextFieldEmail"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:autoSizeMaxTextSize="1000sp"
-                android:autoSizeMinTextSize="1sp"
-                android:autoSizeTextType="uniform"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:textColorHint="@color/gray"
                 app:boxBackgroundMode="none"
                 app:counterEnabled="true"
                 app:counterMaxLength="50"
                 app:helperText=""
                 app:helperTextTextColor="@color/brightred"
-                app:layout_constraintBottom_toTopOf="@+id/guideline87"
-                app:layout_constraintEnd_toStartOf="@+id/guideline89"
-                app:layout_constraintStart_toStartOf="@+id/guideline88"
-                app:layout_constraintTop_toTopOf="@+id/guideline86">
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etLastname">
 
                 <EditText
                     android:id="@+id/etEmail"
-                    android:layout_width="377dp"
+                    android:layout_width="375dp"
                     android:layout_height="55dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/custom_edittext"
@@ -154,20 +150,21 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/etTextFieldPassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/etTextFieldPassword"
                 android:layout_marginTop="10dp"
+                android:textColorHint="@color/gray"
                 app:boxBackgroundMode="none"
                 app:counterEnabled="true"
                 app:counterMaxLength="16"
                 app:helperText=""
-                app:passwordToggleEnabled="true"
-                android:textColorHint="@color/gray"
                 app:helperTextTextColor="@color/brightred"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etTextFieldEmail">
+                app:layout_constraintTop_toBottomOf="@+id/etTextFieldEmail"
+                app:passwordToggleEnabled="true">
+
                 <EditText
                     android:id="@+id/etFirstPassword"
                     android:layout_width="375dp"
@@ -176,9 +173,9 @@
                     android:background="@drawable/custom_edittext"
                     android:ems="10"
                     android:fontFamily="@font/lilita_one"
-                    android:maxLength="16"
                     android:hint="Enter your password"
                     android:inputType="textPassword"
+                    android:maxLength="16"
                     android:padding="10dp"
                     android:textColor="@color/black"
                     android:textColorHint="@color/gray"
@@ -188,20 +185,20 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/etTextFieldPasswordConfirm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/etTextFieldPasswordConfirm"
                 android:layout_marginTop="10dp"
-                app:boxBackgroundMode="none"
-                app:counterMaxLength="16"
-                app:counterEnabled="true"
-                app:helperText=""
-                app:passwordToggleEnabled="true"
-                app:helperTextTextColor="@color/brightred"
                 android:textColorHint="@color/gray"
+                app:boxBackgroundMode="none"
+                app:counterEnabled="true"
+                app:counterMaxLength="16"
+                app:helperText=""
+                app:helperTextTextColor="@color/brightred"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etTextFieldPassword">
+                app:layout_constraintTop_toBottomOf="@+id/etTextFieldPassword"
+                app:passwordToggleEnabled="true">
 
                 <EditText
                     android:id="@+id/etPasswordConfirm"
@@ -210,11 +207,11 @@
                     android:layout_marginTop="10dp"
                     android:background="@drawable/custom_edittext"
                     android:ems="10"
-                    android:maxLength="16"
                     android:fontFamily="@font/lilita_one"
-                    android:letterSpacing="0.0"
                     android:hint="Enter to confirm your password"
                     android:inputType="textPassword"
+                    android:letterSpacing="0.0"
+                    android:maxLength="16"
                     android:padding="10dp"
                     android:textColor="@color/black"
                     android:textColorHint="@color/gray"
@@ -224,16 +221,16 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/etTextFieldStudentID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/etTextFieldStudentID"
                 android:layout_marginTop="10dp"
+                android:textColorHint="@color/gray"
                 app:boxBackgroundMode="none"
                 app:counterEnabled="true"
                 app:counterMaxLength="7"
                 app:helperText=""
                 app:helperTextTextColor="@color/brightred"
-                android:textColorHint="@color/gray"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etTextFieldPasswordConfirm">
@@ -245,10 +242,10 @@
                     android:layout_marginTop="10dp"
                     android:background="@drawable/custom_edittext"
                     android:ems="10"
-                    android:maxLength="7"
                     android:fontFamily="@font/lilita_one"
                     android:hint="Enter your ID Number"
                     android:inputType="textNoSuggestions"
+                    android:maxLength="7"
                     android:padding="10dp"
                     android:textColor="@color/black"
                     android:textColorHint="@color/gray"
@@ -263,13 +260,13 @@
                 android:layout_height="wrap_content"
                 android:textColorHint="@color/gray"
                 app:boxBackgroundMode="none"
-                app:counterMaxLength="11"
                 app:counterEnabled="true"
+                app:counterMaxLength="11"
                 app:helperText=""
                 app:helperTextTextColor="@color/brightred"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etTextFieldDOB">
+                app:layout_constraintTop_toBottomOf="@+id/etTextFieldStudentID">
 
                 <EditText
                     android:id="@+id/etMobileNumber"
@@ -291,16 +288,14 @@
             </com.google.android.material.textfield.TextInputLayout>
 
 
-
             <RelativeLayout
                 android:id="@+id/relativeLayout"
                 android:layout_width="180dp"
                 android:layout_height="55dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="34dp"
-                android:layout_marginRight="140dp"
+                android:layout_marginRight="190dp"
                 android:background="@drawable/custom_edittext"
-                app:layout_constraintEnd_toEndOf="@+id/btnNext"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etTextFieldMobileNum">
 
@@ -309,9 +304,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@null"
+                    android:entries="@array/sex_options"
                     android:paddingEnd="30dp"
-                    android:spinnerMode="dropdown"
-                    android:entries="@array/sex_options"/>
+                    android:spinnerMode="dropdown" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -327,21 +322,20 @@
                 android:layout_width="180dp"
                 android:layout_height="55dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="34dp"
-                android:layout_marginRight="140dp"
+                android:layout_marginLeft="190dp"
                 android:background="@drawable/custom_edittext"
-                app:layout_constraintEnd_toEndOf="@+id/btnNext"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etTextFieldStudentID">
+                app:layout_constraintTop_toBottomOf="@+id/etTextFieldMobileNum">
 
                 <Spinner
                     android:id="@+id/spnYearLevel"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@null"
+                    android:entries="@array/year_level"
                     android:paddingEnd="60dp"
-                    android:spinnerMode="dropdown"
-                    android:entries="@array/year_level"/>
+                    android:spinnerMode="dropdown" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -362,126 +356,23 @@
                 app:helperTextTextColor="@color/brightred"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rlYearLevel">
-
-                <EditText
-                    android:id="@+id/etDateOfBirth"
-                    android:layout_width="375dp"
-                    android:layout_height="55dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/custom_edittext"
-                    android:ems="10"
-                    android:fontFamily="@font/lilita_one"
-                    android:hint="Enter your birthdate(ex. YYYY-MM-DD)"
-                    android:inputType="textNoSuggestions"
-                    android:maxLength="11"
-                    android:padding="10dp"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/gray"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/rlYearLevel" />
-            </com.google.android.material.textfield.TextInputLayout>
+                app:layout_constraintTop_toBottomOf="@+id/rlYearLevel" />
 
             <Button
                 android:id="@+id/btnNext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="30dp"
                 android:backgroundTint="#041AE0"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="28dp"
                 android:fontFamily="@font/lilita_one"
                 android:text="Sign Up"
                 android:textSize="18sp"
                 app:cornerRadius="50dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/relativeLayout"
-                app:layout_constraintTop_toBottomOf="@+id/etTextFieldMobileNum" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline51"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.257" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline52"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.3" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline53"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.2" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline54"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.8" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline55"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.33" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline56"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.385" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline57"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.05" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline58"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.51" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline86"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.39" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline87"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.47" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline88"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.04" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline89"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.96" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etTextFieldDOB" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

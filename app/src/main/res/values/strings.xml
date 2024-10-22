@@ -63,8 +63,8 @@
     <string name="cancel">Cancel</string>
 
     <string-array name="sex_options">
-        <item>male</item>
-        <item>female</item>
+        <item>Male</item>
+        <item>Female</item>
     </string-array>
 
     <string-array name="year_level">

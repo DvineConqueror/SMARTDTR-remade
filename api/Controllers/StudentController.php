@@ -68,9 +68,8 @@ class StudentController extends Controller
             'firstname' => 'required|string|max:255',
             'lastname' => 'required|string|max:255',
             'mobile_number' => 'required|string',
-            'date_of_birth' => 'required|date',
             'year_level' => 'required|integer',
-            'sex' => 'required|in:male,female,other',
+            'sex' => 'required|in:Male,Female',
         ]);
 
         //Checks if the password is above the minimum of 8 char
@@ -102,7 +101,6 @@ class StudentController extends Controller
             'password' => Hash::make($request->password), // Hash the password
             'student_id' => $request->student_id,
             'mobile_number' => $request->mobile_number,
-            'date_of_birth' => $request->date_of_birth,
             'year_level' => $request->year_level,
             'sex' => $request->sex,
         ]);

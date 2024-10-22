@@ -18,7 +18,6 @@ class Student extends Authenticatable
         'password',
         'student_id',
         'mobile_number',
-        'date_of_birth',
         'year_level',
         'sex',
     ];

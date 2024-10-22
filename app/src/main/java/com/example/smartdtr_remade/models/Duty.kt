@@ -1,5 +1,7 @@
 package com.example.smartdtr_remade.models
 
+import java.io.Serializable
+
 data class Duty(
     val id: Int,
     val teacher_id: Int,
@@ -11,5 +13,5 @@ data class Duty(
     val start_time: String,
     val end_time: String,
     val status: String
-)
+): Serializable
 

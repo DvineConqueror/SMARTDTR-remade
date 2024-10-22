@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -20,6 +21,7 @@ class student_home_page : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private lateinit var tvTimer: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,8 +35,15 @@ class student_home_page : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val view = inflater.inflate(R.layout.fragment_student_home_page, container, false)
+        tvTimer = view.findViewById(R.id.timer)
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_student_home_page, container, false)
+    }
+
+    fun updateTimerTextView(remainingHours: Int) {
+        val timerText = "$remainingHours Hours Left"
+        tvTimer.text = timerText
     }
 
     companion object {

@@ -10,7 +10,6 @@ data class SignUpRequest(
     val mobile_number: String,
     val ID: String,
     val sex: String,
-    val date_of_birth: String,
     val year_level: String? = null // Optional for teachers
 )
 
@@ -31,7 +30,6 @@ data class User(
     val lastname: String,
     val email: String,
     val mobile_number: String,
-    val date_of_birth: String,
     val sex: String,
     val year_level: String?
 )

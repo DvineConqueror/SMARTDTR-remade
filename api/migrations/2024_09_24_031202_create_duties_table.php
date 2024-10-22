@@ -17,7 +17,7 @@ class CreateDutiesTable extends Migration
             $table->date('date');  // Date of the duty
             $table->time('start_time');  // Start time of the duty
             $table->time('end_time');  // End time of the duty
-            $table->enum('status', ['pending', 'finished', 'canceled'])->default('pending');  // Status of the duty
+            $table->enum('status', ['Pending', 'Finished', 'Canceled'])->default('Pending');  // Status of the duty
             $table->timestamps();  // Created at and updated at timestamps
         });
     }

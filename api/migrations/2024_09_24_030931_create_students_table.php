@@ -16,9 +16,8 @@ class CreateStudentsTable extends Migration
             $table->string('password');
             $table->string('student_id')->unique();
             $table->string('mobile_number');
-            $table->date('date_of_birth')->default('1900-01-01');
             $table->integer('year_level');
-            $table->enum('sex', ['male', 'female', 'other']);
+            $table->enum('sex', ['Male', 'Female']);
             $table->timestamps();
         });
     }

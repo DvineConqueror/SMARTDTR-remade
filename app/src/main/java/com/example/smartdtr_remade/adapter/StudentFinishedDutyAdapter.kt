@@ -7,6 +7,7 @@ import com.example.smartdtr_remade.R
 import com.example.smartdtr_remade.models.Duty
 import java.text.SimpleDateFormat
 import java.util.Locale
+import java.util.concurrent.TimeUnit
 
 class StudentFinishedDutyAdapter(private var duties: MutableList<Duty>) : RecyclerView.Adapter<StudentFinishedDutyAdapter.DutyViewHolder>() {
 
@@ -36,6 +37,22 @@ class StudentFinishedDutyAdapter(private var duties: MutableList<Duty>) : Recycl
         duties.clear()
         duties.addAll(newDuties)
         notifyDataSetChanged()
+    }
+
+    // Calculate total hours worked
+    fun calculateTotalHoursWorked(): Int {
+        var totalHoursWorked = 0
+        val inputFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
+        for (duty in duties) {
+            val startTime = inputFormat.parse(duty.start_time)
+            val endTime = inputFormat.parse(duty.end_time)
+
+            // Calculate the difference in milliseconds
+            val diffInMillis = endTime!!.time - startTime!!.time
+            val hours = TimeUnit.MILLISECONDS.toHours(diffInMillis).toInt()
+            totalHoursWorked += hours
+        }
+        return totalHoursWorked
     }
 
     class DutyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

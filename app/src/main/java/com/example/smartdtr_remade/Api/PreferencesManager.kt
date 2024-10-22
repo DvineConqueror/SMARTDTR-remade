@@ -10,11 +10,19 @@ class PreferencesManager(context: Context) {
 
     // Token
     fun saveToken(token: String) {
-        editor.putString("token", token).apply()
+        val existingToken = getToken()
+        if (existingToken != token) {
+            editor.putString("token", token).apply()
+        }
     }
+
 
     fun getToken(): String? {
         return sharedPreferences.getString("token", null)
+    }
+
+    fun clearToken() {
+        editor.remove("token").apply()
     }
 
     // User ID
@@ -42,6 +50,14 @@ class PreferencesManager(context: Context) {
 
     fun getStudentId(): String? {
         return sharedPreferences.getString("student_id", null)
+    }
+
+    fun saveUserType(userType: String){
+        editor.putString("user_type", userType).apply()
+    }
+
+    fun getUserType(): String?{
+        return sharedPreferences.getString("user_type", null)
     }
 
     // Clear all preferences (optional)

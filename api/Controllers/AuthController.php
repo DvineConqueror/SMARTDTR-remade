@@ -29,14 +29,47 @@ class AuthController extends Controller
         if ($user && Hash::check($password, $user->password)) {
             // Create and return the token
             $token = $user->createToken('loginToken')->plainTextToken;
+            $userType = str_starts_with($user->id, 'S') ? 'student' : 'teacher';
             return response()->json([
                 'token' => $token,
                 'user' => $user,
                 'userId' => $user->id, // Directly access the ID
+                'userType' => $userType,
             ], 200);
         } else {
             return response()->json(['error' => 'Invalid credentials'], 401);
         }
+    }
+
+    // Change password method
+    public function changePassword(Request $request){
+        $request->validate([
+            'userId' => 'required|string',
+            'new_password' => 'required|string|min:8|confirmed',
+        ]);
+
+        // Find the user by ID, determine if it's a Student or Teacher
+        $user = null;
+        if (str_starts_with($request->userId, 'S')) {
+            $user = Student::where('student_id', $request->userId)->first();
+        } elseif (str_starts_with($request->userId, 'T')) {
+            $user = Teacher::where('teacher_id', $request->userId)->first();
+        }
+
+        if (!$user) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+
+        // Check if the new password is the same as the current password
+        if (Hash::check($request->new_password, $user->password)) {
+            return response()->json(['error' => 'New password cannot be the same as the current password'], 400);
+        }
+
+        // Update the user's password
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
+        return response()->json(['message' => 'Password updated successfully'], 200);
     }
 
     // Signup method
@@ -53,8 +86,7 @@ class AuthController extends Controller
                 'firstname' => 'required|string|max:255',
                 'lastname' => 'required|string|max:255',
                 'mobile_number' => 'required|string|max:11',
-                'date_of_birth' => 'required|date',
-                'sex' => 'required|in:male,female,other',
+                'sex' => 'required|in:Male,Female',
             ];
     
             // Add specific validation based on whether the user is a student or teacher
@@ -88,7 +120,6 @@ class AuthController extends Controller
                     'email' => $request->email,
                     'password' => Hash::make($request->password),
                     'mobile_number' => $request->mobile_number,
-                    'date_of_birth' => $request->date_of_birth,
                     'year_level' => $request->year_level,
                     'sex' => $request->sex,
                 ]);
@@ -101,7 +132,6 @@ class AuthController extends Controller
                     'email' => $request->email,
                     'password' => Hash::make($request->password),
                     'mobile_number' => $request->mobile_number,
-                    'date_of_birth' => $request->date_of_birth,
                     'sex' => $request->sex,
                 ]);
             }

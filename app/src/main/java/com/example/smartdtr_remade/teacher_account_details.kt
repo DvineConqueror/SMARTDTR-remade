@@ -54,7 +54,6 @@ class teacher_account_details : Fragment() {
                     view.findViewById<TextView>(R.id.teacher_id_value)?.text = accountDetails?.teacher_id
                     view.findViewById<TextView>(R.id.email_value)?.text = accountDetails?.email
                     view.findViewById<TextView>(R.id.mobile_number_value)?.text = accountDetails?.mobile_number
-                    view.findViewById<TextView>(R.id.date_of_birth_value)?.text = accountDetails?.date_of_birth
                     view.findViewById<TextView>(R.id.sex_value)?.text = accountDetails?.sex
                 } else {
                     Toast.makeText(requireContext(), "Failed to load teacher details", Toast.LENGTH_SHORT).show()
