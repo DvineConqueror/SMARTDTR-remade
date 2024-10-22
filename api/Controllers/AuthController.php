@@ -41,14 +41,15 @@ class AuthController extends Controller
         }
     }
 
-    // Change password method
+        // Change password method
     public function changePassword(Request $request){
         $request->validate([
             'userId' => 'required|string',
+            'old_password' => 'required|string',
             'new_password' => 'required|string|min:8|confirmed',
         ]);
 
-        // Find the user by ID, determine if it's a Student or Teacher
+        // Determine if it's a Student or Teacher
         $user = null;
         if (str_starts_with($request->userId, 'S')) {
             $user = Student::where('student_id', $request->userId)->first();
@@ -60,9 +61,15 @@ class AuthController extends Controller
             return response()->json(['error' => 'User not found'], 404);
         }
 
+        // Verify old password
+        if (!Hash::check($request->old_password, $user->password)) {
+            // Old password is incorrect
+            return response()->json(['error' => 'Old password is incorrect!'], 400);
+        }
+
         // Check if the new password is the same as the current password
         if (Hash::check($request->new_password, $user->password)) {
-            return response()->json(['error' => 'New password cannot be the same as the current password'], 400);
+            return response()->json(['error' => 'New password cannot be the same as the current password!'], 400);
         }
 
         // Update the user's password
@@ -71,6 +78,7 @@ class AuthController extends Controller
 
         return response()->json(['message' => 'Password updated successfully'], 200);
     }
+
 
     // Signup method
     public function signup(Request $request)
