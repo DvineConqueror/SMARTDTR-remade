@@ -39,7 +39,7 @@ class teacher_appointment : Fragment() {
         // Set up adapter with the click listener
         teacherUpcomingDutyAdapter = TeacherUpcomingDutyAdapter(mutableListOf(), requireActivity()) { duty ->
             // Handle item click to replace the current fragment with DutyDetailFragment
-            val dutyDetailFragment = teacher_create_appointment().apply {
+            val dutyDetailFragment = duty_view().apply {
                 arguments = Bundle().apply {
                     putSerializable("DUTY_DETAILS", duty) // Pass the clicked Duty object
                 }

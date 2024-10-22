@@ -88,5 +88,11 @@ interface ApiService {
         fun getStudentAccountDetails(
             @Path("userId") userId: String
         ): Call<Student>
+
+        @POST("students/by-ids")
+        fun getStudentsByIds(@Body studentIds: List<Int>): Call<List<Student>>
+
+        @GET("duties/{dutyId}/students")
+        fun getStudentsForDuty(@Path("dutyId") dutyId: Int): Call<List<Student>>
     }
 }

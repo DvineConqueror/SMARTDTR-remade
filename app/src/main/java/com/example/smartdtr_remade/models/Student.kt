@@ -1,5 +1,7 @@
 package com.example.smartdtr_remade.models
 
+import java.io.Serializable
+
 data class Student(
     val id: Int,
     val email: String,
@@ -11,4 +13,4 @@ data class Student(
     val student_id: String,
     val year_level: String,
     var isChecked: Boolean = false
-)
+): Serializable

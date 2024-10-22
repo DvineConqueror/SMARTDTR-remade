@@ -43,7 +43,7 @@ class teacher_history : Fragment() {
         // Set up adapter with the click listener
         teacherFinishedDutyAdapter = TeacherFinishedDutyAdapter(mutableListOf()) { duty ->
             // Handle item click to replace the current fragment with DutyDetailFragment
-            val dutyDetailFragment = teacher_create_appointment().apply {
+            val finishedDutyDetailFragment = finished_duty_view().apply {
                 arguments = Bundle().apply {
                     putSerializable("DUTY_DETAILS", duty) // Pass the clicked Duty object
                 }
@@ -51,7 +51,7 @@ class teacher_history : Fragment() {
 
             // Replace the current fragment with DutyDetailFragment
             parentFragmentManager.beginTransaction()
-                .replace(R.id.frameLayout, dutyDetailFragment) // Change to your actual container ID
+                .replace(R.id.frameLayout, finishedDutyDetailFragment) // Change to your actual container ID
                 .addToBackStack(null) // Optional: adds the transaction to the back stack
                 .commit()
         }
