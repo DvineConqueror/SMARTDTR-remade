@@ -1,19 +1,20 @@
 package com.example.smartdtr_remade
 
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.annotation.RequiresApi
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.smartdtr_remade.Api.RetrofitInstance
-import com.example.smartdtr_remade.models.Duty
-import com.example.smartdtr_remade.PreferencesManager
+import com.example.smartdtr_remade.adapter.HomeStudentFinishedDutyAdapter
 import com.example.smartdtr_remade.adapter.HomeStudentUpcomingDutyAdapter
-import com.example.smartdtr_remade.adapter.HomeStudentFinishedDutyAdapter // Import the finished duty adapter
+import com.example.smartdtr_remade.models.Duty
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -61,6 +62,7 @@ class student_home_page : Fragment() {
 
         if (loggedInStudentId != null) {
             RetrofitInstance.dutyApi.getCompletedDutiesStudent(loggedInStudentId).enqueue(object : Callback<List<Duty>> {
+                @RequiresApi(Build.VERSION_CODES.S)
                 override fun onResponse(call: Call<List<Duty>>, response: Response<List<Duty>>) {
                     if (response.isSuccessful) {
                         val duties = response.body()
@@ -119,6 +121,7 @@ class student_home_page : Fragment() {
         tvTimer.text = timerText
     }
 
+    @RequiresApi(Build.VERSION_CODES.S)
     private fun calculateTotalHoursWorked(duties: List<Duty>): Int {
         var totalHours = 0
         for (duty in duties) {
@@ -127,8 +130,16 @@ class student_home_page : Fragment() {
         return totalHours
     }
 
+    @RequiresApi(Build.VERSION_CODES.S)
     private fun calculateHoursFromDuty(duty: Duty): Int {
-        // Your logic to calculate hours based on Duty object
-        return 1 // Placeholder for actual logic
+        // Assuming start_time and end_time are in "HH:mm" format
+        val startTime = java.time.LocalTime.parse(duty.start_time) // Parse the start time
+        val endTime = java.time.LocalTime.parse(duty.end_time) // Parse the end time
+
+        // Calculate the duration between start and end time
+        val duration = java.time.Duration.between(startTime, endTime)
+
+        // Return the total hours worked as an integer
+        return duration.toHoursPart() // Returns only the hour part of the duration
     }
 }
