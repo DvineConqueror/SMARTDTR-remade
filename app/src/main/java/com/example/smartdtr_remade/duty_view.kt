@@ -16,6 +16,7 @@
     import com.example.smartdtr_remade.Api.RetrofitInstance
     import com.example.smartdtr_remade.models.GetDuty
     import com.example.smartdtr_remade.models.Student
+    import com.google.android.material.button.MaterialButton
     import retrofit2.Call
     import retrofit2.Callback
     import retrofit2.Response
@@ -42,6 +43,12 @@
             // Initialize Buttons
             btnEdit = view.findViewById(R.id.btnEdit)
             btnMarkAsDone = view.findViewById(R.id.btnMarkAsDone)
+            val backButton: MaterialButton = view.findViewById(R.id.btnBack)
+
+            // Back button click listener
+            backButton.setOnClickListener {
+                parentFragmentManager.popBackStack()
+            }
 
             // Set button click listeners
             btnEdit.setOnClickListener {

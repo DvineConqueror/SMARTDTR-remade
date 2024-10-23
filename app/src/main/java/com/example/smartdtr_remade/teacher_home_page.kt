@@ -1,85 +1,155 @@
 package com.example.smartdtr_remade
 
+import HomeTeacherFinishedAdapter
+import HomeTeacherUpcomingAdapter
+import TeacherFinishedDutyAdapter
+import TeacherUpcomingDutyAdapter
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.smartdtr_remade.databinding.FragmentTeacherHomePageBinding
+import android.view.ViewStub
+import android.widget.Button
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.smartdtr_remade.R
+import com.example.smartdtr_remade.Api.RetrofitInstance
+import com.example.smartdtr_remade.models.Duty
+import com.example.smartdtr_remade.PreferencesManager
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [teacher_home_page.newInstance] factory method to
- * create an instance of this fragment.
- */
 class teacher_home_page : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var _binding: FragmentTeacherHomePageBinding? = null
-    private val binding get() = _binding!!
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        _binding = FragmentTeacherHomePageBinding.bind(view)
-
-        // In your Fragment where the button is located, e.g., teacher_home_page
-        binding.appointmentButton.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.frameLayout, teacher_create_appointment()) // Passing null for params if not needed
-                .addToBackStack(null)
-                .commit()
-        }
-
-        binding.btUpcomingStudentList.setOnClickListener(){
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.frameLayout, teacher_home_page())
-                .addToBackStack(null)
-                .commit()
-        }
-
-
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
+    private lateinit var recyclerViewUpcoming: RecyclerView
+    private lateinit var recyclerViewCompleted: RecyclerView
+    private lateinit var teacherUpcomingDutyAdapter: HomeTeacherUpcomingAdapter
+    private lateinit var teacherFinishedDutyAdapter: HomeTeacherFinishedAdapter
+    private lateinit var preferencesManager: PreferencesManager
+    private lateinit var makeAppointmentButton: Button
+    private lateinit var viewStub: ViewStub
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_teacher_home_page, container, false)
-    }
+        val view = inflater.inflate(R.layout.fragment_teacher_home_page, container, false)
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment teacher_home_page.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            teacher_home_page().apply {
+        recyclerViewUpcoming = view.findViewById(R.id.recyclerView_duties)
+        recyclerViewUpcoming.layoutManager = LinearLayoutManager(requireContext())
+        recyclerViewCompleted = view.findViewById(R.id.recyclerView_finished_duties)
+        recyclerViewCompleted.layoutManager = LinearLayoutManager(requireContext())
+        makeAppointmentButton = view.findViewById(R.id.appointmentButton)
+
+        preferencesManager = PreferencesManager(requireContext())
+
+        /// Set up adapter with the click listener
+        teacherUpcomingDutyAdapter = HomeTeacherUpcomingAdapter(mutableListOf(), requireActivity()) { duty ->
+            val dutyDetailFragment = duty_view().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                    putSerializable("DUTY_DETAILS", duty) // Pass the clicked Duty object
+                    putInt("DUTY_ID", duty.id) // Pass the clicked Duty ID
                 }
             }
+
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.frameLayout, dutyDetailFragment) // Change to your actual container ID
+                .addToBackStack(null) // Optional: adds the transaction to the back stack
+                .commit()
+        }
+        recyclerViewUpcoming.adapter = teacherUpcomingDutyAdapter
+
+        // Set up adapter with the click listener
+        teacherFinishedDutyAdapter = HomeTeacherFinishedAdapter(mutableListOf(), requireActivity()) { duty ->
+            // Handle item click to replace the current fragment with FinishedDutyView
+            val finishedDutyDetailFragment = finished_duty_view().apply {
+                arguments = Bundle().apply {
+                    putSerializable("DUTY_DETAILS", duty) // Pass the clicked Duty object
+                    putInt("DUTY_ID", duty.id)
+                }
+            }
+
+            // Replace the current fragment with FinishedDutyView
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.frameLayout, finishedDutyDetailFragment) // Change to your actual container ID
+                .addToBackStack(null) // Optional: adds the transaction to the back stack
+                .commit()
+        }
+        recyclerViewCompleted.adapter = teacherFinishedDutyAdapter
+
+
+        // Fetch duties
+        fetchUpcomingDuties()
+        fetchFinishedDuties()
+
+        // Set up button listener
+        makeAppointmentButton.setOnClickListener {
+            // Handle make appointment action
+            Toast.makeText(context, "Make Appointment Clicked", Toast.LENGTH_SHORT).show()
+            // Add your navigation or appointment creation logic here
+        }
+
+        preferencesManager = PreferencesManager(requireContext())
+
+        return view
+    }
+
+    private fun fetchUpcomingDuties() {
+        val teacherId = preferencesManager.getUserId()
+
+        if (teacherId != null) {
+            RetrofitInstance.dutyApi.getUpcomingDutiesTeacher(teacherId).enqueue(object : Callback<List<Duty>> {
+                override fun onResponse(call: Call<List<Duty>>, response: Response<List<Duty>>) {
+                    if (response.isSuccessful) {
+                        val duties = response.body()
+                        if (!duties.isNullOrEmpty()) {
+                            teacherUpcomingDutyAdapter.updateDuties(duties)
+                        } else {
+                            showNoDataView(recyclerViewUpcoming)
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<List<Duty>>, t: Throwable) {
+                    Log.e("API Error", "Error fetching upcoming duties: ${t.message}")
+                    showNoDataView(recyclerViewUpcoming)
+                }
+            })
+        }
+    }
+
+    private fun fetchFinishedDuties() {
+        val teacherId = preferencesManager.getUserId()
+
+        if (teacherId != null) {
+            RetrofitInstance.dutyApi.getCompletedDutiesTeacher(teacherId).enqueue(object : Callback<List<Duty>> {
+                override fun onResponse(call: Call<List<Duty>>, response: Response<List<Duty>>) {
+                    if (response.isSuccessful) {
+                        val duties = response.body()
+                        if (!duties.isNullOrEmpty()) {
+                            teacherFinishedDutyAdapter.updateDuties(duties)
+                        } else {
+                            showNoDataView(recyclerViewCompleted)
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<List<Duty>>, t: Throwable) {
+                    Log.e("API Error", "Error fetching finished duties: ${t.message}")
+                    showNoDataView(recyclerViewCompleted)
+                }
+            })
+        }
+    }
+
+    private fun showNoDataView(recyclerView: RecyclerView) {
+        recyclerView.visibility = View.GONE
+        // You can also show a TextView or another UI element to indicate no data is available
+        // Example:
+        // noDataTextView.visibility = View.VISIBLE
     }
 }

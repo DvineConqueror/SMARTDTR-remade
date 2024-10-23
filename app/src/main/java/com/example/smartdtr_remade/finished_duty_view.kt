@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.smartdtr_remade.Api.RetrofitInstance
 import com.example.smartdtr_remade.models.GetDuty
 import com.example.smartdtr_remade.models.Student
+import com.google.android.material.button.MaterialButton
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -32,6 +33,12 @@ class finished_duty_view : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_finished_duty_view, container, false)
 
+        val backButton: MaterialButton = view.findViewById(R.id.btnBack)
+
+        // Back button click listener
+        backButton.setOnClickListener {
+            parentFragmentManager.popBackStack()
+        }
         // Initialize RecyclerView
         recyclerStudentList = view.findViewById(R.id.recycler_student_list)
 
