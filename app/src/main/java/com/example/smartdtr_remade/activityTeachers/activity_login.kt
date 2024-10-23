@@ -191,7 +191,11 @@ class activity_login : AppCompatActivity() {
                         Toast.makeText(this@activity_login, "Login failed: No token received", Toast.LENGTH_SHORT).show()
                     }
                 } else {
-                    Toast.makeText(this@activity_login, "Login failed: ${response.message()}", Toast.LENGTH_SHORT).show()
+                    if (response.code() == 403 && response.errorBody()?.string()?.contains("User is already logged in") == true){
+                        Toast.makeText(this@activity_login, "User is already logged in on another device", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(this@activity_login, "Login failed: ${response.message()}", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
 
