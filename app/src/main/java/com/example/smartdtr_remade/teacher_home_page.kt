@@ -88,9 +88,10 @@ class teacher_home_page : Fragment() {
 
         // Set up button listener
         makeAppointmentButton.setOnClickListener {
-            // Handle make appointment action
-            Toast.makeText(context, "Make Appointment Clicked", Toast.LENGTH_SHORT).show()
-            // Add your navigation or appointment creation logic here
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.frameLayout, teacher_create_appointment()) // Passing null for params if not needed
+                .addToBackStack(null)
+                .commit()
         }
 
         preferencesManager = PreferencesManager(requireContext())
