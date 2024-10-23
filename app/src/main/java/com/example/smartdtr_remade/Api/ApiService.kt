@@ -36,6 +36,9 @@ interface ApiService {
         @PUT("duties/{id}")
         fun updateDuty(@Path("id") id: Int, @Body duty: Duty): Call<Duty>
 
+        @PUT("duties/{id}")
+        fun updateDutyStatus(@Path("id") id: Int, @Body statusUpdate: Map<String, String>): Call<Void>
+
         @DELETE("duties/{id}")
         fun deleteDuty(@Path("id") id: Int): Call<Void>
 
