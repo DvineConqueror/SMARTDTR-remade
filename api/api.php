@@ -60,9 +60,13 @@ Route::prefix('duties')->group(function () {
     Route::get('/completed-teachers', [DutyController::class, 'getCompletedDutiesForTeachers']);
     Route::get('/upcoming-students', [DutyController::class, 'getUpcomingDutiesForStudents']);
     Route::get('/completed-students', [DutyController::class, 'getCompletedDutiesForStudents']);
+
+    Route::get('/{id}', [DutyController::class, 'show']);
+
+
 });
 
-
+Route::get('/duties/{id}/students', [DutyController::class, 'getStudentsFromDuty']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/signup', [AuthController::class, 'signup']); 
 Route::post('/logout', [AuthController::class, 'logout']);

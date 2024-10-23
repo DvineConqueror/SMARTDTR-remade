@@ -5,10 +5,69 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB; // Import DB
 use Illuminate\Support\Facades\Log; // Import Log
 use App\Models\Duty;
+use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class DutyController extends Controller
 {
+
+    public function getDuty($id)
+    {
+        $duty = Duty::with('students')->find($id); // Assuming 'students' is the relationship defined in Duty model
+        return response()->json($duty);
+    }
+
+    public function getStudentsFromDuty($id)
+    {
+        try {
+            // Fetch the duty by ID and include the students relationship
+            $duty = Duty::with('students')->findOrFail($id);
+
+            // Get the student IDs
+            $studentIds = $duty->students->pluck('id')->toArray();
+
+            // Fetch students based on the IDs
+            $students = Student::whereIn('id', $studentIds)->get();
+
+            return response()->json($students, 200);
+        } catch (\Exception $e) {
+            \Log::error($e->getMessage());
+            return response()->json(['error' => 'Failed to retrieve students for the duty.'], 500);
+        }
+    }
+
+
+    public function show($id)
+    {
+        try {
+            $duty = Duty::with(['teacher', 'students'])->find($id);
+
+            // Check if duty exists
+            if (!$duty) {
+                return response()->json(['message' => 'Duty not found'], 404);
+            }
+
+            // Prepare the response data
+            $response = [
+                'id' => $duty->id,
+                'teacher_name' => $duty->teacher ? $duty->teacher->lastname . ', ' . $duty->teacher->firstname : 'N/A',
+                'student_ids' => $duty->students->pluck('id')->toArray(), // Get student IDs
+                'subject' => $duty->subject,
+                'room' => $duty->room,
+                'date' => $duty->date,
+                'start_time' => $duty->start_time,
+                'end_time' => $duty->end_time,
+                'status' => $duty->status,
+            ];
+
+            return response()->json($response, 200);
+        } catch (\Exception $e) {
+            \Log::error($e->getMessage());
+            return response()->json(['message' => 'Failed to retrieve duty details.'], 500);
+        }
+    }
+
     // GET all duties with teacher and multiple students
     public function index()
     {
@@ -22,7 +81,7 @@ class DutyController extends Controller
                     'id' => $duty->id,
                     'teacher_name' => $duty->teacher ? $duty->teacher->lastname . ', ' . $duty->teacher->firstname : 'N/A',
                     'students' => $duty->students->map(function ($student) {
-                        return $student->lastname . ', ' . $student->firstname;
+                        return $student->id;
                     })->toArray(),
                     'subject' => $duty->subject,
                     'room' => $duty->room,
@@ -54,7 +113,7 @@ class DutyController extends Controller
                 'date' => 'required|date',
                 'start_time' => 'required|date_format:H:i',
                 'end_time' => 'required|date_format:H:i|after:start_time',
-                'status' => 'required|in:pending,finished,canceled',
+                'status' => 'required|in:Pending,Finished,Canceled',
             ]);
 
             // Create the duty
@@ -73,8 +132,8 @@ class DutyController extends Controller
                 'id' => $duty->id,
                 'teacher_name' => $duty->teacher ? $duty->teacher->lastname . ', ' . $duty->teacher->firstname : 'N/A',
                 'students' => $duty->students->map(function ($student) {
-                    return $student->lastname . ', ' . $student->firstname;
-                })->toArray(),
+                        return $student->id;
+                    })->toArray(),
                 'subject' => $duty->subject,
                 'room' => $duty->room,
                 'date' => $duty->date,
@@ -102,7 +161,7 @@ class DutyController extends Controller
                     'id' => $duty->id,
                     'teacher_name' => $duty->teacher ? $duty->teacher->lastname . ', ' . $duty->teacher->firstname : 'N/A',
                     'students' => $duty->students->map(function ($student) {
-                        return $student->lastname . ', ' . $student->firstname;
+                        return $student->id;
                     })->toArray(),
                     'subject' => $duty->subject,
                     'room' => $duty->room,
@@ -131,7 +190,7 @@ class DutyController extends Controller
                     'id' => $duty->id,
                     'teacher_name' => $duty->teacher ? $duty->teacher->lastname . ', ' . $duty->teacher->firstname : 'N/A',
                     'students' => $duty->students->map(function ($student) {
-                        return $student->lastname . ', ' . $student->firstname;
+                        return $student->id;
                     })->toArray(),
                     'subject' => $duty->subject,
                     'room' => $duty->room,
@@ -177,7 +236,7 @@ class DutyController extends Controller
                     'id' => $duty->id,
                     'teacher_name' => $duty->teacher ? "{$duty->teacher->lastname}, {$duty->teacher->firstname}" : 'N/A',
                     'students' => $duty->students->map(function ($student) {
-                        return "{$student->lastname}, {$student->firstname}";
+                        return $student->id;
                     })->toArray(),
                     'subject' => $duty->subject,
                     'room' => $duty->room,
@@ -223,7 +282,7 @@ class DutyController extends Controller
                     'id' => $duty->id,
                     'teacher_name' => $duty->teacher ? "{$duty->teacher->lastname}, {$duty->teacher->firstname}" : 'N/A',
                     'students' => $duty->students->map(function ($student) {
-                        return "{$student->lastname}, {$student->firstname}";
+                        return $student->id;
                     })->toArray(),
                     'subject' => $duty->subject,
                     'room' => $duty->room,
@@ -385,8 +444,8 @@ class DutyController extends Controller
                 'id' => $duty->id,
                 'teacher_name' => $duty->teacher ? $duty->teacher->lastname . ', ' . $duty->teacher->firstname : 'N/A',
                 'students' => $duty->students->map(function ($student) {
-                    return $student->lastname . ', ' . $student->firstname;
-                })->toArray(),
+                        return $student->id;
+                    })->toArray(),
                 'subject' => $duty->subject,
                 'room' => $duty->room,
                 'date' => $duty->date,
