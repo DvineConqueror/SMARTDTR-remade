@@ -426,7 +426,7 @@ class DutyController extends Controller
                 'date' => 'required|date',
                 'start_time' => 'required|date_format:H:i',
                 'end_time' => 'required|date_format:H:i|after:start_time',
-                'status' => 'required|in:pending,finished,canceled',
+                'status' => 'required|in:Pending,Finished,Canceled',
             ]);
 
             // Update duty
@@ -460,6 +460,46 @@ class DutyController extends Controller
             return response()->json('Failed to update duty.', 500);
         }
     }
+
+    public function updateStatus(Request $request, $id)
+    {
+        try {
+            // Find the duty by its ID or return 404 if not found
+            $duty = Duty::findOrFail($id);
+
+            // Validate the request to ensure the status is provided and valid
+            $validatedData = $request->validate([
+                'status' => 'required|in:Pending,Finished,Canceled',
+            ]);
+
+            // Update the status of the duty
+            $duty->update(['status' => $validatedData['status']]);
+
+            // Fetch the updated duty with teacher and students information
+            $duty = Duty::with(['teacher', 'students'])->find($duty->id);
+
+            // Prepare the response data
+            $dutyData = [
+                'id' => $duty->id,
+                'teacher_name' => $duty->teacher ? $duty->teacher->lastname . ', ' . $duty->teacher->firstname : 'N/A',
+                'students' => $duty->students->map(function ($student) {
+                        return $student->id;
+                    })->toArray(),
+                'subject' => $duty->subject,
+                'room' => $duty->room,
+                'date' => $duty->date,
+                'start_time' => $duty->start_time,
+                'end_time' => $duty->end_time,
+                'status' => $duty->status,
+            ];
+
+            return response()->json(['message' => 'Duty status updated successfully', 'duty' => $dutyData], 200);
+        } catch (\Exception $e) {
+            \Log::error($e->getMessage());
+            return response()->json('Failed to update duty status.', 500);
+        }
+    }
+
 
     // DELETE a duty
     public function destroy($id)

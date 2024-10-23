@@ -73,49 +73,4 @@ class Duty extends Model
             });     
     }      
 
-    // Mutator to automatically update status based on date and time     
-    public function setStatusAttribute($value)     
-    {         
-        $now = Carbon::now();                  
-
-        // Check if both date and time are set         
-        if (isset($this->attributes['date']) && isset($this->attributes['start_time']) && isset($this->attributes['end_time'])) {             
-            $dutyDate = Carbon::parse($this->attributes['date']);             
-            $startTime = Carbon::parse($this->attributes['start_time']);             
-            $endTime = Carbon::parse($this->attributes['end_time']);             
-            $nowTime = $now->copy()->format('H:i:s');                          
-
-            // Check if the duty is in the future             
-            if ($dutyDate->isFuture() || ($dutyDate->isToday() && $startTime->gt($nowTime))) {                 
-                $this->attributes['status'] = 'pending';             
-            }             
-            // Check if the duty is pending             
-            elseif ($dutyDate->isToday() && $startTime->lte($nowTime) && $endTime->gt($nowTime)) {                 
-                $this->attributes['status'] = 'pending';             
-            }             
-            // Otherwise, it must be finished             
-            else {                 
-                $this->attributes['status'] = 'finished';             
-            }         
-        } else {             
-            // If no date or time is set, default to the passed value or 'pending'             
-            $this->attributes['status'] = $value ?: 'pending';         
-        }     
-    }      
-
-    // Ensure status is set when creating or updating the duty     
-    public static function boot()     
-    {         
-        parent::boot();          
-
-        // Automatically set status when creating a new Duty         
-        static::creating(function ($model) {             
-            $model->setStatusAttribute($model->status);         
-        });          
-
-        // Automatically set status when updating an existing Duty         
-        static::updating(function ($model) {             
-            $model->setStatusAttribute($model->status);         
-        });     
-    } 
 }
