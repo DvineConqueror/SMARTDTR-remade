@@ -75,7 +75,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/lilita_one"
             android:layout_marginBottom="60dp"
-            android:text="Make an Appointment"
+            android:text="Finished Appointment"
             android:textColor="#1604F4"
             android:textSize="25sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -86,7 +86,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/timeSelector"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="30dp"
             android:background="@drawable/gradient_background_3"
@@ -95,7 +95,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView6"
-            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintVertical_bias="1.0"
             tools:ignore="MissingConstraints">
 
             <TextView
