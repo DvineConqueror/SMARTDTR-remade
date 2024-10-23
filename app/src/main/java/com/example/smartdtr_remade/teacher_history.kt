@@ -1,7 +1,6 @@
 package com.example.smartdtr_remade
 
 import TeacherFinishedDutyAdapter
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -10,12 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewStub // Import ViewStub
+import android.view.ViewStub
 import com.example.smartdtr_remade.Api.RetrofitInstance
 import com.example.smartdtr_remade.models.Duty
 import com.example.smartdtr_remade.PreferencesManager
-import com.example.smartdtr_remade.activityTeachers.Main_teacher
-import com.example.smartdtr_remade.activityTeachers.teacher_list_student_card
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -25,7 +22,7 @@ class teacher_history : Fragment() {
     private lateinit var teacherFinishedDutyAdapter: TeacherFinishedDutyAdapter
     private lateinit var recyclerView: RecyclerView
     private lateinit var preferencesManager: PreferencesManager
-    private lateinit var viewStub: ViewStub // Declare ViewStub
+    private lateinit var viewStub: ViewStub
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -41,15 +38,16 @@ class teacher_history : Fragment() {
         viewStub = view.findViewById(R.id.nodata_viewstub)
 
         // Set up adapter with the click listener
-        teacherFinishedDutyAdapter = TeacherFinishedDutyAdapter(mutableListOf()) { duty ->
-            // Handle item click to replace the current fragment with DutyDetailFragment
+        teacherFinishedDutyAdapter = TeacherFinishedDutyAdapter(mutableListOf(), requireActivity()) { duty ->
+            // Handle item click to replace the current fragment with FinishedDutyView
             val finishedDutyDetailFragment = finished_duty_view().apply {
                 arguments = Bundle().apply {
                     putSerializable("DUTY_DETAILS", duty) // Pass the clicked Duty object
+                    putInt("DUTY_ID", duty.id)
                 }
             }
 
-            // Replace the current fragment with DutyDetailFragment
+            // Replace the current fragment with FinishedDutyView
             parentFragmentManager.beginTransaction()
                 .replace(R.id.frameLayout, finishedDutyDetailFragment) // Change to your actual container ID
                 .addToBackStack(null) // Optional: adds the transaction to the back stack

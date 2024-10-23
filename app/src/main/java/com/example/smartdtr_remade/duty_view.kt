@@ -1,93 +1,102 @@
 package com.example.smartdtr_remade
 
 import StudentListViewAdapter
+import android.icu.text.SimpleDateFormat
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.button.MaterialButton
-import android.widget.Button
-import android.widget.TextView
 import com.example.smartdtr_remade.Api.RetrofitInstance
-import com.example.smartdtr_remade.models.Duty
+import com.example.smartdtr_remade.models.GetDuty
 import com.example.smartdtr_remade.models.Student
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.Locale
 
 class duty_view : Fragment() {
 
-    private lateinit var btnBack: MaterialButton
-    private lateinit var btnEdit: Button
-    private lateinit var btnMarkAsDone: Button
-    private lateinit var tvSubjectValue: TextView
-    private lateinit var tvRoomValue: TextView
-    private lateinit var textStartTimeValue: TextView
-    private lateinit var textEndTimeValue: TextView
-    private lateinit var recyclerStudentList: RecyclerView
-    private lateinit var studentsAdapter: StudentListViewAdapter // Updated to your adapter
-    private var duty: Duty? = null // Initialize the duty object
+    private lateinit var studentsAdapter: StudentListViewAdapter
+    private lateinit var recyclerStudentList: RecyclerView  // RecyclerView for the student list
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    // Lazy property to get duty ID from the arguments
+    private val dutyId: Int by lazy { arguments?.getInt("DUTY_ID") ?: 0 }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View? {
         val view = inflater.inflate(R.layout.fragment_duty_view, container, false)
 
-        // Retrieve the Duty object from the arguments
-        duty = arguments?.getSerializable("DUTY_DETAILS") as? Duty
-
-        // Initialize the views
-        btnBack = view.findViewById(R.id.btnBack)
-        btnEdit = view.findViewById(R.id.btnCreate)
-        btnMarkAsDone = view.findViewById(R.id.btnMarkAsDone)
-        tvSubjectValue = view.findViewById(R.id.tvSubjectValue)
-        tvRoomValue = view.findViewById(R.id.tvRoomValue)
-        textStartTimeValue = view.findViewById(R.id.textStartTimeValue)
-        textEndTimeValue = view.findViewById(R.id.textEndTimeValue)
+        // Initialize RecyclerView
         recyclerStudentList = view.findViewById(R.id.recycler_student_list)
 
-        // Set up the student list RecyclerView
-        setupStudentList()
-
-        // Set the duty details to the UI
-        setDutyDetails()
-
-        // Set up listeners for buttons
-        setupListeners()
+        // Fetch the duty details using the duty ID
+        fetchDutyDetails(dutyId)
 
         return view
     }
 
-    private fun setupStudentList() {
-        studentsAdapter = StudentListViewAdapter(mutableListOf()) // Initialize adapter
+    private fun fetchDutyDetails(dutyId: Int) {
+        RetrofitInstance.dutyApi.getDuty(dutyId).enqueue(object : Callback<GetDuty> {
+            override fun onResponse(call: Call<GetDuty>, response: Response<GetDuty>) {
+                if (response.isSuccessful) {
+                    val getDuty = response.body()
+                    getDuty?.let {
+                        // Populate the UI with duty details
+                        populateDutyDetails(it)
+
+                        // Initialize the adapter with student IDs and set it to the RecyclerView
+                        setupStudentList(it.student_ids)
+                    }
+                } else {
+                    Log.e("DutyView", "Failed to fetch duty details: ${response.errorBody()}")
+                }
+            }
+
+            override fun onFailure(call: Call<GetDuty>, t: Throwable) {
+                Log.e("DutyView", "Error fetching duty details: ${t.message}")
+            }
+        })
+    }
+
+    private fun populateDutyDetails(duty: GetDuty) {
+        val startTimeTextView: TextView = view?.findViewById(R.id.textStartTimeValue) ?: return
+        val endTimeTextView: TextView = view?.findViewById(R.id.textEndTimeValue) ?: return
+        val roomTextView: TextView = view?.findViewById(R.id.tvRoomValue) ?: return
+        val subjectTextView: TextView = view?.findViewById(R.id.tvSubjectValue) ?: return
+
+        startTimeTextView.text = formatTime(duty.start_time)
+        endTimeTextView.text = formatTime(duty.end_time)
+        roomTextView.text = duty.room
+        subjectTextView.text = duty.subject
+    }
+
+    private fun setupStudentList(studentIds: List<Int>) {
+        // Initialize the adapter with an empty student list
+        studentsAdapter = StudentListViewAdapter(mutableListOf())
         recyclerStudentList.layoutManager = LinearLayoutManager(requireContext())
         recyclerStudentList.adapter = studentsAdapter
+
+        // Fetch students for this duty (you no longer need to pass studentIds)
+        fetchStudentsForDuty()
     }
 
-    private fun setDutyDetails() {
-        duty?.let {
-            tvSubjectValue.text = it.subject
-            tvRoomValue.text = it.room
-            textStartTimeValue.text = formatTime(it.start_time)
-            textEndTimeValue.text = formatTime(it.end_time)
-
-            // Fetch students related to this duty
-            fetchStudentsForDuty(it.id)
-        }
-    }
-
-    private fun fetchStudentsForDuty(dutyId: Int) {
-        RetrofitInstance.studentApi.getStudentsForDuty(dutyId).enqueue(object : Callback<List<Student>> {
+    private fun fetchStudentsForDuty() {
+        // Call the API using the dutyId
+        RetrofitInstance.studentApi.getStudentsFromDuty(dutyId).enqueue(object : Callback<List<Student>> {
             override fun onResponse(call: Call<List<Student>>, response: Response<List<Student>>) {
                 if (response.isSuccessful) {
                     val students = response.body()
                     students?.let {
-                        studentsAdapter.updateStudents(it) // Assuming your adapter has an update method
+                        studentsAdapter.updateStudents(it)  // Update the adapter with fetched students
                     }
                 } else {
-                    Log.e("StudentList", "Failed to fetch students")
+                    Log.e("StudentList", "Failed to fetch students: ${response.errorBody()}")
                 }
             }
 
@@ -97,23 +106,10 @@ class duty_view : Fragment() {
         })
     }
 
-    private fun setupListeners() {
-        btnBack.setOnClickListener { requireActivity().onBackPressed() }
-        btnEdit.setOnClickListener { editDuty() }
-        btnMarkAsDone.setOnClickListener { markDutyAsDone() }
-    }
-
-    private fun editDuty() {
-        // Implement logic to navigate to edit duty screen
-    }
-
-    private fun markDutyAsDone() {
-        // Implement logic to mark the duty as done
-    }
-
     private fun formatTime(time: String): String {
-        return time // Implement your time formatting logic here
+        val inputFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
+        val outputFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+        val date = inputFormat.parse(time)
+        return outputFormat.format(date!!)
     }
 }
-
-

@@ -7,6 +7,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.smartdtr_remade.R
 import com.example.smartdtr_remade.models.Duty
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class StudentUpcomingDutyAdapter(private var duties: List<Duty>) : RecyclerView.Adapter<StudentUpcomingDutyAdapter.DutyViewHolder>() {
 
@@ -51,8 +53,11 @@ class StudentUpcomingDutyAdapter(private var duties: List<Duty>) : RecyclerView.
 
     // Format time function
     private fun formatTime(time: String): String {
-        // You can implement your own time formatting logic here
-        return time // For now, just return the time as-is
+        val inputFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
+        val outputFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+
+        val date = inputFormat.parse(time)
+        return outputFormat.format(date!!)
     }
 }
 

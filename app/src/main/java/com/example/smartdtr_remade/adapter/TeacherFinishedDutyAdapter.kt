@@ -1,7 +1,10 @@
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.smartdtr_remade.R
 import com.example.smartdtr_remade.models.Duty
@@ -10,6 +13,7 @@ import java.util.Locale
 
 class TeacherFinishedDutyAdapter(
     private var duties: MutableList<Duty>,
+    private val fragmentActivity: FragmentActivity, // Pass FragmentActivity for navigation
     private val onItemClick: (Duty) -> Unit // Callback for item click
 ) : RecyclerView.Adapter<TeacherFinishedDutyAdapter.DutyViewHolder>() {
 
@@ -33,6 +37,7 @@ class TeacherFinishedDutyAdapter(
         // Set item click listener
         holder.itemView.setOnClickListener {
             onItemClick(duty) // Call the callback with the clicked Duty item
+            // Navigate to detailed view or another fragment here if needed
         }
     }
 
@@ -54,6 +59,14 @@ class TeacherFinishedDutyAdapter(
         val teacherTextView: TextView = itemView.findViewById(R.id.finished_teacher)
         val subjectTextView: TextView = itemView.findViewById(R.id.finished_subject)
         val roomTextView: TextView = itemView.findViewById(R.id.finished_room)
+    }
+
+    // Navigation method (optional: if you want to navigate to a specific fragment)
+    private fun navigateToFragment(fragment: Fragment) {
+        val transaction = fragmentActivity.supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.recycler_dutySchedule, fragment) // Check this container ID
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
 
     // Function to format time from hh:mm:ss to hh:mm

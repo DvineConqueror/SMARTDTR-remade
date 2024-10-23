@@ -3,6 +3,7 @@ package com.example.smartdtr_remade.Api
 import LoginRequest
 import LoginResponse
 import com.example.smartdtr_remade.models.Duty
+import com.example.smartdtr_remade.models.GetDuty
 import com.example.smartdtr_remade.models.ResetPasswordRequest
 import com.example.smartdtr_remade.models.ResetPasswordResponse
 import com.example.smartdtr_remade.models.SignUpRequest
@@ -37,6 +38,9 @@ interface ApiService {
 
         @DELETE("duties/{id}")
         fun deleteDuty(@Path("id") id: Int): Call<Void>
+
+        @GET("duties/{id}")
+        fun getDuty(@Path("id") dutyId: Int): Call<GetDuty>
     }
 
     interface StudentListApi {
@@ -48,10 +52,16 @@ interface ApiService {
     fun login(@Body loginRequest: LoginRequest): Call<LoginResponse>
 
     @PUT("/students/{id}") // Use the correct endpoint for password updates
-    fun updateStudent(@Path("id") id: String, @Body request: ResetPasswordRequest): Call<ResetPasswordResponse>
+    fun updateStudent(
+        @Path("id") id: String,
+        @Body request: ResetPasswordRequest
+    ): Call<ResetPasswordResponse>
 
     @PUT("/teachers/{id}") // Use the correct endpoint for password updates
-    fun updateTeacher(@Path("id") id: String, @Body request: ResetPasswordRequest): Call<ResetPasswordResponse>
+    fun updateTeacher(
+        @Path("id") id: String,
+        @Body request: ResetPasswordRequest
+    ): Call<ResetPasswordResponse>
 
     @POST("changepassword")
     fun changePassword(@Body request: ResetPasswordRequest): Call<ResetPasswordResponse>
@@ -64,7 +74,8 @@ interface ApiService {
 
     // Companion object to create the Retrofit instance
     companion object {
-        private const val BASE_URL = "http://10.0.2.2:8000/api/" // Ensure you have the correct base URL
+        private const val BASE_URL =
+            "http://10.0.2.2:8000/api/" // Ensure you have the correct base URL
 
         fun create(): ApiService {
             val retrofit = Retrofit.Builder()
@@ -89,10 +100,8 @@ interface ApiService {
             @Path("userId") userId: String
         ): Call<Student>
 
-        @POST("students/by-ids")
-        fun getStudentsByIds(@Body studentIds: List<Int>): Call<List<Student>>
-
-        @GET("duties/{dutyId}/students")
-        fun getStudentsForDuty(@Path("dutyId") dutyId: Int): Call<List<Student>>
+        @GET("duties/{id}/students")
+        fun getStudentsFromDuty(@Path("id") dutyId: Int): Call<List<Student>>
     }
+
 }

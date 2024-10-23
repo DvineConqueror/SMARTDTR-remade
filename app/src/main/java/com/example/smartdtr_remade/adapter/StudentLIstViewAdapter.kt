@@ -5,6 +5,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.smartdtr_remade.R
 import com.example.smartdtr_remade.models.Student
+import com.example.smartdtr_remade.models.Students
 
 class StudentListViewAdapter(private var students: MutableList<Student>) :
     RecyclerView.Adapter<StudentListViewAdapter.StudentViewHolder>() {

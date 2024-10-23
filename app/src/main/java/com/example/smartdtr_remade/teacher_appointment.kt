@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewStub // Add this import
+import android.view.ViewStub
 import com.example.smartdtr_remade.Api.RetrofitInstance
 import com.example.smartdtr_remade.models.Duty
 import com.example.smartdtr_remade.PreferencesManager
@@ -22,7 +22,7 @@ class teacher_appointment : Fragment() {
     private lateinit var teacherUpcomingDutyAdapter: TeacherUpcomingDutyAdapter
     private lateinit var recyclerView: RecyclerView
     private lateinit var preferencesManager: PreferencesManager
-    private lateinit var viewStub: ViewStub // ViewStub declaration
+    private lateinit var viewStub: ViewStub
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -38,14 +38,13 @@ class teacher_appointment : Fragment() {
 
         // Set up adapter with the click listener
         teacherUpcomingDutyAdapter = TeacherUpcomingDutyAdapter(mutableListOf(), requireActivity()) { duty ->
-            // Handle item click to replace the current fragment with DutyDetailFragment
             val dutyDetailFragment = duty_view().apply {
                 arguments = Bundle().apply {
                     putSerializable("DUTY_DETAILS", duty) // Pass the clicked Duty object
+                    putInt("DUTY_ID", duty.id) // Pass the clicked Duty ID
                 }
             }
 
-            // Replace the current fragment with DutyDetailFragment
             parentFragmentManager.beginTransaction()
                 .replace(R.id.frameLayout, dutyDetailFragment) // Change to your actual container ID
                 .addToBackStack(null) // Optional: adds the transaction to the back stack
@@ -89,9 +88,7 @@ class teacher_appointment : Fragment() {
     }
 
     private fun showNoDataView() {
-        // Inflate the ViewStub and display the no data layout
         recyclerView.visibility = View.GONE // Hide RecyclerView
         viewStub.visibility = View.VISIBLE  // Inflate and show the no data view
     }
 }
-

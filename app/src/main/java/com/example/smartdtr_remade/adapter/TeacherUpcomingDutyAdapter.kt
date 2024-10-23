@@ -11,7 +11,6 @@ import com.example.smartdtr_remade.R
 import com.example.smartdtr_remade.models.Duty
 import com.example.smartdtr_remade.teacher_create_appointment
 import com.example.smartdtr_remade.teacher_student_list_create
-import com.example.smartdtr_remade.teacher_student_list_view
 import java.text.SimpleDateFormat
 import java.util.Locale
 
