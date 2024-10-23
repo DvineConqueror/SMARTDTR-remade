@@ -52,8 +52,8 @@ Route::prefix('duties')->group(function () {
     Route::get('/', [DutyController::class, 'index']);                          //GET all duties
     Route::get('/upcoming', [DutyController::class, 'getUpcomingDuties']);      //GET upcoming duties
     Route::get('/completed', [DutyController::class, 'getCompletedDuties']);    //GET completed duties
-    Route::put('/{id}', [DutyController::class, 'update']);                     //UPDATE a duty
-    Route::put('/{id}', [DutyController::class, 'updateStatus']);
+    Route::put('/{id}', [DutyController::class, 'update']);                     //UPDATE a duty 
+    Route::put('/{id}/status', [DutyController::class, 'updateStatus']);
     Route::delete('/{id}', [DutyController::class, 'destroy']);                 //DELETE a duty
 
     // New routes for upcoming and completed duties
