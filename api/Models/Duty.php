@@ -44,33 +44,16 @@ class Duty extends Model
         })->implode(', ');     
     }      
 
-    // Scope to get upcoming duties (status: pending, date: future or time in future)     
+    // Scope to get upcoming duties (status: pending)     
     public function scopeUpcoming($query)     
     {         
-        return $query->where('status', 'Pending')->where(function ($query) {             
-            $query->where('date', '>', now()->toDateString())                   
-                  ->orWhere(function ($query) {                       
-                      $query->where('date', '=', now()->toDateString())                             
-                            ->where('start_time', '>', now()->toTimeString());                   
-                  });         
-        });     
+        return $query->where('status', 'Pending')     
     }      
 
-    // Scope to get completed duties (status: finished or date/time has passed)     
+    // Scope to get completed duties (status: finished)     
     public function scopeCompleted($query)     
     {         
-        return $query->where('status', 'Finished')             
-            ->orWhere(function ($query) {                 
-                // Automatically mark duties as finished if the time has passed                 
-                $query->where('status', 'Pending')                       
-                      ->where(function ($query) {                           
-                          $query->where('date', '<', now()->toDateString())                                 
-                                ->orWhere(function ($query) {                                     
-                                    $query->where('date', '=', now()->toDateString())                                           
-                                          ->where('end_time', '<', now()->toTimeString());                                 
-                                });                       
-                      });             
-            });     
+        return $query->where('status', 'Finished')                  
     }      
 
 }
