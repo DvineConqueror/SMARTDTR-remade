@@ -140,6 +140,6 @@ class student_home_page : Fragment() {
         val duration = java.time.Duration.between(startTime, endTime)
 
         // Return the total hours worked as an integer
-        return duration.toHoursPart() // Returns only the hour part of the duration
+        return duration.toHours().toInt() // Returns only the hour part of the duration
     }
 }
