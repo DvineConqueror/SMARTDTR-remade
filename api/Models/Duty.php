@@ -47,13 +47,13 @@ class Duty extends Model
     // Scope to get upcoming duties (status: pending)     
     public function scopeUpcoming($query)     
     {         
-        return $query->where('status', 'Pending')     
+        return $query->where('status', 'Pending');     
     }      
 
     // Scope to get completed duties (status: finished)     
     public function scopeCompleted($query)     
     {         
-        return $query->where('status', 'Finished')                  
+        return $query->where('status', 'Finished');                  
     }      
 
 }
