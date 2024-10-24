@@ -36,6 +36,7 @@ class Duty extends Model
     {         
         return $this->teacher ? $this->teacher->last_name . ', ' . $this->teacher->first_name : 'N/A';     
     }
+
     // Accessor to get all student names as a comma-separated string     
     public function getStudentNamesAttribute()     
     {         
@@ -47,13 +48,12 @@ class Duty extends Model
     // Scope to get upcoming duties (status: pending)     
     public function scopeUpcoming($query)     
     {         
-        return $query->where('status', 'Pending');     
+        return $query->where('status', 'Pending'); // Added semicolon     
     }      
 
     // Scope to get completed duties (status: finished)     
     public function scopeCompleted($query)     
     {         
-        return $query->where('status', 'Finished');                  
+        return $query->where('status', 'Finished'); // Added semicolon                  
     }      
-
 }
