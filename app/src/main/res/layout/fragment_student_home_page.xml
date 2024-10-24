@@ -17,10 +17,33 @@
             android:layout_height="250dp"
             android:contentDescription="top_wave"
             android:scaleType="fitXY"
-            android:src="@drawable/top_wave"
+            android:src="@drawable/wave2_top"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivLogo"
+            android:layout_width="141dp"
+            android:layout_height="126dp"
+            android:layout_marginTop="40dp"
+            android:src="@drawable/logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.203"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/top_wave" />
+
+        <ImageView
+            android:id="@+id/ivLogoText"
+            android:layout_width="146dp"
+            android:layout_height="71dp"
+            android:layout_marginTop="68dp"
+            android:src="@drawable/group_76"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.739"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/top_wave" />
 
         <ImageView
             android:id="@+id/rectange_blue"
@@ -37,7 +60,7 @@
             android:id="@+id/timer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="64dp"
+            android:layout_marginStart="54dp"
             android:fontFamily="@font/lilita_one"
             android:gravity="center"
             android:text="90"
@@ -55,6 +78,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:text="Upcoming Duty:"
+            android:fontFamily="@font/lilita_one"
             android:textColor="@color/blue"
             android:textSize="15sp"
             android:textStyle="bold"
@@ -80,6 +104,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:text="Finished Duty:"
+            android:fontFamily="@font/lilita_one"
             android:textColor="@color/blue"
             android:textSize="15sp"
             android:textStyle="bold"

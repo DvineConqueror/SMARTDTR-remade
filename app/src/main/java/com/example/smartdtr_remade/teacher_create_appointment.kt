@@ -80,6 +80,12 @@ class teacher_create_appointment : Fragment() {
             adapter.selectAllStudents(isChecked)
         }
 
+        // Listen for individual student selection changes
+        adapter.setOnStudentSelectionChangeListener {
+            // Update the "Select All" checkbox based on the current state
+            selectAllCheckBox.isChecked = adapter.areAllStudentsSelected()
+        }
+
         // Back button click listener
         backButton.setOnClickListener {
             parentFragmentManager.popBackStack()

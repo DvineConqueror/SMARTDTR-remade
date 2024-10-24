@@ -10,6 +10,8 @@ import com.example.smartdtr_remade.models.Student
 class StudentListCreateAdapter(private var students: MutableList<Student>) :
     RecyclerView.Adapter<StudentListCreateAdapter.StudentViewHolder>() {
 
+    private var studentSelectionChangeListener: (() -> Unit)? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StudentViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.rv_teacher_list_student_create_card, parent, false)
         return StudentViewHolder(view)
@@ -19,11 +21,15 @@ class StudentListCreateAdapter(private var students: MutableList<Student>) :
         val student = students[position]
         holder.tvNameValue.text = "${student.firstname} ${student.lastname}"
         holder.tvStudentIdValue.text = student.student_id
+
+        // remove listener before updating checked state
+        holder.checkBox.setOnCheckedChangeListener(null)
         holder.checkBox.isChecked = student.isChecked
 
         // Update the checked state when the checkbox is toggled
         holder.checkBox.setOnCheckedChangeListener { _, isChecked ->
             student.isChecked = isChecked
+            studentSelectionChangeListener?.invoke()//notify listener of the change
         }
     }
 
@@ -37,6 +43,15 @@ class StudentListCreateAdapter(private var students: MutableList<Student>) :
             student.isChecked = isChecked
         }
         notifyDataSetChanged()
+        studentSelectionChangeListener?.invoke()
+    }
+
+    fun areAllStudentsSelected(): Boolean {
+        return students.all { it.isChecked }
+    }
+
+    fun setOnStudentSelectionChangeListener(listener: () -> Unit){
+        studentSelectionChangeListener = listener
     }
 
     // Get a list of selected students
