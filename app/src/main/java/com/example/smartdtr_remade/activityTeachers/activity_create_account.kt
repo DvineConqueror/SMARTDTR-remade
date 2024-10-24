@@ -67,10 +67,10 @@ class activity_create_account : AppCompatActivity() {
         )
 
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerSex.adapter = adapter1
+        spinnerSex.adapter = adapter2
 
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spnYearLevel.adapter = adapter2
+        spnYearLevel.adapter = adapter1
 
         etFocusListeners()
 
@@ -216,9 +216,9 @@ class activity_create_account : AppCompatActivity() {
         val passwordConfirm = etPasswordConfirm.text.toString().trim()
         val mobileNumber = etMobileNumber.text.toString().trim()
         val id = etID.text.toString().trim()
-        val sex = spinnerSex.selectedItem.toString()
+        val sex = spinnerSex.selectedItem.toString().trim()
         val yearLevel = if (id.startsWith("S")) {
-            spnYearLevel.selectedItem.toString() // Get the selected year level if ID starts with "S"
+            spnYearLevel.selectedItem.toString().trim() // Get the selected year level if ID starts with "S"
         } else {
             null // Handle accordingly if ID doesn't start with "S"
         }
