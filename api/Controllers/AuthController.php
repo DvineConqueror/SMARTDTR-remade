@@ -27,6 +27,10 @@ class AuthController extends Controller
 
         // Check if user exists and password is correct
         if ($user && Hash::check($password, $user->password)) {
+            // Check if the user already has an active token
+            if ($user->tokens()->where('name', 'loginToken')->exists()) {
+                return response()->json(['error' => 'User is already logged in on another device'], 403);
+            }
             // Create and return the token
             $token = $user->createToken('loginToken')->plainTextToken;
             $userType = str_starts_with($user->id, 'S') ? 'student' : 'teacher';
