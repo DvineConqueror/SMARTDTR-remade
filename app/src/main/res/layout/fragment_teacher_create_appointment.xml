@@ -144,7 +144,7 @@
                 android:id="@+id/tvTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="65dp"
                 android:fontFamily="@font/lilita_one"
                 android:letterSpacing="0.1"
                 android:text="Time"
@@ -179,10 +179,10 @@
                 android:id="@+id/spnrEndTime"
                 android:layout_width="97dp"
                 android:layout_height="48dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="52dp"
                 android:background="@drawable/custom_edittext"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.358"
+                app:layout_constraintHorizontal_bias="0.138"
                 app:layout_constraintStart_toEndOf="@+id/spnrStartTime"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -190,8 +190,8 @@
                 android:id="@+id/spnrStartTime"
                 android:layout_width="97dp"
                 android:layout_height="48dp"
-                android:layout_marginStart="44dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginStart="70dp"
+                android:layout_marginTop="52dp"
                 android:background="@drawable/custom_edittext"
                 android:fontFamily="@font/lilita_one"
                 app:layout_constraintStart_toEndOf="@+id/tvTime"
@@ -250,6 +250,34 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/checkBox"
                 tools:listitem="@layout/rv_teacher_list_student_create_card" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="50dp"
+                android:text="Start Time"
+                android:textSize="18dp"
+                android:fontFamily="@font/lilita_one"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toTopOf="@+id/spnrStartTime"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="@font/lilita_one"
+                android:layout_marginStart="160dp"
+                android:text="End Time"
+                android:textSize="18dp"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toTopOf="@+id/spnrEndTime"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -75,10 +75,11 @@
                 app:layout_constraintTop_toBottomOf="@+id/imageView15" />
 
             <EditText
-                android:id="@+id/etFirstname"
-                android:layout_width="180dp"
+                android:id="@+id/etLastname"
+                android:layout_width="150dp"
                 android:layout_height="55dp"
                 android:layout_marginTop="40dp"
+                android:layout_marginLeft="170dp"
                 android:background="@drawable/custom_edittext"
                 android:ems="10"
                 android:fontFamily="@font/lilita_one"
@@ -90,16 +91,16 @@
                 android:textColor="@color/black"
                 android:textColorHint="@color/gray"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.901"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
             <EditText
-                android:id="@+id/etLastname"
-                android:layout_width="180dp"
+                android:id="@+id/etFirstname"
+                android:layout_width="150dp"
                 android:layout_height="55dp"
                 android:layout_marginTop="40dp"
                 android:background="@drawable/custom_edittext"
+                android:layout_marginRight="170dp"
                 android:ems="10"
                 android:fontFamily="@font/lilita_one"
                 android:hint="First Name"
@@ -110,7 +111,6 @@
                 android:textColor="@color/black"
                 android:textColorHint="@color/gray"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.09"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
@@ -118,20 +118,20 @@
                 android:id="@+id/etTextFieldEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:textColorHint="@color/gray"
                 app:boxBackgroundMode="none"
                 app:counterEnabled="true"
                 app:counterMaxLength="50"
+                android:layout_marginTop="20dp"
                 app:helperText=""
                 app:helperTextTextColor="@color/brightred"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etLastname">
+                app:layout_constraintTop_toBottomOf="@+id/etFirstname">
 
                 <EditText
                     android:id="@+id/etEmail"
-                    android:layout_width="375dp"
+                    android:layout_width="320dp"
                     android:layout_height="55dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/custom_edittext"
@@ -167,7 +167,7 @@
 
                 <EditText
                     android:id="@+id/etFirstPassword"
-                    android:layout_width="375dp"
+                    android:layout_width="320dp"
                     android:layout_height="55dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/custom_edittext"
@@ -202,7 +202,7 @@
 
                 <EditText
                     android:id="@+id/etPasswordConfirm"
-                    android:layout_width="375dp"
+                    android:layout_width="320dp"
                     android:layout_height="55dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/custom_edittext"
@@ -237,7 +237,7 @@
 
                 <EditText
                     android:id="@+id/etID"
-                    android:layout_width="375dp"
+                    android:layout_width="320dp"
                     android:layout_height="55dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/custom_edittext"
@@ -270,7 +270,7 @@
 
                 <EditText
                     android:id="@+id/etMobileNumber"
-                    android:layout_width="375dp"
+                    android:layout_width="320dp"
                     android:layout_height="55dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/custom_edittext"
@@ -290,10 +290,10 @@
 
             <RelativeLayout
                 android:id="@+id/relativeLayout"
-                android:layout_width="180dp"
+                android:layout_width="150dp"
                 android:layout_height="55dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginRight="190dp"
+                android:layout_marginRight="170dp"
                 android:background="@drawable/custom_edittext"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -319,10 +319,10 @@
 
             <RelativeLayout
                 android:id="@+id/rlYearLevel"
-                android:layout_width="180dp"
+                android:layout_width="150dp"
                 android:layout_height="55dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="190dp"
+                android:layout_marginLeft="170dp"
                 android:background="@drawable/custom_edittext"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

@@ -31,12 +31,20 @@
         private var teacherId: Int? = null
         private var dutyId: Int? = null // Variable to hold the duty ID
 
+        // Declare the views as properties
+        private lateinit var backButton: MaterialButton
+        private lateinit var createButton: MaterialButton
+        private lateinit var spnrStartTime: Spinner
+        private lateinit var spnrEndTime: Spinner
+        private lateinit var etSubject: EditText
+        private lateinit var etRoom: EditText
+
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
 
             // Retrieve duty ID from arguments
             arguments?.let {
-                dutyId = it.getInt("DUTY_ID", 0) // Default to 0 if not found
+                dutyId = it.getInt("DUTY_ID", -1).takeIf { it != -1 }
             }
         }
 
@@ -51,12 +59,14 @@
             super.onViewCreated(view, savedInstanceState)
 
             // Initialize views
-            val backButton: MaterialButton = view.findViewById(R.id.btnBack)
-            val createButton: MaterialButton = view.findViewById(R.id.btnCreate)
-            val spnrStartTime: Spinner = view.findViewById(R.id.spnrStartTime)
-            val spnrEndTime: Spinner = view.findViewById(R.id.spnrEndTime)
-            val etSubject: EditText = view.findViewById(R.id.etSubject)
-            val etRoom: EditText = view.findViewById(R.id.etRoom)
+            backButton = view.findViewById(R.id.btnBack)
+            createButton = view.findViewById(R.id.btnCreate)
+            spnrStartTime = view.findViewById(R.id.spnrStartTime)
+            spnrEndTime = view.findViewById(R.id.spnrEndTime)
+            etSubject = view.findViewById(R.id.etSubject)
+            etRoom = view.findViewById(R.id.etRoom)
+
+            setupSpinners()
 
             // Retrieve teacher ID from PreferencesManager
             teacherId = PreferencesManager(requireContext()).getUserId()?.toIntOrNull()
@@ -120,10 +130,23 @@
             }
 
             createButton.setOnClickListener {
+
                 // Check if a date has been selected
                 if (!::selectedDate.isInitialized) {
                     Toast.makeText(requireContext(), "Please select a date", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener // Stay in the fragment without exiting
+                }
+
+                // Check if start time and end time are selected
+                if (spnrStartTime.selectedItem == null || spnrEndTime.selectedItem == null) {
+                    Toast.makeText(requireContext(), "Please select a time frame", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+
+                // Check if students have been selected
+                if (!areStudentsSelected()) { // Assuming you have a function to check student selection
+                    Toast.makeText(requireContext(), "Please select your students", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
                 }
 
                 // Proceed with duty creation if a date is selected
@@ -153,6 +176,22 @@
             dutyId?.let { fetchDutyDetails(it) }
         }
 
+        private fun areStudentsSelected(): Boolean {
+            return studentList.any{it.isChecked}
+        }
+
+        private fun setupSpinners() {
+            val hours = resources.getStringArray(R.array.Hour)
+
+            val startTimeAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, hours)
+            startTimeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            spnrStartTime.adapter = startTimeAdapter
+
+            val endTimeAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, hours)
+            endTimeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            spnrEndTime.adapter = endTimeAdapter
+        }
+
         private fun setupTimeSpinners(startSpinner: Spinner, endSpinner: Spinner) {
             val adapterTimeHour: ArrayAdapter<CharSequence> = ArrayAdapter.createFromResource(
                 requireContext(),
@@ -168,8 +207,19 @@
             RetrofitInstance.dutyApi.getDuty(dutyId).enqueue(object : Callback<GetDuty> {
                 override fun onResponse(call: Call<GetDuty>, response: Response<GetDuty>) {
                     if (response.isSuccessful) {
-                        val getDuty = response.body()
-                        getDuty?.let {
+                        response.body()?.let { duty ->
+                            etSubject.setText(duty.subject)
+                            etRoom.setText(duty.room)
+                            selectedDate = duty.date
+                            // Set the date in the CalendarView
+                            val dateParts = duty.date.split("-")
+                            calendarView.setDate(Calendar.getInstance().apply {
+                                set(dateParts[0].toInt(), dateParts[1].toInt() - 1, dateParts[2].toInt())
+                            }.timeInMillis)
+
+                            // Set the selected start and end times in the spinners
+                            spnrStartTime.setSelection(getTimePosition(duty.start_time))
+                            spnrEndTime.setSelection(getTimePosition(duty.end_time))
                         }
                     } else {
                         Log.e("DutyView", "Failed to fetch duty details: ${response.errorBody()}")
@@ -181,6 +231,7 @@
                 }
             })
         }
+
 
         private fun getTimePosition(time: String): Int {
             // Assuming time format is "HH:mm" or similar, find the position in the spinner
@@ -213,6 +264,10 @@
                 override fun onResponse(call: Call<Duty>, response: Response<Duty>) {
                     if (response.isSuccessful) {
                         Toast.makeText(requireContext(), "Duty updated successfully", Toast.LENGTH_SHORT).show()
+                        // Navigate back to home fragment
+                        parentFragmentManager.beginTransaction()
+                            .replace(R.id.frameLayout, teacher_home_page()) // Replace with your actual HomeFragment
+                            .commit()
                         // Refresh the duties to see the updated data
                     } else {
                         Log.e("UpdateDuty", "Error: ${response.code()} - ${response.message()}")

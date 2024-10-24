@@ -1,3 +1,4 @@
+import android.adservices.adid.AdId
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import com.example.smartdtr_remade.models.Student
 class StudentListCreateAdapter(private var students: MutableList<Student>) :
     RecyclerView.Adapter<StudentListCreateAdapter.StudentViewHolder>() {
 
+    private val selectedStudentIds = mutableSetOf<Int>() // Store selected student IDs
     private var studentSelectionChangeListener: (() -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StudentViewHolder {
@@ -35,6 +37,15 @@ class StudentListCreateAdapter(private var students: MutableList<Student>) :
 
     override fun getItemCount(): Int {
         return students.size
+    }
+
+    fun selectStudent(studentId: Int, isSelected: Boolean){
+        if (isSelected){
+            selectedStudentIds.add(studentId)
+        } else {
+            selectedStudentIds.remove(studentId)
+        }
+        notifyDataSetChanged()
     }
 
     // Function to select/deselect all students

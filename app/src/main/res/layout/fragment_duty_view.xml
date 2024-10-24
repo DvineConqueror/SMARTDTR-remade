@@ -57,6 +57,7 @@
             android:layout_marginTop="16dp"
             android:backgroundTint="@color/white"
             android:shadowColor="@color/white"
+            app:cornerRadius="50dp"
             android:contentDescription="Back Button"
             app:icon="@drawable/baseline_arrow_back_ios_24"
             app:iconTint="@color/brightred"
@@ -86,17 +87,13 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/timeSelector"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="30dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/gradient_background_3"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView6"
-            app:layout_constraintVertical_bias="0.0"
-            tools:ignore="MissingConstraints">
+            app:layout_constraintVertical_bias="0.0" >
 
             <TextView
                 android:id="@+id/tvSubject"
