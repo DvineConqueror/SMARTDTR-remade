@@ -91,9 +91,10 @@
             android:background="@drawable/gradient_background_3"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView6"
-            app:layout_constraintVertical_bias="0.0" >
+            app:layout_constraintVertical_bias="0.0">
 
             <TextView
                 android:id="@+id/tvSubject"
@@ -114,14 +115,14 @@
                 android:id="@+id/tvSubjectValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="32dp"
                 android:fontFamily="@font/lilita_one"
                 android:text="SubjectValue"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.27"
+                app:layout_constraintHorizontal_bias="0.331"
                 app:layout_constraintStart_toEndOf="@+id/tvSubject"
                 app:layout_constraintTop_toBottomOf="@+id/textTimeSeparator"
                 tools:ignore="HardcodedText,MissingConstraints" />
@@ -130,8 +131,8 @@
                 android:id="@+id/tvRoomValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="60dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginStart="76dp"
+                android:layout_marginTop="20dp"
                 android:fontFamily="@font/lilita_one"
                 android:text="RoomValue"
                 android:textColor="@color/white"
@@ -145,45 +146,43 @@
                 android:id="@+id/textStartTimeValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="8dp"
                 android:fontFamily="@font/lilita_one"
                 android:text="00:00 "
                 android:textColor="@color/white"
                 android:textSize="25sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.488"
+                app:layout_constraintHorizontal_bias="0.485"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnMarkAsDone"
+                app:layout_constraintTop_toBottomOf="@+id/btnCancel"
                 tools:ignore="HardcodedText,MissingConstraints" />
 
             <TextView
                 android:id="@+id/textEndTimeValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="6dp"
                 android:fontFamily="@font/lilita_one"
                 android:text="00:00 "
                 android:textColor="@color/white"
                 android:textSize="25sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.211"
                 app:layout_constraintStart_toEndOf="@+id/textTimeSeparator"
-                app:layout_constraintTop_toBottomOf="@+id/btnMarkAsDone"
+                app:layout_constraintTop_toBottomOf="@+id/btnCancel"
                 tools:ignore="HardcodedText,MissingConstraints" />
 
             <TextView
                 android:id="@+id/textTimeSeparator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="8dp"
                 android:fontFamily="@font/lilita_one"
                 android:text="-"
                 android:textColor="@color/white"
                 android:textSize="25sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.081"
                 app:layout_constraintStart_toEndOf="@+id/textStartTimeValue"
-                app:layout_constraintTop_toBottomOf="@+id/btnMarkAsDone"
+                app:layout_constraintTop_toBottomOf="@+id/btnCancel"
                 tools:ignore="HardcodedText,MissingConstraints" />
 
             <TextView
@@ -235,11 +234,12 @@
                 app:layout_constraintTop_toBottomOf="@+id/btnEdit"
                 tools:ignore="HardcodedText,MissingConstraints" />
 
+
             <Button
                 android:id="@+id/btnEdit"
                 android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:layout_marginTop="36dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="8dp"
                 android:backgroundTint="#0008E2"
                 android:fontFamily="@font/lilita_one"
                 android:text="Edit"
@@ -248,16 +248,34 @@
                 android:textStyle="bold"
                 app:cornerRadius="50dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.148"
+                app:layout_constraintHorizontal_bias="0.21"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnMarkAsDone"
+                tools:ignore="HardcodedText,MissingConstraints" />
+
+            <Button
+                android:id="@+id/btnCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="#0008E2"
+                android:fontFamily="@font/lilita_one"
+                android:text="delete"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:cornerRadius="50dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.733"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnMarkAsDone"
                 tools:ignore="HardcodedText,MissingConstraints" />
 
             <Button
                 android:id="@+id/btnMarkAsDone"
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:layout_marginTop="36dp"
+                android:layout_width="300dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="24dp"
                 android:backgroundTint="#0008E2"
                 android:fontFamily="@font/lilita_one"
                 android:text="Mark as Done"
@@ -266,8 +284,8 @@
                 android:textStyle="bold"
                 app:cornerRadius="50dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.33"
-                app:layout_constraintStart_toEndOf="@+id/btnEdit"
+                app:layout_constraintHorizontal_bias="0.495"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="HardcodedText,MissingConstraints" />
 

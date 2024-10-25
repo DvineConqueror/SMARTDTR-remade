@@ -28,6 +28,7 @@
         private lateinit var recyclerStudentList: RecyclerView  // RecyclerView for the student list
         private lateinit var btnEdit: Button
         private lateinit var btnMarkAsDone: Button
+        private lateinit var btnCancel: Button
 
         // Lazy property to get duty ID from the arguments
         private val dutyId: Int by lazy { arguments?.getInt("DUTY_ID") ?: 0 }
@@ -43,6 +44,7 @@
             // Initialize Buttons
             btnEdit = view.findViewById(R.id.btnEdit)
             btnMarkAsDone = view.findViewById(R.id.btnMarkAsDone)
+            btnCancel = view.findViewById(R.id.btnCancel)
             val backButton: MaterialButton = view.findViewById(R.id.btnBack)
 
             // Back button click listener
@@ -57,6 +59,10 @@
 
             btnMarkAsDone.setOnClickListener {
                 onMarkDutyAsDone()
+            }
+
+            btnCancel.setOnClickListener {
+                onCancel()
             }
 
             // Fetch the duty details using the duty ID
@@ -166,6 +172,32 @@
                 override fun onFailure(call: Call<Void>, t: Throwable) {
                     Log.e("DutyView", "Error marking duty as done: ${t.message}")
                     Toast.makeText(requireContext(), "Error marking as done", Toast.LENGTH_SHORT).show()
+                }
+            })
+        }
+
+        private fun onCancel() {
+            // Prepare the status update data as a map
+            val statusUpdate = mapOf("status" to "Canceled")
+
+            // Call the API to update the duty status
+            RetrofitInstance.dutyApi.updateDutyStatus(dutyId, statusUpdate).enqueue(object : Callback<Void> {
+                override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                    if (response.isSuccessful) {
+                        Log.d("DutyView", "Duty deleted successfully")
+                        // Show a success message or navigate back
+                        Toast.makeText(requireContext(), "Duty deleted", Toast.LENGTH_SHORT).show()
+                        // You may want to navigate back to the previous screen or update the UI
+                        parentFragmentManager.popBackStack()
+                    } else {
+                        Log.e("DutyView", "Failed to delete duty : ${response.errorBody()}")
+                        Toast.makeText(requireContext(), "Failed to delete", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<Void>, t: Throwable) {
+                    Log.e("DutyView", "Error deleting duty : ${t.message}")
+                    Toast.makeText(requireContext(), "Error deleting", Toast.LENGTH_SHORT).show()
                 }
             })
         }
