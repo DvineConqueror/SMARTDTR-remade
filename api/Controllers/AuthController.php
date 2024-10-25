@@ -46,42 +46,50 @@ class AuthController extends Controller
     }
 
         // Change password method
-    public function changePassword(Request $request){
-        $request->validate([
-            'userId' => 'required|string',
-            'old_password' => 'required|string',
-            'new_password' => 'required|string|min:8|confirmed',
-        ]);
+    public function changePassword(Request $request) {
+    // Validate the input data
+    $request->validate([
+        'userId' => 'required|string',
+        'old_password' => 'required|string',
+        'new_password' => 'required|string|min:8|confirmed',
+    ]);
 
-        // Determine if it's a Student or Teacher
-        $user = null;
-        if (str_starts_with($request->userId, 'S')) {
-            $user = Student::where('student_id', $request->userId)->first();
-        } elseif (str_starts_with($request->userId, 'T')) {
-            $user = Teacher::where('teacher_id', $request->userId)->first();
-        }
-
-        if (!$user) {
-            return response()->json(['error' => 'User not found'], 404);
-        }
-
-        // Verify old password
-        if (!Hash::check($request->old_password, $user->password)) {
-            // Old password is incorrect
-            return response()->json(['error' => 'Old password is incorrect!'], 400);
-        }
-
-        // Check if the new password is the same as the current password
-        if (Hash::check($request->new_password, $user->password)) {
-            return response()->json(['error' => 'New password cannot be the same as the current password!'], 400);
-        }
-
-        // Update the user's password
-        $user->password = Hash::make($request->new_password);
-        $user->save();
-
-        return response()->json(['message' => 'Password updated successfully'], 200);
+    // Determine if it's a Student or Teacher
+    $user = null;
+    if (str_starts_with($request->userId, 'S')) {
+        $user = Student::where('student_id', $request->userId)->first();
+    } elseif (str_starts_with($request->userId, 'T')) {
+        $user = Teacher::where('teacher_id', $request->userId)->first();
     }
+
+    // If no user is found, return an error response
+    if (!$user) {
+        return response()->json(['error' => 'User not found'], 404);
+    }
+
+    // Verify if the provided old password matches the current password
+    if (!Hash::check($request->old_password, $user->password)) {
+        return response()->json(['error' => 'Old password is incorrect!'], 400);
+    }
+
+    // Check if the new password is the same as the current password
+    if (Hash::check($request->new_password, $user->password)) {
+        return response()->json(['error' => 'New password cannot be the same as the current password!'], 400);
+    }
+
+    // Hash and update the user's password
+    $user->password = Hash::make($request->new_password);
+    $user->save();
+
+    // Invalidate all active tokens for the user (Sanctum example)
+    if (method_exists($user, 'tokens')) {
+        $user->tokens()->delete(); // This logs out the user from all sessions by deleting all tokens
+    }
+
+    // Return a success response
+    return response()->json(['message' => 'Password updated successfully'], 200);
+    }
+
 
 
     // Signup method
