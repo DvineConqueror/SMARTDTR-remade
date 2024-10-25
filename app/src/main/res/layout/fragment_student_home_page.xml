@@ -49,7 +49,7 @@
             android:id="@+id/rectange_blue"
             android:layout_width="300dp"
             android:layout_height="60dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="5dp"
             android:src="@drawable/rectangle_blue"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.494"
@@ -76,7 +76,7 @@
             android:id="@+id/upcoming_duty_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="15dp"
             android:text="Upcoming Duty:"
             android:fontFamily="@font/lilita_one"
             android:textColor="@color/blue"
@@ -87,22 +87,38 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rectange_blue" />
 
-        <!-- RecyclerView for upcoming and finished duties -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView_duties"
-            android:layout_width="0dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/upcomingContainer"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/gradient_background_4"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/upcoming_duty_label"
-            tools:listitem="@layout/rv_student_duty_card"/>
+            app:layout_constraintTop_toBottomOf="@+id/upcoming_duty_label"
+            app:layout_constraintVertical_bias="0.0"
+            tools:ignore="MissingConstraints">
+
+            <!-- RecyclerView for upcoming and finished duties -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView_duties"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="@id/upcomingContainer"
+                app:layout_constraintStart_toStartOf="@id/upcomingContainer"
+                app:layout_constraintBottom_toBottomOf="@id/upcomingContainer"
+                app:layout_constraintTop_toTopOf="@id/upcomingContainer"
+                tools:listitem="@layout/rv_student_duty_card" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/finished_duty_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="15dp"
             android:text="Finished Duty:"
             android:fontFamily="@font/lilita_one"
             android:textColor="@color/blue"
@@ -111,17 +127,31 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.158"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recyclerView_duties" />
+            app:layout_constraintTop_toBottomOf="@+id/upcomingContainer" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView_finished_duties"
-            android:layout_width="0dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/finishedContainer"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/gradient_background_4"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/finished_duty_label"
-            tools:listitem="@layout/rv_student_finished_duty_card"/>
+            app:layout_constraintTop_toBottomOf="@+id/finished_duty_label"
+            tools:ignore="MissingConstraints">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView_finished_duties"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="@+id/finishedContainer"
+                app:layout_constraintStart_toStartOf="@+id/finishedContainer"
+                app:layout_constraintBottom_toBottomOf="@+id/finishedContainer"
+                app:layout_constraintTop_toTopOf="@+id/finishedContainer"
+                tools:listitem="@layout/rv_student_finished_duty_card" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
