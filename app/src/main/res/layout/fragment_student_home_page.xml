@@ -1,157 +1,182 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".student_home_page">
+    android:layout_width="match_parent"
+    android:id="@+id/refreshLayout">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:id="@+id/top_wave"
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:contentDescription="top_wave"
-            android:scaleType="fitXY"
-            android:src="@drawable/wave2_top"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/ivLogo"
-            android:layout_width="141dp"
-            android:layout_height="126dp"
-            android:layout_marginTop="40dp"
-            android:src="@drawable/logo"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.203"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/top_wave" />
-
-        <ImageView
-            android:id="@+id/ivLogoText"
-            android:layout_width="146dp"
-            android:layout_height="71dp"
-            android:layout_marginTop="68dp"
-            android:src="@drawable/group_76"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.739"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/top_wave" />
-
-        <ImageView
-            android:id="@+id/rectange_blue"
-            android:layout_width="300dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="5dp"
-            android:src="@drawable/rectangle_blue"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.494"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/top_wave" />
-
-        <TextView
-            android:id="@+id/timer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="54dp"
-            android:fontFamily="@font/lilita_one"
-            android:gravity="center"
-            android:text="90"
-            android:textColor="@color/white"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/rectange_blue"
-            app:layout_constraintStart_toStartOf="@+id/rectange_blue"
-            app:layout_constraintTop_toTopOf="@+id/rectange_blue"
-            app:layout_constraintVertical_bias="0.52" />
-
-        <TextView
-            android:id="@+id/upcoming_duty_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:text="Upcoming Duty:"
-            android:fontFamily="@font/lilita_one"
-            android:textColor="@color/blue"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.16"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rectange_blue" />
+        android:layout_height="match_parent"
+        tools:context=".student_home_page">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/upcomingContainer"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/gradient_background_4"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/upcoming_duty_label"
-            app:layout_constraintVertical_bias="0.0"
-            tools:ignore="MissingConstraints">
+            android:layout_height="wrap_content">
 
-            <!-- RecyclerView for upcoming and finished duties -->
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView_duties"
-                android:layout_width="0dp"
+            <ImageView
+                android:id="@+id/top_wave"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:contentDescription="top_wave"
+                android:scaleType="fitXY"
+                android:src="@drawable/wave2_top"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/ivLogo"
+                android:layout_width="141dp"
+                android:layout_height="126dp"
+                android:layout_marginTop="40dp"
+                android:src="@drawable/logo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.203"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/top_wave" />
+
+            <ImageView
+                android:id="@+id/ivLogoText"
+                android:layout_width="146dp"
+                android:layout_height="71dp"
+                android:layout_marginTop="68dp"
+                android:src="@drawable/group_76"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.739"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/top_wave" />
+
+            <TextView
+                android:id="@+id/refreshPrompt"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="@id/upcomingContainer"
-                app:layout_constraintStart_toStartOf="@id/upcomingContainer"
-                app:layout_constraintBottom_toBottomOf="@id/upcomingContainer"
-                app:layout_constraintTop_toTopOf="@id/upcomingContainer"
-                tools:listitem="@layout/rv_student_duty_card" />
+                android:layout_margin="16dp"
+                android:fontFamily="@font/lilita_one"
+                android:text="Please swipe down to see new updates of your duties"
+                android:textColor="@color/blue"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toTopOf="@+id/rectange_blue"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.03"
+                android:visibility="visible"/>
+
+            <ImageView
+                android:id="@+id/rectange_blue"
+                android:layout_width="300dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/rectangle_blue"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.494"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/top_wave" />
+
+            <TextView
+                android:id="@+id/timer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="54dp"
+                android:fontFamily="@font/lilita_one"
+                android:gravity="center"
+                android:text="90"
+                android:textColor="@color/white"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/rectange_blue"
+                app:layout_constraintStart_toStartOf="@+id/rectange_blue"
+                app:layout_constraintTop_toTopOf="@+id/rectange_blue"
+                app:layout_constraintVertical_bias="0.52" />
+
+            <TextView
+                android:id="@+id/upcoming_duty_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="Upcoming Duty:"
+                android:fontFamily="@font/lilita_one"
+                android:textColor="@color/blue"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.16"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rectange_blue" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/upcomingContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/gradient_background_4"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/upcoming_duty_label"
+                app:layout_constraintVertical_bias="0.0"
+                tools:ignore="MissingConstraints">
+
+
+
+                <!-- RecyclerView for upcoming and finished duties -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView_duties"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="@id/upcomingContainer"
+                    app:layout_constraintStart_toStartOf="@id/upcomingContainer"
+                    app:layout_constraintBottom_toBottomOf="@id/upcomingContainer"
+                    app:layout_constraintTop_toTopOf="@id/upcomingContainer"
+                    tools:listitem="@layout/rv_student_duty_card" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/finished_duty_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="Finished Duty:"
+                android:fontFamily="@font/lilita_one"
+                android:textColor="@color/blue"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.158"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/upcomingContainer" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/finishedContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/gradient_background_4"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/finished_duty_label"
+                tools:ignore="MissingConstraints">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView_finished_duties"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="@+id/finishedContainer"
+                    app:layout_constraintStart_toStartOf="@+id/finishedContainer"
+                    app:layout_constraintBottom_toBottomOf="@+id/finishedContainer"
+                    app:layout_constraintTop_toTopOf="@+id/finishedContainer"
+                    tools:listitem="@layout/rv_student_finished_duty_card" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 
-        <TextView
-            android:id="@+id/finished_duty_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:text="Finished Duty:"
-            android:fontFamily="@font/lilita_one"
-            android:textColor="@color/blue"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.158"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/upcomingContainer" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/finishedContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/gradient_background_4"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/finished_duty_label"
-            tools:ignore="MissingConstraints">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView_finished_duties"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="@+id/finishedContainer"
-                app:layout_constraintStart_toStartOf="@+id/finishedContainer"
-                app:layout_constraintBottom_toBottomOf="@+id/finishedContainer"
-                app:layout_constraintTop_toTopOf="@+id/finishedContainer"
-                tools:listitem="@layout/rv_student_finished_duty_card" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.core.widget.NestedScrollView>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

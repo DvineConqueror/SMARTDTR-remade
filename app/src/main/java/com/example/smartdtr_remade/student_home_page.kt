@@ -2,6 +2,7 @@ package com.example.smartdtr_remade
 
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.smartdtr_remade.Api.RetrofitInstance
 import com.example.smartdtr_remade.adapter.HomeStudentFinishedDutyAdapter
 import com.example.smartdtr_remade.adapter.HomeStudentUpcomingDutyAdapter
@@ -26,6 +28,19 @@ class student_home_page : Fragment() {
     private lateinit var finishedDutyRecyclerView: RecyclerView
     private lateinit var studentUpcomingDutyAdapter: HomeStudentUpcomingDutyAdapter
     private lateinit var studentFinishedDutyAdapter: HomeStudentFinishedDutyAdapter // Declare finished duty adapter
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
+    private lateinit var refreshPrompt: TextView
+    private var newDutiesAvailable = false
+    private var previousUpcomingDuties: List<Duty> = emptyList()
+
+
+    private val handler = Handler()
+    private val refreshRunnable = object : Runnable {
+        override fun run() {
+            checkForNewDuties()
+            handler.postDelayed(this, 3000) // Check every 5 seconds
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +55,8 @@ class student_home_page : Fragment() {
         tvTimer = view.findViewById(R.id.timer)
         upcomingDutyRecyclerView = view.findViewById(R.id.recyclerView_duties)
         finishedDutyRecyclerView = view.findViewById(R.id.recyclerView_finished_duties)
+        swipeRefreshLayout = view.findViewById(R.id.refreshLayout)
+        refreshPrompt = view.findViewById(R.id.refreshPrompt)
 
         // Initialize RecyclerViews with adapters
         upcomingDutyRecyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -54,7 +71,44 @@ class student_home_page : Fragment() {
         fetchFinishedDuties()
         fetchUpcomingDuties()
 
+        swipeRefreshLayout.setOnRefreshListener {
+            refreshPrompt.visibility = View.GONE
+            fetchUpcomingDuties() // Refresh duties
+        }
+
+
         return view
+    }
+
+    override fun onResume() {
+        super.onResume()
+        handler.post(refreshRunnable) // Start periodic check when fragment is active
+    }
+
+    override fun onPause() {
+        super.onPause()
+        handler.removeCallbacks(refreshRunnable) // Stop periodic check when fragment is not active
+    }
+
+    private fun checkForNewDuties() {
+        val loggedInStudentId = preferencesManager.getUserId()
+        if (loggedInStudentId != null) {
+            RetrofitInstance.dutyApi.getUpcomingDutiesStudent(loggedInStudentId).enqueue(object : Callback<List<Duty>> {
+                override fun onResponse(call: Call<List<Duty>>, response: Response<List<Duty>>) {
+                    if (response.isSuccessful) {
+                        val latestDuties = response.body() ?: emptyList()
+                        if (latestDuties != previousUpcomingDuties) {
+                            newDutiesAvailable = true // Set flag to indicate new duties are available
+                            refreshPrompt.visibility = View.VISIBLE // Show the refresh prompt
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<List<Duty>>, t: Throwable) {
+                    Log.e("DutyResponse", "Failure: ${t.message}")
+                }
+            })
+        }
     }
 
     private fun fetchFinishedDuties() {
@@ -94,27 +148,47 @@ class student_home_page : Fragment() {
 
     private fun fetchUpcomingDuties() {
         val loggedInStudentId = preferencesManager.getUserId()
+        swipeRefreshLayout.isRefreshing = true // Start the loading animation
 
         if (loggedInStudentId != null) {
             RetrofitInstance.dutyApi.getUpcomingDutiesStudent(loggedInStudentId).enqueue(object : Callback<List<Duty>> {
                 override fun onResponse(call: Call<List<Duty>>, response: Response<List<Duty>>) {
                     if (response.isSuccessful) {
-                        val duties = response.body()
-                        if (!duties.isNullOrEmpty()) {
-                            // Update the upcoming duties RecyclerView
-                            studentUpcomingDutyAdapter.updateDuties(duties)
+                        val newDuties = response.body() ?: emptyList()
+
+                        if (newDuties != previousUpcomingDuties) { // Show prompt if there's an update
+                            previousUpcomingDuties = newDuties // Update previous duties
+                            studentUpcomingDutyAdapter.updateDuties(newDuties)
+                            refreshPrompt.visibility = View.VISIBLE // Show the prompt
+                            newDutiesAvailable = true // Set the flag for new duties
+                        } else {
+                            refreshPrompt.visibility = View.GONE // Hide if no updates
                         }
+                        //fetch duties to update the timer
+                        fetchFinishedDuties()
+
                     } else {
-                        Log.e("DutyResponse", "Response was unsuccessful: ${response.message()}")
+                        refreshPrompt.visibility = View.GONE // Hide the prompt on unsuccessful response
+                    }
+                    swipeRefreshLayout.isRefreshing = false // Stop loading animation
+
+                    // Hide the refresh prompt after refreshing
+                    if (newDutiesAvailable) {
+                        refreshPrompt.visibility = View.GONE // Hide the prompt after refreshing
+                        newDutiesAvailable = false // Reset the flag
                     }
                 }
 
                 override fun onFailure(call: Call<List<Duty>>, t: Throwable) {
                     Log.e("DutyResponse", "Failure: ${t.message}")
+                    swipeRefreshLayout.isRefreshing = false // Stop loading animation
                 }
             })
+        } else {
+            swipeRefreshLayout.isRefreshing = false // Stop loading animation
         }
     }
+
 
     fun updateTimerTextView(remainingHours: Int) {
         val timerText = "$remainingHours Hours Left"

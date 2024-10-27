@@ -58,6 +58,7 @@
             android:backgroundTint="@color/white"
             android:shadowColor="@color/white"
             android:contentDescription="Back Button"
+            app:cornerRadius="50dp"
             app:icon="@drawable/baseline_arrow_back_ios_24"
             app:iconTint="@color/brightred"
             app:layout_constraintEnd_toEndOf="parent"
