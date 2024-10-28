@@ -1,5 +1,6 @@
 package com.example.smartdtr_remade
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -24,6 +25,7 @@ import retrofit2.Response
 
 class student_home_page : Fragment() {
     private lateinit var tvTimer: TextView
+    private lateinit var tvTimerCompleted: TextView
     private lateinit var preferencesManager: PreferencesManager
     private lateinit var upcomingDutyRecyclerView: RecyclerView
     private lateinit var finishedDutyRecyclerView: RecyclerView
@@ -50,12 +52,14 @@ class student_home_page : Fragment() {
         preferencesManager = PreferencesManager(requireContext())
     }
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_student_home_page, container, false)
         tvTimer = view.findViewById(R.id.timer)
+        tvTimerCompleted = view.findViewById(R.id.timerCompleted)
         upcomingDutyRecyclerView = view.findViewById(R.id.recyclerView_duties)
         finishedDutyRecyclerView = view.findViewById(R.id.recyclerView_finished_duties)
         swipeRefreshLayout = view.findViewById(R.id.refreshLayout)
@@ -205,8 +209,16 @@ class student_home_page : Fragment() {
 
 
     fun updateTimerTextView(remainingHours: Int) {
-        val timerText = "$remainingHours Hours Left"
-        tvTimer.text = timerText
+        if (remainingHours <= 0) {
+            tvTimerCompleted.text = "Completed"
+            tvTimerCompleted.visibility = View.VISIBLE
+            tvTimer.visibility = View.GONE // Hide the original timerText view
+        } else {
+            val timerText = "$remainingHours Hours Left"
+            tvTimer.text = timerText
+            tvTimer.visibility = View.VISIBLE
+            tvTimerCompleted.visibility = View.GONE // Hide completed text when hours remain
+        }
     }
 
     private fun showNoDataView() {
