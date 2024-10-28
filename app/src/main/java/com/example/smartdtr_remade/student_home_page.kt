@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewStub
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
@@ -28,6 +29,8 @@ class student_home_page : Fragment() {
     private lateinit var finishedDutyRecyclerView: RecyclerView
     private lateinit var studentUpcomingDutyAdapter: HomeStudentUpcomingDutyAdapter
     private lateinit var studentFinishedDutyAdapter: HomeStudentFinishedDutyAdapter // Declare finished duty adapter
+    private lateinit var viewStubUpcoming: ViewStub
+    private lateinit var viewStubHistory: ViewStub
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private lateinit var refreshPrompt: TextView
     private var newDutiesAvailable = false
@@ -58,13 +61,17 @@ class student_home_page : Fragment() {
         swipeRefreshLayout = view.findViewById(R.id.refreshLayout)
         refreshPrompt = view.findViewById(R.id.refreshPrompt)
 
+        // Initialize ViewStubs
+        viewStubUpcoming = view.findViewById(R.id.nodata_viewstub_upcoming)
+        viewStubHistory = view.findViewById(R.id.nodata_viewstub_history)
+
         // Initialize RecyclerViews with adapters
         upcomingDutyRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         studentUpcomingDutyAdapter = HomeStudentUpcomingDutyAdapter(emptyList())
         upcomingDutyRecyclerView.adapter = studentUpcomingDutyAdapter
 
         finishedDutyRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        studentFinishedDutyAdapter = HomeStudentFinishedDutyAdapter(emptyList()) // Initialize finished duty adapter
+        studentFinishedDutyAdapter = HomeStudentFinishedDutyAdapter(emptyList())
         finishedDutyRecyclerView.adapter = studentFinishedDutyAdapter
 
         // Fetch finished and upcoming duties when the view is created
@@ -73,16 +80,17 @@ class student_home_page : Fragment() {
 
         swipeRefreshLayout.setOnRefreshListener {
             refreshPrompt.visibility = View.GONE
-            fetchUpcomingDuties() // Refresh duties
+            fetchUpcomingDuties()
         }
-
 
         return view
     }
 
+
     override fun onResume() {
         super.onResume()
         handler.post(refreshRunnable) // Start periodic check when fragment is active
+        refreshPrompt.visibility = View.GONE
     }
 
     override fun onPause() {
@@ -100,6 +108,9 @@ class student_home_page : Fragment() {
                         if (latestDuties != previousUpcomingDuties) {
                             newDutiesAvailable = true // Set flag to indicate new duties are available
                             refreshPrompt.visibility = View.VISIBLE // Show the refresh prompt
+                            showNoDataView()
+                        } else {
+                            refreshPrompt.visibility = View.GONE
                         }
                     }
                 }
@@ -131,6 +142,7 @@ class student_home_page : Fragment() {
                         } else {
                             // Handle case where no duties are found
                             updateTimerTextView(90) // Default to 90 hours if no duties are found
+                            showNoHistoryView()
                         }
                     } else {
                         Log.e("DutyResponse", "Response was unsuccessful: ${response.message()}")
@@ -140,12 +152,14 @@ class student_home_page : Fragment() {
 
                 override fun onFailure(call: Call<List<Duty>>, t: Throwable) {
                     Log.e("DutyResponse", "Failure: ${t.message}")
+                    showNoHistoryView()
                     updateTimerTextView(90) // Default to 90 hours if API call fails
                 }
             })
         }
     }
 
+    // Update fetchUpcomingDuties function
     private fun fetchUpcomingDuties() {
         val loggedInStudentId = preferencesManager.getUserId()
         swipeRefreshLayout.isRefreshing = true // Start the loading animation
@@ -156,32 +170,32 @@ class student_home_page : Fragment() {
                     if (response.isSuccessful) {
                         val newDuties = response.body() ?: emptyList()
 
-                        if (newDuties != previousUpcomingDuties) { // Show prompt if there's an update
-                            previousUpcomingDuties = newDuties // Update previous duties
-                            studentUpcomingDutyAdapter.updateDuties(newDuties)
-                            refreshPrompt.visibility = View.VISIBLE // Show the prompt
-                            newDutiesAvailable = true // Set the flag for new duties
+                        // Check if the new duties are different from the previous ones
+                        previousUpcomingDuties = newDuties // Update the previous duties
+                        studentUpcomingDutyAdapter.updateDuties(newDuties)
+
+                        if (newDuties.isEmpty()) {
+                            showNoDataView()
+                            refreshPrompt.visibility = View.GONE // Hide prompt if no new duties
                         } else {
-                            refreshPrompt.visibility = View.GONE // Hide if no updates
+                            // Ensure visibility for duties and hide prompt
+                            upcomingDutyRecyclerView.visibility = View.VISIBLE // Ensure list visibility
+                            viewStubUpcoming.visibility = View.GONE
+                            refreshPrompt.visibility = View.GONE // Hide prompt if duties are present
                         }
-                        //fetch duties to update the timer
-                        fetchFinishedDuties()
-
+                        fetchFinishedDuties()//fetch duties to refresh timer
                     } else {
-                        refreshPrompt.visibility = View.GONE // Hide the prompt on unsuccessful response
+                        refreshPrompt.visibility = View.GONE // Hide prompt on unsuccessful response
                     }
-                    swipeRefreshLayout.isRefreshing = false // Stop loading animation
 
-                    // Hide the refresh prompt after refreshing
-                    if (newDutiesAvailable) {
-                        refreshPrompt.visibility = View.GONE // Hide the prompt after refreshing
-                        newDutiesAvailable = false // Reset the flag
-                    }
+                    swipeRefreshLayout.isRefreshing = false // Stop loading animation
                 }
 
                 override fun onFailure(call: Call<List<Duty>>, t: Throwable) {
                     Log.e("DutyResponse", "Failure: ${t.message}")
+                    showNoDataView()
                     swipeRefreshLayout.isRefreshing = false // Stop loading animation
+                    refreshPrompt.visibility = View.GONE // Hide prompt on failure
                 }
             })
         } else {
@@ -194,6 +208,27 @@ class student_home_page : Fragment() {
         val timerText = "$remainingHours Hours Left"
         tvTimer.text = timerText
     }
+
+    private fun showNoDataView() {
+        if (studentUpcomingDutyAdapter.itemCount == 0) {
+            upcomingDutyRecyclerView.visibility = View.GONE
+            viewStubUpcoming.visibility = View.VISIBLE
+        } else {
+            upcomingDutyRecyclerView.visibility = View.VISIBLE
+            viewStubUpcoming.visibility = View.GONE
+        }
+    }
+
+    private fun showNoHistoryView() {
+        if (studentFinishedDutyAdapter.itemCount == 0) {
+            finishedDutyRecyclerView.visibility = View.GONE
+            viewStubHistory.visibility = View.VISIBLE
+        } else {
+            finishedDutyRecyclerView.visibility = View.VISIBLE
+            viewStubHistory.visibility = View.GONE
+        }
+    }
+
 
     @RequiresApi(Build.VERSION_CODES.S)
     private fun calculateTotalHoursWorked(duties: List<Duty>): Int {

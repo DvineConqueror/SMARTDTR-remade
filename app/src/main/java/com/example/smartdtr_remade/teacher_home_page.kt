@@ -31,7 +31,8 @@ class teacher_home_page : Fragment() {
     private lateinit var teacherFinishedDutyAdapter: HomeTeacherFinishedAdapter
     private lateinit var preferencesManager: PreferencesManager
     private lateinit var makeAppointmentButton: Button
-    private lateinit var viewStub: ViewStub
+    private lateinit var viewStubUpcoming: ViewStub
+    private lateinit var viewStubHistory: ViewStub
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,6 +45,9 @@ class teacher_home_page : Fragment() {
         recyclerViewCompleted = view.findViewById(R.id.recyclerView_finished_duties)
         recyclerViewCompleted.layoutManager = LinearLayoutManager(requireContext())
         makeAppointmentButton = view.findViewById(R.id.appointmentButton)
+        viewStubUpcoming = view.findViewById(R.id.nodata_viewstub_upcoming) // Make sure the ID matches your layout
+        viewStubHistory = view.findViewById(R.id.nodata_viewstub_history) // Make sure the ID matches your layout
+
 
         preferencesManager = PreferencesManager(requireContext())
 
@@ -109,6 +113,8 @@ class teacher_home_page : Fragment() {
                         val duties = response.body()
                         if (!duties.isNullOrEmpty()) {
                             teacherUpcomingDutyAdapter.updateDuties(duties)
+                            recyclerViewUpcoming.visibility = View.VISIBLE
+                            viewStubUpcoming.visibility = View.GONE
                         } else {
                             showNoDataView(recyclerViewUpcoming)
                         }
@@ -133,15 +139,17 @@ class teacher_home_page : Fragment() {
                         val duties = response.body()
                         if (!duties.isNullOrEmpty()) {
                             teacherFinishedDutyAdapter.updateDuties(duties)
+                            recyclerViewCompleted.visibility = View.VISIBLE
+                            viewStubHistory.visibility = View.GONE
                         } else {
-                            showNoDataView(recyclerViewCompleted)
+                            showNoHistoryView(recyclerViewCompleted)
                         }
                     }
                 }
 
                 override fun onFailure(call: Call<List<Duty>>, t: Throwable) {
                     Log.e("API Error", "Error fetching finished duties: ${t.message}")
-                    showNoDataView(recyclerViewCompleted)
+                    showNoHistoryView(recyclerViewCompleted)
                 }
             })
         }
@@ -149,8 +157,12 @@ class teacher_home_page : Fragment() {
 
     private fun showNoDataView(recyclerView: RecyclerView) {
         recyclerView.visibility = View.GONE
-        // You can also show a TextView or another UI element to indicate no data is available
-        // Example:
-        // noDataTextView.visibility = View.VISIBLE
+        viewStubUpcoming.visibility = View.VISIBLE  // Show the no data view for upcoming duties
     }
+
+    private fun showNoHistoryView(recyclerView: RecyclerView) {
+        recyclerView.visibility = View.GONE
+        viewStubHistory.visibility = View.VISIBLE  // Show the no data view for finished duties
+    }
+
 }
