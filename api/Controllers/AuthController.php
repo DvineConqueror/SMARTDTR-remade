@@ -105,7 +105,7 @@ class AuthController extends Controller
             $rules = [
                 'firstname' => 'required|string|max:255',
                 'lastname' => 'required|string|max:255',
-                'mobile_number' => 'required|string|max:13',
+                'mobile_number' => 'required|string|max:12',
                 'sex' => 'required|in:Male,Female',
             ];
     
