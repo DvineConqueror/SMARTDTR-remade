@@ -39,7 +39,7 @@ class activity_login : AppCompatActivity() {
 
         //Input filter to block symbols etc.
         val blockedChars = " .,/;'\":{}[]|\\_=+!@#$%^&*()?<> "
-        val synbolTextFilter = InputFilter { source, _, _, _, _, _  ->
+        val symbolTextFilter = InputFilter { source, _, _, _, _, _  ->
             if (source.any { it in blockedChars }){
                 return@InputFilter ""
             }
@@ -50,8 +50,8 @@ class activity_login : AppCompatActivity() {
         val maxLengthUserId = InputFilter.LengthFilter(7)
         val maxLengthPassword = InputFilter.LengthFilter(16)
 
-        binding.etTextFieldUserID.editText?.filters = arrayOf(synbolTextFilter, maxLengthUserId)
-        binding.etTextFieldPass.editText?.filters = arrayOf(synbolTextFilter, maxLengthPassword)
+        binding.etTextFieldUserID.editText?.filters = arrayOf(symbolTextFilter, maxLengthUserId)
+        binding.etTextFieldPass.editText?.filters = arrayOf(symbolTextFilter, maxLengthPassword)
         //Input filter to block spaces
 
         val etIDNumber = binding.etTextFieldUserID

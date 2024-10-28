@@ -4,12 +4,16 @@ import LoginResponse
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.text.Editable
+import android.text.InputFilter
+import android.text.TextWatcher
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.Toast
+import android.util.Patterns
 import androidx.appcompat.app.AppCompatActivity
 import com.example.smartdtr_remade.Api.ApiService
 import com.example.smartdtr_remade.R
@@ -17,6 +21,7 @@ import com.example.smartdtr_remade.activityStudents.Main_student
 import com.example.smartdtr_remade.activityTeachers.Main_teacher
 import com.example.smartdtr_remade.models.SignUpRequest
 import com.example.smartdtr_remade.models.SignupResponse
+import com.google.android.material.textfield.TextInputLayout
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -29,6 +34,9 @@ class activity_create_account : AppCompatActivity() {
     private lateinit var etFirstPassword: EditText
     private lateinit var etPasswordConfirm: EditText
     private lateinit var etID: EditText
+    private lateinit var etIDTextField: TextInputLayout
+    private lateinit var etPasswordTextField: TextInputLayout
+    private lateinit var etPasswordConfirmTextField: TextInputLayout
     private lateinit var etMobileNumber: EditText
     private lateinit var spinnerSex: Spinner
     private lateinit var spnYearLevel: Spinner
@@ -52,6 +60,9 @@ class activity_create_account : AppCompatActivity() {
         spnYearLevel = findViewById(R.id.spnYearLevel)
         btnNext = findViewById(R.id.btnNext)
         btnBack = findViewById(R.id.btnBack)
+        etIDTextField = findViewById(R.id.etTextFieldStudentID)
+        etPasswordTextField = findViewById(R.id.etTextFieldPassword)
+        etPasswordConfirmTextField = findViewById(R.id.etTextFieldPasswordConfirm)
 
         //Set spinner font to app font
         val adapter1 = ArrayAdapter.createFromResource(
@@ -90,6 +101,43 @@ class activity_create_account : AppCompatActivity() {
                 )
             )
         }
+
+        //Input filter to block symbols etc.
+        val blockedChars = " .,/;'\":{}[]|\\_=+!@#$%^&*()?<> "
+        val symbolTextFilter = InputFilter { source, _, _, _, _, _  ->
+            if (source.any { it in blockedChars }){
+                return@InputFilter ""
+            }
+            null
+        }
+        //Because space filter overrides the other filters, we need to set the max lengths of our text fields here
+        val maxLengthUserId = InputFilter.LengthFilter(7)
+        val maxLengthPassword = InputFilter.LengthFilter(16)
+
+        etIDTextField.editText?.filters = arrayOf(symbolTextFilter, maxLengthUserId)
+        etPasswordTextField.editText?.filters = arrayOf(symbolTextFilter, maxLengthPassword)
+        etPasswordConfirmTextField.editText?.filters = arrayOf(symbolTextFilter, maxLengthPassword)
+
+        etMobileNumber.apply {
+            setText("63") // Set initial text as "63"
+            setSelection(2) // Set the cursor to start after "63"
+
+            // Add TextWatcher to prevent user from modifying the first two characters
+            addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+                override fun afterTextChanged(s: Editable?) {
+                    // Ensure "63" is always at the start and can't be modified
+                    if (!s.toString().startsWith("63")) {
+                        etMobileNumber.setText("63")
+                        etMobileNumber.setSelection(2) // Set cursor after "63"
+                    }
+                }
+            })
+        }
+
     }
 
     private fun etFocusListeners() {
@@ -139,7 +187,7 @@ class activity_create_account : AppCompatActivity() {
 
         etMobileNumber.setOnFocusChangeListener { _, focused ->
             if (!focused) {
-                etMobileNumber.error = validateField(etMobileNumber.text.toString().trim(), "Mobile number")
+                etMobileNumber.error = validateMobileNum()
             }
         }
 
@@ -155,13 +203,11 @@ class activity_create_account : AppCompatActivity() {
 
     private fun validateEmail(): String? {
         val email = etEmail.text.toString().trim()
-        val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+".toRegex()
-        return if (email.isEmpty()) {
-            "Email is required."
-        } else if (!email.matches(emailPattern)) {
-            "Please enter a valid email address."
-        } else {
-            null
+
+        return when {
+            email.isEmpty() -> "Email is required."
+            !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> "Please enter a valid email address."
+            else -> null
         }
     }
 
@@ -191,7 +237,16 @@ class activity_create_account : AppCompatActivity() {
         val studentPattern = "^S-\\d{5}$".toRegex(RegexOption.IGNORE_CASE)
 
         return if (!teacherPattern.matches(id) && !studentPattern.matches(id)) {
-            "Please enter a valid ID number."
+            "ID must be T-***** or S-*****"
+        } else {
+            null
+        }
+    }
+
+    private fun validateMobileNum(): String? {
+        val mobileNumber = etMobileNumber.text.toString().trim()
+        return if (mobileNumber.length < 12) {
+            "Mobile number must be at least 12 digits."
         } else {
             null
         }
@@ -226,12 +281,17 @@ class activity_create_account : AppCompatActivity() {
         // Validate fields
         if (firstname.isEmpty() || lastname.isEmpty() || email.isEmpty() ||
             password.isEmpty() || mobileNumber.isEmpty() || id.isEmpty()) {
-            Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Please fill in all fields.", Toast.LENGTH_SHORT).show()
             return
         }
 
         if (password != passwordConfirm) {
-            Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Passwords do not match.", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if (mobileNumber.length < 12){
+            Toast.makeText(this, "Mobile numbers must be at least 12 digits.", Toast.LENGTH_SHORT).show()
             return
         }
 

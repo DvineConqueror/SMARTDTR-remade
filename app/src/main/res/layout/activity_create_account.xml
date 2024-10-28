@@ -115,6 +115,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:id="@+id/etTextFieldEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -150,6 +151,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:id="@+id/etTextFieldPassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -185,6 +187,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:id="@+id/etTextFieldPasswordConfirm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -221,6 +224,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:id="@+id/etTextFieldStudentID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -244,7 +248,7 @@
                     android:ems="10"
                     android:fontFamily="@font/lilita_one"
                     android:hint="Enter your ID Number"
-                    android:inputType="textNoSuggestions"
+                    android:inputType="textCapCharacters"
                     android:maxLength="7"
                     android:padding="10dp"
                     android:textColor="@color/black"
@@ -255,13 +259,14 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:id="@+id/etTextFieldMobileNum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColorHint="@color/gray"
                 app:boxBackgroundMode="none"
                 app:counterEnabled="true"
-                app:counterMaxLength="11"
+                app:counterMaxLength="12"
                 app:helperText=""
                 app:helperTextTextColor="@color/brightred"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -278,7 +283,7 @@
                     android:fontFamily="@font/lilita_one"
                     android:hint="Enter your mobile number"
                     android:inputType="phone"
-                    android:maxLength="11"
+                    android:maxLength="12"
                     android:padding="10dp"
                     android:textColor="@color/black"
                     android:textColorHint="@color/gray"
