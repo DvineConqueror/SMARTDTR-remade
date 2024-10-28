@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@color/transparent"
     app:cardElevation="10dp"
     android:orientation="vertical"
+    app:cardCornerRadius="50dp"
+    app:cardBackgroundColor="@color/transparent"
     tools:context=".alert_dialog">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,6 +23,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:fontFamily="@font/lilita_one"
+            android:gravity="center"
             android:letterSpacing="0.12"
             android:text="@string/log_out"
             android:textColor="@color/white"
@@ -115,14 +117,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.28" />
+            app:layout_constraintGuide_percent="0.0" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.78" />
+            app:layout_constraintGuide_percent="1.0" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline4"
