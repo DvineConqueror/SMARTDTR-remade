@@ -13,12 +13,13 @@
         android:layout_width="20dp"
         android:layout_height="90dp"
         android:layout_weight="1"
+        android:padding="10dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:drawableBottom="@drawable/baseline_key_24"
         android:drawablePadding="0dp"
         android:fontFamily="@font/lilita_one"
         android:text="change password"
-        android:textSize="12dp"
+        android:textSize="11dp"
         android:letterSpacing="0"/>
 
     <Button
@@ -26,34 +27,37 @@
         android:layout_width="20dp"
         android:layout_height="90dp"
         android:layout_weight="1"
+        android:padding="10dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:drawableBottom="@drawable/baseline_account_circle_24"
         android:drawablePadding="0dp"
         android:text="user details"
         android:fontFamily="@font/lilita_one"
-        android:textSize="12dp"/>
+        android:textSize="11dp"/>
 
     <Button
         android:id="@+id/btn_history"
         android:layout_width="20dp"
         android:layout_height="90dp"
         android:layout_weight="1"
+        android:padding="10dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:drawableBottom="@drawable/baseline_history_24"
         android:drawablePadding="0dp"
         android:fontFamily="@font/lilita_one"
         android:text="history"
-        android:textSize="12dp"/>
+        android:textSize="11dp"/>
 
     <Button
         android:id="@+id/btn_log_out"
         android:layout_width="20dp"
         android:layout_height="90dp"
         android:layout_weight="1"
+        android:padding="10dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:drawableBottom="@drawable/baseline_logout_24"
         android:drawablePadding="0dp"
         android:fontFamily="@font/lilita_one"
         android:text="log out"
-        android:textSize="12dp"/>
+        android:textSize="11dp"/>
 </LinearLayout>
